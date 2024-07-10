@@ -17,6 +17,7 @@ class Tibia {
     fun weapons(): Weapons {
         return Weapons(scrapper, baseurl)
     }
+
     fun catalog(): CatalogGame {
         return CatalogGame(scrapper, baseurl)
     }
