@@ -37,6 +37,7 @@ class ControllerVocations {
     fun vocation(@PathVariable vocation:String): Any {
         return try {
             logger.info("init petition")
+            logger.info("Request: $vocation")
             val catalog = RepositoryVocations()
             val vocations = when(vocation.lowercase()){
                 "sorcerer" -> catalog.sorcerer()
@@ -51,7 +52,7 @@ class ControllerVocations {
                 return response
             }else{
                 val error = Errors(400, "Error getting vocation")
-                logger.error("Error: $vocations")
+                logger.error("Error Final: $vocations")
                 return error
             }
         }catch (e: Exception){
@@ -59,7 +60,4 @@ class ControllerVocations {
             Errors(500, "Fatal Error, contact to support")
         }
     }
-
-
-
 }

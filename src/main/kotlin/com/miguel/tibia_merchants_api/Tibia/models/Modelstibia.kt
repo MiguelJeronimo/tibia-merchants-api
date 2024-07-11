@@ -74,7 +74,7 @@ data class Vocation(
 data class Spell(
     val name: String? = null,
     val image: String? = null,
-    val words: String? = null,
+    val formula: String? = null,
     val premium: String? = null,
     val level: String? = null,
     val mana: String? = null,
@@ -86,7 +86,7 @@ data class Spell(
 data class RuneSpell(
     val name: String? = null,
     val image: String? = null,
-    val words: String? = null,
+    val formula: String? = null,
     val premium: String? = null,
     val level: String? = null,
     val mana: String? = null,
