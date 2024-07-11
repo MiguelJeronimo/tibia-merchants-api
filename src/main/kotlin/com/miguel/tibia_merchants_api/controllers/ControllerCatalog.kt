@@ -3,7 +3,6 @@ package com.miguel.tibia_merchants_api.controllers
 import com.miguel.tibia_merchants_api.model.Tibia.Errors
 import com.miguel.tibia_merchants_api.model.Tibia.Response
 import com.miguel.tibia_merchants_api.repository.RepositoryCatalog
-import com.miguel.tibia_merchants_api.repository.repositoryNPC
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.springframework.web.bind.annotation.GetMapping
