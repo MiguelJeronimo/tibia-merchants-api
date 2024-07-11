@@ -170,7 +170,6 @@ class Vocations(val scrapper: Scrapper, private val baseurl: String) {
         val trSpells = table[0].select("tbody").select("tr")
         val trSpellsIsNotAvaible = table[1].select("tbody").select("tr")
         val trRuneSpells = table[2].select("tbody").select("tr")
-        println(table.size)
         trSpells.forEach {
             val children = it.children()
             spellList.add(
