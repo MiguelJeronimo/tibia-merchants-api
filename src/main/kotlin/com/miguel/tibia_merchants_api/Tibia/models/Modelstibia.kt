@@ -1,11 +1,14 @@
 package API.Tibia.models
 
+import com.miguel.tibia_merchants_api.Tibia.ModelsScrapper.Club
+
 data class Weapons(
     val bows: ArrayList<Weapon>,
     val crossBows: ArrayList<Weapon>,
     val arrows: ArrayList<Ammunition>,
     val bolts: ArrayList<Ammunition>,
-    val throwing: ArrayList<Throwing>
+    val throwing: ArrayList<Throwing>,
+    val clubs: Club?,
 )
 /**
  * Name: Yol's Bow
@@ -74,7 +77,7 @@ data class Vocation(
 data class Spell(
     val name: String? = null,
     val image: String? = null,
-    val words: String? = null,
+    val formula: String? = null,
     val premium: String? = null,
     val level: String? = null,
     val mana: String? = null,
@@ -86,7 +89,7 @@ data class Spell(
 data class RuneSpell(
     val name: String? = null,
     val image: String? = null,
-    val words: String? = null,
+    val formula: String? = null,
     val premium: String? = null,
     val level: String? = null,
     val mana: String? = null,

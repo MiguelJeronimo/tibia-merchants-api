@@ -5,20 +5,26 @@ import API.Tibia.models.Throwing
 import API.Tibia.models.Weapon
 import API.Tibia.models.Weapons
 import Jsoup.Scrapper
+import com.miguel.tibia_merchants_api.Tibia.ModelsScrapper.Club
+import com.miguel.tibia_merchants_api.Tibia.ModelsScrapper.ClubWeapons
+import java.sql.SQLOutput
 
-class Weapons(scrapper: Scrapper, baseurl: String) {
-    private val request = scrapper.Soup("${baseurl}/Distance_Weapons")
+class Weapons(val scrapper: Scrapper, val baseurl: String) {
     fun weapons(): Weapons {
+        println("url_: ${baseurl}/Distance_Weapons")
+        println("url_: ${baseurl}/Club_Weapons")
         return Weapons(
             bows = bows(),
             crossBows = crowBows(),
             arrows = arrows(),
             bolts = bolts(),
-            throwing = throwingWeapons()
+            throwing = throwingWeapons(),
+            clubs = clubWeapons()
         )
     }
     //six tables
     private fun bows(): ArrayList<Weapon> {
+        val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val weaponsList = ArrayList<Weapon>()
         val body = request.getElementsByClass("tabber wds-tabber")
             .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")[0].select("tbody")
@@ -45,6 +51,7 @@ class Weapons(scrapper: Scrapper, baseurl: String) {
         return weaponsList
     }
     private fun crowBows(): ArrayList<Weapon> {
+        val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val weaponsList = ArrayList<Weapon>()
         val body = request.getElementsByClass("tabber wds-tabber")
             .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")[1].select("tbody")
@@ -72,6 +79,7 @@ class Weapons(scrapper: Scrapper, baseurl: String) {
     }
 
     private fun arrows(): ArrayList<Ammunition> {
+        val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val ammunitionList = ArrayList<Ammunition>()
         val body = request.getElementsByClass("tabber wds-tabber")
             .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")[2].select("tbody")
@@ -94,6 +102,7 @@ class Weapons(scrapper: Scrapper, baseurl: String) {
     }
 
     private fun bolts(): ArrayList<Ammunition> {
+        val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val ammunitionList = ArrayList<Ammunition>()
         val body = request.getElementsByClass("tabber wds-tabber")
             .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")[3].select("tbody")
@@ -116,6 +125,7 @@ class Weapons(scrapper: Scrapper, baseurl: String) {
     }
 
     private fun throwingWeapons(): ArrayList<Throwing> {
+        val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val ammunitionList = ArrayList<Throwing>()
         val body = request.getElementsByClass("tabber wds-tabber")
             .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")[4]
@@ -137,5 +147,74 @@ class Weapons(scrapper: Scrapper, baseurl: String) {
         }
         ammunitionList.removeFirst()
         return ammunitionList
+    }
+
+    /*CLUBS*/
+
+    fun clubWeapons(): Club {
+        val request = scrapper.Soup("${baseurl}/Club_Weapons")
+        val clubWeaponsList = ArrayList<ClubWeapons>()
+        val clubEnchanted = ArrayList<ClubWeapons>()
+        val clubCharged = ArrayList<ClubWeapons>()
+        val tbody = request.getElementsByClass("tabber wds-tabber")
+            .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")
+        val clubWeapon = tbody[0].select("tbody")
+        val enchantedReplicas = tbody[1].select("tbody")
+        val chargedReplicas = tbody[2].select("tbody")
+        clubWeapon.select("tr").forEach {
+            val data = it.children()
+            val imageWeapon = data[0].select("img").attr("data-src")
+            val club = ClubWeapons().apply {
+                name = data[0].text()
+                image = imageWeapon
+                level = data[1].text()
+                attack = data[2].text()
+                defense = data[3].text()
+                defMode = data[4].text()
+                hands = data[5].text()
+                resist = data[6].text()
+                slots = data[7].text()
+                classs = data[8].text()
+                weight = data[9].text()
+                attributes = data[10].text()
+            }
+            clubWeaponsList.add(club)
+        }
+        enchantedReplicas.select("tr").forEach {
+            val data = it.children()
+            val imageWeapon = data[1].select("img").attr("data-src")
+            val club = ClubWeapons().apply {
+                name = data[0].text()
+                image = imageWeapon
+                attack = data[2].text()
+                defense = data[3].text()
+                hands = data[4].text()
+                classs = data[5].text()
+                weight = data[6].text()
+            }
+            clubEnchanted.add(club)
+        }
+        chargedReplicas.select("tr").forEach {
+            val data = it.children()
+            val imageWeapon = data[1].select("img").attr("data-src")
+            val club = ClubWeapons().apply {
+                name = data[0].text()
+                image = imageWeapon
+                attack = data[2].text()
+                defense = data[3].text()
+                hands = data[4].text()
+                classs = data[5].text()
+                weight = data[6].text()
+            }
+            clubCharged.add(club)
+        }
+        clubWeaponsList.removeFirst()
+        clubEnchanted.removeFirst()
+        clubCharged.removeFirst()
+        return Club().apply {
+            enchantedClubReplicas = clubEnchanted
+            clubWeapons = clubWeaponsList
+            chargedClubReplicas = clubCharged
+        }
     }
 }

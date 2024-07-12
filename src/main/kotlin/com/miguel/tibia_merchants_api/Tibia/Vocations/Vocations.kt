@@ -33,9 +33,9 @@ class Vocations(val scrapper: Scrapper, private val baseurl: String) {
                 Spell(
                     name = children[0].text(),
                     image = children[1].select("img").attr("data-src"),
-                    words = children[2].text(),
+                    formula = children[2].text(),
                     premium = children[3].select("span").attr("title"),
-                    level = children[4].text(),
+                    level =  children[4].text(),
                     mana = children[5].text(),
                     price = children[6].text(),
                     group = children[7].text(),
@@ -67,7 +67,7 @@ class Vocations(val scrapper: Scrapper, private val baseurl: String) {
                 Spell(
                     name = children[0].text(),
                     image = children[1].select("img").attr("data-src"),
-                    words = children[2].text(),
+                    formula = children[2].text(),
                     premium = children[3].select("span").attr("title"),
                     level = children[4].text(),
                     mana = children[5].text(),
@@ -84,7 +84,7 @@ class Vocations(val scrapper: Scrapper, private val baseurl: String) {
                 RuneSpell(
                     name = children[0].text(),
                     image = children[1].select("img").attr("data-src"),
-                    words = children[2].text(),
+                    formula = children[2].text(),
                     premium = children[3].select("span").attr("title"),
                     level = children[4].text(),
                     mana = children[5].text(),
@@ -121,7 +121,7 @@ class Vocations(val scrapper: Scrapper, private val baseurl: String) {
                 Spell(
                     name = children[0].text(),
                     image = children[1].select("img").attr("data-src"),
-                    words = children[2].text(),
+                    formula = children[2].text(),
                     premium = children[3].select("span").attr("title"),
                     level = children[4].text(),
                     mana = children[5].text(),
@@ -138,7 +138,7 @@ class Vocations(val scrapper: Scrapper, private val baseurl: String) {
                 RuneSpell(
                     name = children[0].text(),
                     image = children[1].select("img").attr("data-src"),
-                    words = children[2].text(),
+                    formula = children[2].text(),
                     premium = children[3].select("span").attr("title"),
                     level = children[4].text(),
                     mana = children[5].text(),
@@ -170,14 +170,13 @@ class Vocations(val scrapper: Scrapper, private val baseurl: String) {
         val trSpells = table[0].select("tbody").select("tr")
         val trSpellsIsNotAvaible = table[1].select("tbody").select("tr")
         val trRuneSpells = table[2].select("tbody").select("tr")
-        println(table.size)
         trSpells.forEach {
             val children = it.children()
             spellList.add(
                 Spell(
                     name = children[0].text(),
                     image = children[1].select("img").attr("data-src"),
-                    words = children[2].text(),
+                    formula = children[2].text(),
                     premium = children[3].select("span").attr("title"),
                     level = children[4].text(),
                     mana = children[5].text(),
@@ -194,7 +193,7 @@ class Vocations(val scrapper: Scrapper, private val baseurl: String) {
                 Spell(
                     name = children[0].text(),
                     image = children[1].select("img").attr("data-src"),
-                    words = children[2].text(),
+                    formula = children[2].text(),
                     premium = children[3].select("span").attr("title"),
                     level = children[4].text(),
                     mana = children[5].text(),
@@ -211,7 +210,7 @@ class Vocations(val scrapper: Scrapper, private val baseurl: String) {
                 RuneSpell(
                     name = children[0].text(),
                     image = children[1].select("img").attr("data-src"),
-                    words = children[2].text(),
+                    formula = children[2].text(),
                     premium = children[3].select("span").attr("title"),
                     level = children[4].text(),
                     mana = children[5].text(),
