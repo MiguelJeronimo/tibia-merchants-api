@@ -36,13 +36,14 @@ class ControllerItems {
     @GetMapping("/item/{name}")
     fun item(@PathVariable name: String): Any {
         return try {
+            logger.info("init petition")
             val repository = RepositoryItems().item(name)
             if (repository != null){
                 val response = Response(200, repository)
                 logger.info("Reponse final: $response")
                 response
             } else {
-                val error = Errors(400, "Error getting catalog list")
+                val error = Errors(400, "Error getting body Equipment list")
                 logger.error("Error: $repository")
                 error
             }
