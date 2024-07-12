@@ -10,6 +10,7 @@ class RepositoryWeapons {
     fun weapons(): Weapons? {
         try {
             val tibia = Tibia().weapons().weapons()
+            Tibia().weapons().clubWeapons()
             logger.info("weapon response: $tibia")
             return tibia
         } catch (e:Exception){

@@ -1,11 +1,14 @@
 package API.Tibia.models
 
+import com.miguel.tibia_merchants_api.Tibia.ModelsScrapper.Club
+
 data class Weapons(
     val bows: ArrayList<Weapon>,
     val crossBows: ArrayList<Weapon>,
     val arrows: ArrayList<Ammunition>,
     val bolts: ArrayList<Ammunition>,
-    val throwing: ArrayList<Throwing>
+    val throwing: ArrayList<Throwing>,
+    val clubs: Club?,
 )
 /**
  * Name: Yol's Bow
