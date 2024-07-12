@@ -6,7 +6,9 @@ import Tibia.Blessings.Blessings
 import Tibia.Catalog.CatalogGame
 import Tibia.Items.Items
 import Tibia.Vocations.Vocations
+import com.miguel.tibia_merchants_api.Tibia.Items.bodyequipment.EquipmentList
 import com.miguel.tibia_merchants_api.Tibia.TibiaNPCs
+import model.Tibia.ItemEquipment
 import Tibia.Weapons.Weapons as Weapons
 
 @Suppress("IMPLICIT_CAST_TO_ANY")
@@ -50,5 +52,9 @@ class Tibia {
             else -> {null}
         }
         return npc
+    }
+
+    fun item(name: String): ArrayList<ItemEquipment> {
+        return EquipmentList(scrapper, baseurl, name).item()
     }
 }
