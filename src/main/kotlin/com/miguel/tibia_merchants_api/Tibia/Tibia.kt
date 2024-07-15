@@ -54,7 +54,7 @@ class Tibia {
         return npc
     }
 
-    fun item(name: String): ArrayList<ItemEquipment> {
+    fun bodyEquipments(name: String): ArrayList<ItemEquipment> {
         return EquipmentList(scrapper, baseurl, name).item()
     }
 }

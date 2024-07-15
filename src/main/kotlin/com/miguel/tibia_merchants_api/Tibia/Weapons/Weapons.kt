@@ -25,7 +25,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         )
     }
     //six tables
-    private fun bows(): ArrayList<Weapon> {
+    fun bows(): ArrayList<Weapon> {
         val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val weaponsList = ArrayList<Weapon>()
         val body = request.getElementsByClass("tabber wds-tabber")
@@ -52,7 +52,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         weaponsList.removeFirst()
         return weaponsList
     }
-    private fun crowBows(): ArrayList<Weapon> {
+    fun crowBows(): ArrayList<Weapon> {
         val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val weaponsList = ArrayList<Weapon>()
         val body = request.getElementsByClass("tabber wds-tabber")
@@ -80,7 +80,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         return weaponsList
     }
 
-    private fun arrows(): ArrayList<Ammunition> {
+    fun arrows(): ArrayList<Ammunition> {
         val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val ammunitionList = ArrayList<Ammunition>()
         val body = request.getElementsByClass("tabber wds-tabber")
@@ -103,7 +103,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         return ammunitionList
     }
 
-    private fun bolts(): ArrayList<Ammunition> {
+    fun bolts(): ArrayList<Ammunition> {
         val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val ammunitionList = ArrayList<Ammunition>()
         val body = request.getElementsByClass("tabber wds-tabber")
@@ -126,7 +126,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         return ammunitionList
     }
 
-    private fun throwingWeapons(): ArrayList<Throwing> {
+    fun throwingWeapons(): ArrayList<Throwing> {
         val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val ammunitionList = ArrayList<Throwing>()
         val body = request.getElementsByClass("tabber wds-tabber")
@@ -153,7 +153,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
 
     /*AXES*/
 
-    private fun clubWeapons(): Club {
+    fun clubWeapons(): Club {
         val request = scrapper.Soup("${baseurl}/Club_Weapons")
         val clubWeaponsList = ArrayList<ClubWeapons>()
         val clubEnchanted = ArrayList<ClubWeapons>()
@@ -220,7 +220,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         }
     }
 
-    private fun axesWeapons(): Axes {
+    fun axesWeapons(): Axes {
         val request = scrapper.Soup("${baseurl}/Axe_Weapons")
         val axesWeaponsList = ArrayList<AxesWeapons>()
         val axesEnchanted = ArrayList<AxesWeapons>()
@@ -287,7 +287,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         }
     }
 
-    private fun swordsWeapons(): Swords {
+    fun swordsWeapons(): Swords {
         val request = scrapper.Soup("${baseurl}/Sword_Weapons")
         val swordsWeaponsList = ArrayList<SwordsWeapons>()
         val swordsEnchanted = ArrayList<SwordsWeapons>()
