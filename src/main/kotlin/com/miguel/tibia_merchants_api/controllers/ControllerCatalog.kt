@@ -16,6 +16,7 @@ class ControllerCatalog {
         return try {
             logger.info("init petition")
             val catalog = RepositoryCatalog().catalog()
+
             if (catalog != null){
                 val response = Response(200, catalog)
                 logger.info("Response final: $response")

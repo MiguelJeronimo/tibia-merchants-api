@@ -3,6 +3,7 @@ package API.Tibia.models
 import com.miguel.tibia_merchants_api.Tibia.ModelsScrapper.Axes
 import com.miguel.tibia_merchants_api.Tibia.ModelsScrapper.Club
 import com.miguel.tibia_merchants_api.Tibia.ModelsScrapper.Swords
+import com.miguel.tibia_merchants_api.Tibia.ModelsScrapper.Wands
 
 data class Weapons(
     val bows: ArrayList<Weapon>,
@@ -13,6 +14,7 @@ data class Weapons(
     val clubs: Club?,
     val swords: Swords,
     val axes: Axes,
+    val wands: Wands,
 )
 /**
  * Name: Yol's Bow

@@ -86,6 +86,26 @@ data class WandsWeapons(
     var attributes: String? = null,
 )
 
+data class Rods(
+    var rodsWeapons: ArrayList<RodsWeapons>? = null,
+    var enchantedRodsReplicas: ArrayList<RodsWeapons>? = null,
+)
+
+data class RodsWeapons(
+    var name: String? = null,
+    var image: String? = null,
+    var level:String? = null,
+    var damage: String? = null,
+    var damageType: DamageType? = null,
+    var range: String? = null,
+    var mana: String? = null,
+    var resist:String? = null,
+    var slots: String? = null,
+    var classs:String? = null,
+    var weight:String? = null,
+    var attributes: String? = null,
+)
+
 data class DamageType(
     var damageName: String? = null,
     var imageIcon: String? = null

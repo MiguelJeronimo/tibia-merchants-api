@@ -35,7 +35,7 @@ class RepositoryItems {
                 "axe weapons"-> Tibia().weapons().axesWeapons()
                 "club weapons"-> Tibia().weapons().clubWeapons()
                 "sword weapons"-> Tibia().weapons().swordsWeapons()
-                "rods"-> Tibia().weapons().weapons()
+                "rods"-> Tibia().weapons().rods()
                 "wands"-> Tibia().weapons().wands()
                 "throwing weapons"-> Tibia().weapons().throwingWeapons()
                 "bows"-> Tibia().weapons().bows()

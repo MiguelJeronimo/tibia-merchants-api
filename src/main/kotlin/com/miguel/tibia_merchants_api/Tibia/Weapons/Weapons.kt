@@ -9,10 +9,6 @@ import com.miguel.tibia_merchants_api.Tibia.ModelsScrapper.*
 
 class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     fun weapons(): Weapons {
-        println("url_: ${baseurl}/Distance_Weapons")
-        println("url_: ${baseurl}/Club_Weapons")
-        println("url_:${baseurl}/Axe_Weapons")
-        println("url_:${baseurl}/Sword_Weapons")
         return Weapons(
             bows = bows(),
             crossBows = crowBows(),
@@ -21,11 +17,13 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
             throwing = throwingWeapons(),
             clubs = clubWeapons(),
             swords = swordsWeapons(),
-            axes = axesWeapons()
+            axes = axesWeapons(),
+            wands = wands()
         )
     }
     //six tables
     fun bows(): ArrayList<Weapon> {
+        println("url_: ${baseurl}/Distance_Weapons")
         val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val weaponsList = ArrayList<Weapon>()
         val body = request.getElementsByClass("tabber wds-tabber")
@@ -53,6 +51,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         return weaponsList
     }
     fun crowBows(): ArrayList<Weapon> {
+        println("url_: ${baseurl}/Distance_Weapons")
         val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val weaponsList = ArrayList<Weapon>()
         val body = request.getElementsByClass("tabber wds-tabber")
@@ -81,6 +80,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     }
 
     fun arrows(): ArrayList<Ammunition> {
+        println("url_: ${baseurl}/Distance_Weapons")
         val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val ammunitionList = ArrayList<Ammunition>()
         val body = request.getElementsByClass("tabber wds-tabber")
@@ -104,6 +104,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     }
 
     fun bolts(): ArrayList<Ammunition> {
+        println("url_: ${baseurl}/Distance_Weapons")
         val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val ammunitionList = ArrayList<Ammunition>()
         val body = request.getElementsByClass("tabber wds-tabber")
@@ -127,6 +128,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     }
 
     fun throwingWeapons(): ArrayList<Throwing> {
+        println("url_: ${baseurl}/Distance_Weapons")
         val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val ammunitionList = ArrayList<Throwing>()
         val body = request.getElementsByClass("tabber wds-tabber")
@@ -154,6 +156,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     /*AXES*/
 
     fun clubWeapons(): Club {
+        println("url_: ${baseurl}/Club_Weapons")
         val request = scrapper.Soup("${baseurl}/Club_Weapons")
         val clubWeaponsList = ArrayList<ClubWeapons>()
         val clubEnchanted = ArrayList<ClubWeapons>()
@@ -221,6 +224,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     }
 
     fun axesWeapons(): Axes {
+        println("url_: ${baseurl}/Axe_Weapons")
         val request = scrapper.Soup("${baseurl}/Axe_Weapons")
         val axesWeaponsList = ArrayList<AxesWeapons>()
         val axesEnchanted = ArrayList<AxesWeapons>()
@@ -288,6 +292,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     }
 
     fun swordsWeapons(): Swords {
+        println("url_: ${baseurl}/Sword_Weapons")
         val request = scrapper.Soup("${baseurl}/Sword_Weapons")
         val swordsWeaponsList = ArrayList<SwordsWeapons>()
         val swordsEnchanted = ArrayList<SwordsWeapons>()
@@ -355,6 +360,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     }
 
     fun wands(): Wands {
+        println("url_:${baseurl}/Wands")
         val request = scrapper.Soup("${baseurl}/Wands")
         val wandsWeaponsList = ArrayList<WandsWeapons>()
         val wandsCharged = ArrayList<WandsWeapons>()
@@ -409,6 +415,65 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         return Wands().apply {
             wandsWeapons = wandsWeaponsList
             enchantedWandsReplicas = wandsCharged
+        }
+    }
+
+    fun rods(): Rods {
+        println("url_:${baseurl}/Rods")
+        val request = scrapper.Soup("${baseurl}/Rods")
+        val rodsWeaponsList = ArrayList<RodsWeapons>()
+        val rodsCharged = ArrayList<RodsWeapons>()
+        val tbody = request.getElementsByClass("tabber wds-tabber")
+            .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")
+        val wandsWeapon = tbody[0].select("tbody")
+        val chargedReplicas = tbody[1].select("tbody")
+        wandsWeapon.select("tr").forEach {
+            val data = it.children()
+            val imageWeapon = data[1].select("img").attr("data-src")
+            val damageTypeData = DamageType().apply {
+                damageName = data[4].select("img").attr("alt").ifEmpty { null }
+                imageIcon = data[4].select("img").attr("data-src").ifEmpty { null }
+            }
+            val rods = RodsWeapons().apply {
+                name = data[0].text().ifEmpty { null }
+                image = imageWeapon.ifEmpty { null }
+                level = data[2].text().ifEmpty { null }
+                damage = data[3].text().ifEmpty { null }
+                damageType = damageTypeData
+                range = data[5].text().ifEmpty { null }
+                mana = data[6].text().ifEmpty { null }
+                resist = data[7].text().ifEmpty { null }
+                slots = data[8].text().ifEmpty { null }
+                classs = data[9].text().ifEmpty { null }
+                weight = data[10].text().ifEmpty { null }
+                attributes = data[11].text().ifEmpty { null }
+            }
+            rodsWeaponsList.add(rods)
+        }
+        chargedReplicas.select("tr").forEach {
+            val data = it.children()
+            val imageWeapon = data[1].select("img").attr("data-src")
+            val damageTypeData = DamageType().apply {
+                damageName = data[3].select("img").attr("alt")
+                imageIcon = data[3].select("img").attr("data-src")
+            }
+            val rods = RodsWeapons().apply {
+                name = data[0].text().ifEmpty { null }
+                image = imageWeapon.ifEmpty { null }
+                damage = data[2].text().ifEmpty { null }
+                damageType = damageTypeData
+                range = data[4].text().ifEmpty { null }
+                mana = data[5].text().ifEmpty { null }
+                classs = data[6].text().ifEmpty { null }
+                weight = data[7].text().ifEmpty { null }
+            }
+            rodsCharged.add(rods)
+        }
+        rodsWeaponsList.removeFirst()
+        rodsCharged.removeFirst()
+        return Rods().apply {
+            rodsWeapons = rodsWeaponsList
+            enchantedRodsReplicas = rodsCharged
         }
     }
 
