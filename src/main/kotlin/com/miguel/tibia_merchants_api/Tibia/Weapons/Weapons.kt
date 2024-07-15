@@ -353,4 +353,63 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
             chargedSwordsReplicas = swordsCharged
         }
     }
+
+    fun wands(): Wands {
+        val request = scrapper.Soup("${baseurl}/Wands")
+        val wandsWeaponsList = ArrayList<WandsWeapons>()
+        val wandsCharged = ArrayList<WandsWeapons>()
+        val tbody = request.getElementsByClass("tabber wds-tabber")
+            .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")
+        val wandsWeapon = tbody[0].select("tbody")
+        val chargedReplicas = tbody[1].select("tbody")
+        wandsWeapon.select("tr").forEach {
+            val data = it.children()
+            val imageWeapon = data[1].select("img").attr("data-src")
+            val damageTypeData = DamageType().apply {
+                damageName = data[4].select("img").attr("alt").ifEmpty { null }
+                imageIcon = data[4].select("img").attr("data-src").ifEmpty { null }
+            }
+            val club = WandsWeapons().apply {
+                name = data[0].text().ifEmpty { null }
+                image = imageWeapon.ifEmpty { null }
+                level = data[2].text().ifEmpty { null }
+                damage = data[3].text().ifEmpty { null }
+                damageType = damageTypeData
+                range = data[5].text().ifEmpty { null }
+                mana = data[6].text().ifEmpty { null }
+                resist = data[7].text().ifEmpty { null }
+                slots = data[8].text().ifEmpty { null }
+                classs = data[9].text().ifEmpty { null }
+                weight = data[10].text().ifEmpty { null }
+                attributes = data[11].text().ifEmpty { null }
+            }
+            wandsWeaponsList.add(club)
+        }
+        chargedReplicas.select("tr").forEach {
+            val data = it.children()
+            val imageWeapon = data[1].select("img").attr("data-src")
+            val damageTypeData = DamageType().apply {
+                damageName = data[3].select("img").attr("alt")
+                imageIcon = data[3].select("img").attr("data-src")
+            }
+            val wands = WandsWeapons().apply {
+                name = data[0].text().ifEmpty { null }
+                image = imageWeapon.ifEmpty { null }
+                damage = data[2].text().ifEmpty { null }
+                damageType = damageTypeData
+                range = data[4].text().ifEmpty { null }
+                mana = data[5].text().ifEmpty { null }
+                classs = data[6].text().ifEmpty { null }
+                weight = data[7].text().ifEmpty { null }
+            }
+            wandsCharged.add(wands)
+        }
+        wandsWeaponsList.removeFirst()
+        wandsCharged.removeFirst()
+        return Wands().apply {
+            wandsWeapons = wandsWeaponsList
+            enchantedWandsReplicas = wandsCharged
+        }
+    }
+
 }
