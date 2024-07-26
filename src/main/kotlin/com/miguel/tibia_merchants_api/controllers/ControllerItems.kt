@@ -3,6 +3,7 @@ package com.miguel.tibia_merchants_api.controllers
 import com.miguel.tibia_merchants_api.model.Tibia.Errors
 import com.miguel.tibia_merchants_api.model.Tibia.POST.BodyItems
 import com.miguel.tibia_merchants_api.model.Tibia.Response
+import com.miguel.tibia_merchants_api.repository.RepositoryHousehold
 import com.miguel.tibia_merchants_api.repository.RepositoryItems
 import org.apache.logging.log4j.LogManager
 import org.springframework.http.ResponseEntity
@@ -44,7 +45,7 @@ class ControllerItems {
                 val repository = when(title.lowercase()){
                     "body equipment"-> RepositoryItems().bodyEquipments(name)
                     "weapons"-> RepositoryItems().weapons(name)
-                    "household items"-> "RepositoryItems().item(name)"
+                    "household items"-> RepositoryHousehold().household(name)
                     "plants, animal products, food and frink"-> "RepositoryItems().item(name)"
                     "tools and other equipment"-> "RepositoryItems().item(name)"
                     "other items"-> "RepositoryItems().item(name)"
