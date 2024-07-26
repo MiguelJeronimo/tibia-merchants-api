@@ -67,12 +67,12 @@ class Tibia {
             "contest prizes"-> HouseholdItems(scrapper, baseurl).contestPrizes()
             "fansite items"-> HouseholdItems(scrapper, baseurl).fanSiteItems()
             "decorations"-> HouseholdItems(scrapper, baseurl).decorations()
-            "documents and papers"-> ""
-            "dolls and bears"-> ""
-            "furniture"-> ""
-            "kitchen tools"-> ""
-            "musical instruments"-> ""
-            "trophies"-> ""
+            "documents and papers"-> HouseholdItems(scrapper, baseurl).documentsAndPapers()
+            "dolls and bears"-> HouseholdItems(scrapper, baseurl).dollsAndBears()
+            "furniture"-> HouseholdItems(scrapper, baseurl).furniture()
+            "kitchen tools"-> HouseholdItems(scrapper, baseurl).kitchenTools()
+            "musical instruments"-> HouseholdItems(scrapper, baseurl).musicalInstruments()
+            "trophies"-> HouseholdItems(scrapper, baseurl).trophies()
             else-> null
         }
         return household
