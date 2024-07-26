@@ -50,6 +50,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         weaponsList.removeFirst()
         return weaponsList
     }
+
     fun crowBows(): ArrayList<Weapon> {
         println("url_: ${baseurl}/Distance_Weapons")
         val request = scrapper.Soup("${baseurl}/Distance_Weapons")
@@ -477,4 +478,21 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         }
     }
 
+    fun oldWands(): OldWands {
+        println("url_:${baseurl}/Old_Wands_and_Rods")
+        val request = scrapper.Soup("${baseurl}/Old_Wands_and_Rods")
+        val oldWands = ArrayList<OldWand>()
+        val tbody = request.getElementsByClass("wikitable sortable full-width")
+            .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")
+        tbody.select("tr").forEach {
+            val tr = it.children()
+            val oldWand = OldWand().apply {
+                name = tr[0].text().ifEmpty { null }
+                image = tr[1].select("img").attr("data-src").ifEmpty { null }
+                weight = tr[3].text().ifEmpty { null }
+            }
+            oldWands.add(oldWand)
+        }
+        return OldWands(oldWands = oldWands)
+    }
 }

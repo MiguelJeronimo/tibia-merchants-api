@@ -5,10 +5,8 @@ import com.miguel.tibia_merchants_api.model.Tibia.POST.BodyItems
 import com.miguel.tibia_merchants_api.model.Tibia.Response
 import com.miguel.tibia_merchants_api.repository.RepositoryItems
 import org.apache.logging.log4j.LogManager
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("api/v1")
@@ -16,25 +14,26 @@ class ControllerItems {
     private val logger = LogManager.getLogger(ControllerItems::class.java)
     @GetMapping("/items")
     fun items(): Any {
-        try {
+        return try {
             logger.info("init petition")
             val repository = RepositoryItems().items()
             if (repository!= null){
                 val response = Response(200, repository)
                 logger.info("Reponse final: $response")
-                return response
+                ResponseEntity.ok().body(response)
             }else{
                 val error = Errors(400, "Error getting catalog list")
                 logger.error("Error: $repository")
-                return error
+                ResponseEntity.badRequest().body(error)
             }
         }catch (e:Exception){
             logger.fatal("Error: ${e.message}")
-            return Errors(500, "Fatal Error, contact to support")
+            val error = Errors(500, "Fatal Error, contact to support")
+            ResponseEntity.internalServerError().body(error)
         }
     }
 
-    @GetMapping("/items/type/")
+    @PostMapping("/items/type/")
     fun item(@RequestBody bodyItems: BodyItems): Any {
         return try {
             logger.info("Request: $bodyItems")
@@ -55,11 +54,11 @@ class ControllerItems {
                 if (repository != null){
                     val response = Response(200, repository)
                     logger.info("Reponse final: $response")
-                    response
+                    ResponseEntity.ok().body(response)
                 } else {
                     val error = Errors(400, "Error getting $name list")
                     logger.error("Error: $repository")
-                    error
+                    ResponseEntity.badRequest().body(error)
                 }
             } else {
                 val error = Errors(400, "Error send data: ")
@@ -68,7 +67,8 @@ class ControllerItems {
             }
         }catch(e:Exception){
             logger.fatal("Error: ${e.message}")
-            Errors(500, "Fatal Error, contact to support")
+            val error = Errors(500, "Fatal Error, contact to support")
+            ResponseEntity.internalServerError().body(error)
         }
     }
 }

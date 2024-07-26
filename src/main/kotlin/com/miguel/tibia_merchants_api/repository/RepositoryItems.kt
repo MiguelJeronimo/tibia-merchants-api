@@ -39,7 +39,12 @@ class RepositoryItems {
                 "wands"-> Tibia().weapons().wands()
                 "throwing weapons"-> Tibia().weapons().throwingWeapons()
                 "bows"-> Tibia().weapons().bows()
-                 else->{}
+                "bow ammunition"-> Tibia().weapons().arrows()
+                "crossbows"-> Tibia().weapons().crowBows()
+                "crossbow ammunition"-> Tibia().weapons().bolts()
+                "old wands"-> Tibia().weapons().oldWands()
+                "old wands (deprecated)"->Tibia().weapons().oldWands()
+                 else-> null
             }
             logger.info("Response repository: $tibia")
             tibia
