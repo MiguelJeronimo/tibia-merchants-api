@@ -5,6 +5,7 @@ import com.miguel.tibia_merchants_api.model.Tibia.Response
 import com.miguel.tibia_merchants_api.repository.RepositoryCatalog
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -20,15 +21,16 @@ class ControllerCatalog {
             if (catalog != null){
                 val response = Response(200, catalog)
                 logger.info("Response final: $response")
-                return response
+                ResponseEntity.ok().body(response)
             }else{
                 val error = Errors(400, "Error getting catalog list")
                 logger.error("Error: $error")
-                return error
+                ResponseEntity.badRequest().body(error)
             }
         }catch (e: Exception){
             logger.fatal("Error: ${e.message}")
-            Errors(500, "Fatal Error, contact to support")
+            val error =Errors(500, "Fatal Error, contact to support")
+            ResponseEntity.internalServerError().body(error)
         }
     }
 

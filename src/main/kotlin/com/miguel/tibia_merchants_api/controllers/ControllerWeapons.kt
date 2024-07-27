@@ -5,6 +5,7 @@ import com.miguel.tibia_merchants_api.model.Tibia.Response
 import com.miguel.tibia_merchants_api.repository.RepositoryWeapons
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -21,15 +22,16 @@ class ControllerWeapons {
             if (weapons != null){
                 val response = Response(200, weapons)
                 logger.info("Response final: $response")
-                response
+                ResponseEntity.ok().body(response)
             }else{
                 val error = Errors(400, "Error getting weapon list")
                 logger.error("Error: $error")
-                error
+                ResponseEntity.badRequest().body(error)
             }
         }catch (e: Exception){
             logger.fatal("Error: ${e.message}")
-            Errors(500, "Fatal Error, contact to support")
+            val error = Errors(500, "Fatal Error, contact to support")
+            ResponseEntity.ok().body(error)
         }
     }
 }
