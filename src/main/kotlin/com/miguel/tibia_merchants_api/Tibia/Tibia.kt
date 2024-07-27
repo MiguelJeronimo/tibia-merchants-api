@@ -8,6 +8,7 @@ import Tibia.Items.Items
 import Tibia.Vocations.Vocations
 import com.miguel.tibia_merchants_api.Tibia.Items.bodyequipment.EquipmentList
 import com.miguel.tibia_merchants_api.Tibia.TibiaNPCs
+import com.miguel.tibia_merchants_api.Tibia.householdItems.HouseholdItems
 import model.Tibia.ItemEquipment
 import Tibia.Weapons.Weapons as Weapons
 
@@ -54,7 +55,26 @@ class Tibia {
         return npc
     }
 
-    fun item(name: String): ArrayList<ItemEquipment> {
+    fun bodyEquipments(name: String): ArrayList<ItemEquipment> {
         return EquipmentList(scrapper, baseurl, name).item()
+    }
+
+    fun household(name: String): Any? {
+        val household = when(name.lowercase()){
+            "books"-> HouseholdItems(scrapper, baseurl).books()
+            "carpets"-> HouseholdItems(scrapper, baseurl).carpets()
+            "containers"-> HouseholdItems(scrapper, baseurl).containers()
+            "contest prizes"-> HouseholdItems(scrapper, baseurl).contestPrizes()
+            "fansite items"-> HouseholdItems(scrapper, baseurl).fanSiteItems()
+            "decorations"-> HouseholdItems(scrapper, baseurl).decorations()
+            "documents and papers"-> HouseholdItems(scrapper, baseurl).documentsAndPapers()
+            "dolls and bears"-> HouseholdItems(scrapper, baseurl).dollsAndBears()
+            "furniture"-> HouseholdItems(scrapper, baseurl).furniture()
+            "kitchen tools"-> HouseholdItems(scrapper, baseurl).kitchenTools()
+            "musical instruments"-> HouseholdItems(scrapper, baseurl).musicalInstruments()
+            "trophies"-> HouseholdItems(scrapper, baseurl).trophies()
+            else-> null
+        }
+        return household
     }
 }
