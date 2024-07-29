@@ -7,6 +7,7 @@ import Tibia.Catalog.CatalogGame
 import Tibia.Items.Items
 import Tibia.Vocations.Vocations
 import com.miguel.tibia_merchants_api.Tibia.Items.bodyequipment.EquipmentList
+import com.miguel.tibia_merchants_api.Tibia.Items.ohters.Other
 import com.miguel.tibia_merchants_api.Tibia.TibiaNPCs
 import com.miguel.tibia_merchants_api.Tibia.householdItems.HouseholdItems
 import model.Tibia.ItemEquipment
@@ -77,4 +78,16 @@ class Tibia {
         }
         return household
     }
+
+    fun others(name: String): Any? {
+        val ohters = when(name.lowercase()){
+            "creature products"-> Other(scrapper, baseurl).creatureProducts()
+            "food"-> Other(scrapper, baseurl).food()
+            "liquids"-> Other(scrapper, baseurl).liquids()
+            "plants and herbs"-> Other(scrapper, baseurl).plantsAndHerbs()
+            else-> null
+        }
+        return ohters
+    }
+
 }
