@@ -49,7 +49,7 @@ class ControllerItems {
                     "household items"-> RepositoryHousehold().household(name)
                     "plants, animal products, food and drink"-> RepositoryOthers().others(name)
                     "tools and other equipment"-> RepositoryOthers().othersEquipments(name)
-                    "other items"-> "RepositoryItems().item(name)"
+                    "other items"-> RepositoryOthers().otherItems(name)
                     ""-> "RepositoryItems().item(name)"
                     else -> {}
                 }

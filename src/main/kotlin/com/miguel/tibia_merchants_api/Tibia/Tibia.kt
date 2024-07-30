@@ -8,6 +8,7 @@ import Tibia.Items.Items
 import Tibia.Vocations.Vocations
 import com.miguel.tibia_merchants_api.Tibia.Items.bodyequipment.EquipmentList
 import com.miguel.tibia_merchants_api.Tibia.Items.ohters.Other
+import com.miguel.tibia_merchants_api.Tibia.Items.ohters.OtherItem
 import com.miguel.tibia_merchants_api.Tibia.Items.toolsequipments.ToolsEquipments
 import com.miguel.tibia_merchants_api.Tibia.TibiaNPCs
 import com.miguel.tibia_merchants_api.Tibia.householdItems.HouseholdItems
@@ -106,5 +107,21 @@ class Tibia {
         return equipments
     }
 
-
+    fun otherItems(name: String): Any? {
+        val equipments = when(name.lowercase()){
+            "clothing accessories"-> OtherItem(scrapper, baseurl).clothingAccesories()
+            "enchanted items"-> OtherItem(scrapper, baseurl).enchantedItems()
+            "game tokens"-> OtherItem(scrapper, baseurl).gameTokens()
+            "valuables"-> OtherItem(scrapper, baseurl).valuables()
+            "magical items"-> OtherItem(scrapper, baseurl).magicalItems()
+            "metals"-> OtherItem(scrapper, baseurl).metals()
+            "party items"-> OtherItem(scrapper, baseurl).partyItems()
+            "blessing charms"-> OtherItem(scrapper, baseurl).blessingsCharms()
+            "quest items"-> OtherItem(scrapper, baseurl).questItems()
+            "rubbish"-> OtherItem(scrapper, baseurl).rubbish()
+            "runes"-> OtherItem(scrapper, baseurl).runes()
+            else-> null
+        }
+        return equipments
+    }
 }
