@@ -23,6 +23,7 @@ class Other (val scrapper: Scrapper, private val baseurl: String){
         items.removeFirst()
         return OtherModel( items = items)
     }
+
     fun food(): OtherModel {
         println("url_:${baseurl}/Food")
         val request = scrapper.Soup("${baseurl}/Food")

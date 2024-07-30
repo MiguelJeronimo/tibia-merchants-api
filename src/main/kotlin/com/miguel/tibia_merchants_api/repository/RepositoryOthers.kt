@@ -14,4 +14,14 @@ class RepositoryOthers {
             null
         }
     }
+
+    fun othersEquipments(name: String): Any? {
+        return try {
+            val tibia = Tibia().toolsEquipments(name)
+            tibia
+        }catch (e: Exception){
+            logger.fatal("Error repository: ${e.message}")
+            null
+        }
+    }
 }

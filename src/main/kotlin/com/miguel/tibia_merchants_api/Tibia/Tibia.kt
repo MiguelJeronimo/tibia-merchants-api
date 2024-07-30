@@ -8,6 +8,7 @@ import Tibia.Items.Items
 import Tibia.Vocations.Vocations
 import com.miguel.tibia_merchants_api.Tibia.Items.bodyequipment.EquipmentList
 import com.miguel.tibia_merchants_api.Tibia.Items.ohters.Other
+import com.miguel.tibia_merchants_api.Tibia.Items.toolsequipments.ToolsEquipments
 import com.miguel.tibia_merchants_api.Tibia.TibiaNPCs
 import com.miguel.tibia_merchants_api.Tibia.householdItems.HouseholdItems
 import model.Tibia.ItemEquipment
@@ -89,5 +90,21 @@ class Tibia {
         }
         return ohters
     }
+
+    fun toolsEquipments(name: String): Any? {
+        val equipments = when(name.lowercase()){
+            "amulets and necklaces"-> ToolsEquipments(scrapper, baseurl).amuletsAndNecklaces()
+            "keys"-> ToolsEquipments(scrapper, baseurl).keys()
+            "light sources"-> ToolsEquipments(scrapper, baseurl).ligthSources()
+            "painting equipment"-> ToolsEquipments(scrapper, baseurl).plaintingEquipment()
+            "rings"-> ToolsEquipments(scrapper, baseurl).rings()
+            "tools"-> ToolsEquipments(scrapper, baseurl).tools()
+            "taming items"-> ToolsEquipments(scrapper, baseurl).tamingItems()
+            "diving equipment"-> ToolsEquipments(scrapper, baseurl).divingEquipment()
+            else-> null
+        }
+        return equipments
+    }
+
 
 }
