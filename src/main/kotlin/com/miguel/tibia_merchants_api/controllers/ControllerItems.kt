@@ -5,6 +5,7 @@ import com.miguel.tibia_merchants_api.model.Tibia.POST.BodyItems
 import com.miguel.tibia_merchants_api.model.Tibia.Response
 import com.miguel.tibia_merchants_api.repository.RepositoryHousehold
 import com.miguel.tibia_merchants_api.repository.RepositoryItems
+import com.miguel.tibia_merchants_api.repository.RepositoryOthers
 import org.apache.logging.log4j.LogManager
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -46,15 +47,15 @@ class ControllerItems {
                     "body equipment"-> RepositoryItems().bodyEquipments(name)
                     "weapons"-> RepositoryItems().weapons(name)
                     "household items"-> RepositoryHousehold().household(name)
-                    "plants, animal products, food and frink"-> "RepositoryItems().item(name)"
-                    "tools and other equipment"-> "RepositoryItems().item(name)"
-                    "other items"-> "RepositoryItems().item(name)"
+                    "plants, animal products, food and drink"-> RepositoryOthers().others(name)
+                    "tools and other equipment"-> RepositoryOthers().othersEquipments(name)
+                    "other items"-> RepositoryOthers().otherItems(name)
                     ""-> "RepositoryItems().item(name)"
                     else -> {}
                 }
                 if (repository != null){
                     val response = Response(200, repository)
-                    logger.info("Reponse final: $response")
+                    logger.info("Response succeful....")
                     ResponseEntity.ok().body(response)
                 } else {
                     val error = Errors(400, "Error getting $name list")
