@@ -1,8 +1,6 @@
 package Tibia.Weapons
 
-import API.Tibia.models.Ammunition
-import API.Tibia.models.Throwing
-import API.Tibia.models.Weapon
+import API.Tibia.models.*
 import API.Tibia.models.Weapons
 import Jsoup.Scrapper
 import com.miguel.tibia_merchants_api.Tibia.ModelsScrapper.*
@@ -22,17 +20,17 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         )
     }
     //six tables
-    fun bows(): ArrayList<Weapon> {
+    fun bows(): Bows {
         println("url_: ${baseurl}/Distance_Weapons")
         val request = scrapper.Soup("${baseurl}/Distance_Weapons")
-        val weaponsList = ArrayList<Weapon>()
+        val weaponsList = ArrayList<Bow>()
         val body = request.getElementsByClass("tabber wds-tabber")
             .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")[0].select("tbody")
         body.select("tr").forEach {
             val data = it.children()
             val image = data[1].select("img").attr("data-src")
             weaponsList.add(
-                Weapon(
+                Bow(
                     name = data[0].text(),
                     image = image.ifEmpty { null },
                     level = data[2].text(),
@@ -48,20 +46,22 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
             )
         }
         weaponsList.removeFirst()
-        return weaponsList
+        return Bows().apply {
+            weapons = weaponsList
+        }
     }
 
-    fun crowBows(): ArrayList<Weapon> {
+    fun crowBows(): CrossBows {
         println("url_: ${baseurl}/Distance_Weapons")
         val request = scrapper.Soup("${baseurl}/Distance_Weapons")
-        val weaponsList = ArrayList<Weapon>()
+        val weaponsList = ArrayList<CrossBow>()
         val body = request.getElementsByClass("tabber wds-tabber")
             .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")[1].select("tbody")
         body.select("tr").forEach {
             val data = it.children()
             val image = data[1].select("img").attr("data-src")
             weaponsList.add(
-                Weapon(
+                CrossBow(
                     name = data[0].text(),
                     image = image.ifEmpty { null },
                     level = data[2].text(),
@@ -77,20 +77,20 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
             )
         }
         weaponsList.removeFirst()
-        return weaponsList
+        return CrossBows().apply { weapons = weaponsList }
     }
 
-    fun arrows(): ArrayList<Ammunition> {
+    fun arrows(): Arrows {
         println("url_: ${baseurl}/Distance_Weapons")
         val request = scrapper.Soup("${baseurl}/Distance_Weapons")
-        val ammunitionList = ArrayList<Ammunition>()
+        val ammunitionList = ArrayList<Arrow>()
         val body = request.getElementsByClass("tabber wds-tabber")
             .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")[2].select("tbody")
         body.select("tr").forEach {
             val data = it.children()
             val image = data[1].select("img").attr("data-src")
             ammunitionList.add(
-                Ammunition(
+                Arrow(
                     name = data[0].text(),
                     image = image.ifEmpty { null },
                     level = data[2].text(),
@@ -101,20 +101,20 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
             )
         }
         ammunitionList.removeFirst()
-        return ammunitionList
+        return Arrows().apply { weapons }
     }
 
-    fun bolts(): ArrayList<Ammunition> {
+    fun bolts(): Bolts {
         println("url_: ${baseurl}/Distance_Weapons")
         val request = scrapper.Soup("${baseurl}/Distance_Weapons")
-        val ammunitionList = ArrayList<Ammunition>()
+        val ammunitionList = ArrayList<Bolt>()
         val body = request.getElementsByClass("tabber wds-tabber")
             .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")[3].select("tbody")
         body.select("tr").forEach {
             val data = it.children()
             val image = data[1].select("img").attr("data-src")
             ammunitionList.add(
-                Ammunition(
+                Bolt(
                     name = data[0].text(),
                     image = image.ifEmpty { null },
                     level = data[2].text(),
@@ -125,10 +125,10 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
             )
         }
         ammunitionList.removeFirst()
-        return ammunitionList
+        return Bolts().apply { weapons = ammunitionList }
     }
 
-    fun throwingWeapons(): ArrayList<Throwing> {
+    fun throwingWeapons(): Throwings {
         println("url_: ${baseurl}/Distance_Weapons")
         val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val ammunitionList = ArrayList<Throwing>()
@@ -151,7 +151,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
             )
         }
         ammunitionList.removeFirst()
-        return ammunitionList
+        return Throwings().apply { weapons = ammunitionList }
     }
 
     /*AXES*/
@@ -218,9 +218,9 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         clubEnchanted.removeFirst()
         clubCharged.removeFirst()
         return Club().apply {
-            enchantedClubReplicas = clubEnchanted
-            clubWeapons = clubWeaponsList
-            chargedClubReplicas = clubCharged
+            weaponsEnchantedReplicas = clubEnchanted
+            weapons = clubWeaponsList
+            weaponsChargedReplicas = clubCharged
         }
     }
 
@@ -286,9 +286,9 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         axesEnchanted.removeFirst()
         axesCharged.removeFirst()
         return Axes().apply {
-            enchantedAxesReplicas = axesEnchanted
-            axesWeapons = axesWeaponsList
-            chargedAxesReplicas = axesCharged
+            weaponsEnchantedReplicas = axesEnchanted
+            weapons = axesWeaponsList
+            weaponsChargedReplicas = axesCharged
         }
     }
 
@@ -354,9 +354,9 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         swordsEnchanted.removeFirst()
         swordsCharged.removeFirst()
         return Swords().apply {
-            enchantedSwordsReplicas = swordsEnchanted
-            swordsWeapons = swordsWeaponsList
-            chargedSwordsReplicas = swordsCharged
+            weaponsEnchantedReplicas = swordsEnchanted
+            weapons = swordsWeaponsList
+            weaponsChargedReplicas = swordsCharged
         }
     }
 
@@ -414,8 +414,8 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         wandsWeaponsList.removeFirst()
         wandsCharged.removeFirst()
         return Wands().apply {
-            wandsWeapons = wandsWeaponsList
-            enchantedWandsReplicas = wandsCharged
+            weapons = wandsWeaponsList
+            weaponsChargedReplicas = wandsCharged
         }
     }
 
@@ -473,8 +473,8 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         rodsWeaponsList.removeFirst()
         rodsCharged.removeFirst()
         return Rods().apply {
-            rodsWeapons = rodsWeaponsList
-            enchantedRodsReplicas = rodsCharged
+            weapons = rodsWeaponsList
+            weaponsChargedReplicas = rodsCharged
         }
     }
 
@@ -493,6 +493,6 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
             }
             oldWands.add(oldWand)
         }
-        return OldWands(oldWands = oldWands)
+        return OldWands(weapons = oldWands)
     }
 }

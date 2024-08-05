@@ -1,9 +1,9 @@
 package com.miguel.tibia_merchants_api.Tibia.ModelsScrapper
 
 data class Club(
-    var clubWeapons: ArrayList<ClubWeapons>? = null,
-    var enchantedClubReplicas: ArrayList<ClubWeapons>? = null,
-    var chargedClubReplicas: ArrayList<ClubWeapons>? = null
+    var weapons: ArrayList<ClubWeapons>? = null,
+    var weaponsEnchantedReplicas: ArrayList<ClubWeapons>? = null,
+    var weaponsChargedReplicas: ArrayList<ClubWeapons>? = null
 )
 
 
@@ -23,9 +23,9 @@ data class ClubWeapons(
 )
 
 data class Axes(
-    var axesWeapons: ArrayList<AxesWeapons>? = null,
-    var enchantedAxesReplicas: ArrayList<AxesWeapons>? = null,
-    var chargedAxesReplicas: ArrayList<AxesWeapons>? = null
+    var weapons: ArrayList<AxesWeapons>? = null,
+    var weaponsEnchantedReplicas: ArrayList<AxesWeapons>? = null,
+    var weaponsChargedReplicas: ArrayList<AxesWeapons>? = null
 )
 
 
@@ -45,9 +45,9 @@ data class AxesWeapons(
 )
 
 data class Swords(
-    var swordsWeapons: ArrayList<SwordsWeapons>? = null,
-    var enchantedSwordsReplicas: ArrayList<SwordsWeapons>? = null,
-    var chargedSwordsReplicas: ArrayList<SwordsWeapons>? = null
+    var weapons: ArrayList<SwordsWeapons>? = null,
+    var weaponsEnchantedReplicas: ArrayList<SwordsWeapons>? = null,
+    var weaponsChargedReplicas: ArrayList<SwordsWeapons>? = null
 )
 
 
@@ -67,8 +67,9 @@ data class SwordsWeapons(
 )
 
 data class Wands(
-    var wandsWeapons: ArrayList<WandsWeapons>? = null,
-    var enchantedWandsReplicas: ArrayList<WandsWeapons>? = null,
+    var weapons: ArrayList<WandsWeapons>? = null,
+    var weaponsEnchantedReplicas: ArrayList<WandsWeapons>? = null,
+    var weaponsChargedReplicas: ArrayList<WandsWeapons>? = null
 )
 
 data class WandsWeapons(
@@ -87,8 +88,9 @@ data class WandsWeapons(
 )
 
 data class Rods(
-    var rodsWeapons: ArrayList<RodsWeapons>? = null,
-    var enchantedRodsReplicas: ArrayList<RodsWeapons>? = null,
+    var weapons: ArrayList<RodsWeapons>? = null,
+    var weaponsEnchantedReplicas: ArrayList<RodsWeapons>? = null,
+    var weaponsChargedReplicas: ArrayList<RodsWeapons>? = null
 )
 
 data class RodsWeapons(
@@ -112,7 +114,9 @@ data class DamageType(
 )
 
 data class OldWands(
-    val oldWands: ArrayList<OldWand>? = null
+    var weapons: ArrayList<OldWand>? = null,
+    var weaponsEnchantedReplicas: ArrayList<OldWand>? = null,
+    var weaponsChargedReplicas: ArrayList<OldWand>? = null
 )
 
 data class OldWand(
