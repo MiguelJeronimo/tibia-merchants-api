@@ -79,13 +79,13 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
         weaponsList.removeFirst()
         return CrossBows().apply { weapons = weaponsList }
     }
-
+    //https://tibia-merchants-api.onrender.com
     fun arrows(): Arrows {
-        println("url_: ${baseurl}/Distance_Weapons")
-        val request = scrapper.Soup("${baseurl}/Distance_Weapons")
+        println("url_: ${baseurl}/Bow_Ammunition")
+        val request = scrapper.Soup("${baseurl}/Bow_Ammunition")
         val ammunitionList = ArrayList<Arrow>()
-        val body = request.getElementsByClass("tabber wds-tabber")
-            .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")[2].select("tbody")
+        val body = request.getElementsByClass("wikitable sortable full-width").select("tbody")
+        println(body)
         body.select("tr").forEach {
             val data = it.children()
             val image = data[1].select("img").attr("data-src")
@@ -101,7 +101,7 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
             )
         }
         ammunitionList.removeFirst()
-        return Arrows().apply { weapons }
+        return Arrows().apply { weapons = ammunitionList }
     }
 
     fun bolts(): Bolts {
