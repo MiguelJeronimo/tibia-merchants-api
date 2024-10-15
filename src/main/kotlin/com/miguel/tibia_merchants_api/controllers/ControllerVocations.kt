@@ -1,9 +1,10 @@
 package com.miguel.tibia_merchants_api.controllers
 
-import com.miguel.tibia_merchants_api.model.Tibia.Errors
-import com.miguel.tibia_merchants_api.model.Tibia.Response
-import com.miguel.tibia_merchants_api.repository.RepositoryCatalog
-import com.miguel.tibia_merchants_api.repository.RepositoryVocations
+import com.miguel.tibia_merchants_api.data.network.Tibia
+import com.miguel.tibia_merchants_api.data.repositories.VocationsRepositoryImp
+import com.miguel.tibia_merchants_api.domain.models.Errors
+import com.miguel.tibia_merchants_api.domain.models.Response
+import com.miguel.tibia_merchants_api.domain.usecase.UseCaseVocations
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.springframework.http.ResponseEntity
@@ -14,18 +15,20 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class ControllerVocations {
     private val logger: Logger = LogManager.getLogger(ControllerVocations::class.java)
+    private val vocationsRepositoryImp = VocationsRepositoryImp(Tibia())
+    private val useCaseVocations = UseCaseVocations(vocationsRepositoryImp)
     @GetMapping("api/v1/vocations")
     fun vocations(): Any {
         return try {
             logger.info("init petition")
-            val catalog = RepositoryVocations().vocations()
-            if (catalog != null){
-                val response = Response(200, catalog)
+            val vocations = useCaseVocations.vocatons()
+            if (vocations != null){
+                val response = Response(200, vocations)
                 logger.info("Response final: $response")
                 ResponseEntity.ok().body(response)
             }else{
                 val error = Errors(400, "Error getting vocation list")
-                logger.error("Error: $catalog")
+                logger.error("Error: $vocations")
                 ResponseEntity.badRequest().body(error)
             }
         }catch (e: Exception){
@@ -40,21 +43,14 @@ class ControllerVocations {
         return try {
             logger.info("init petition")
             logger.info("Request: $vocation")
-            val catalog = RepositoryVocations()
-            val vocations = when(vocation.lowercase()){
-                "sorcerer" -> catalog.sorcerer()
-                "druid" -> catalog.druid()
-                "knight" -> catalog.knight()
-                "paladin" -> catalog.paladin()
-                else -> {null}
-            }
-            if (vocations != null){
-                val response = Response(200, vocations)
-                logger.info("Response final: $response")
+            val vocation = useCaseVocations.vocation(vocation)
+            if (vocation != null){
+                val response = Response(200, vocation)
+                logger.info("Response final: ${response.statusCode}")
                 ResponseEntity.ok().body(response)
             }else{
                 val error = Errors(400, "Error getting vocation")
-                logger.error("Error Final: $vocations")
+                logger.error("Error Final: $vocation")
                 ResponseEntity.badRequest().body(error)
             }
         }catch (e: Exception){
