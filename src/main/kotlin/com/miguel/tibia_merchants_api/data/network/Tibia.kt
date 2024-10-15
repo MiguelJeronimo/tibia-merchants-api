@@ -40,30 +40,21 @@ class Tibia {
         return Blessings(scrapper, baseurl)
     }
 
+    @Suppress("IMPLICIT_CAST_TO_ANY")
     fun npcsDefault(nameNPC: String): Any? {
         val npc = when (nameNPC){
-            "Rashid"-> { TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").rashid()}
-            "Yasir"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").yasir()}
-            "Haroun"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").horoun()}
-            "Nah Bob"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").nashBob()}
-            "Asnarus"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").asnarus()}
-            "Alesar"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").alesar()}
-            "Yalam"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").yalam()}
-            "Esrik"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").esrik()}
-            "Alexander"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").alexander()}
-            "Tamoril"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").tamoril()}
-            "Grizzly Adams"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").grizzlyAdams()}
-            else -> {null}
+            "Rashid"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").rashid()
+            "Yasir"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").yasir()
+            "Haroun"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").horoun()
+            "Nah Bob"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").nashBob()
+            "Asnarus"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").asnarus()
+            "Alesar"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").alesar()
+            "Yalam"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").yalam()
+            "Esrik"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").esrik()
+            "Alexander"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").alexander()
+            "Tamoril"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").tamoril()
+            "Grizzly Adams"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").grizzlyAdams()
+            else -> null
         }
         return npc
     }
