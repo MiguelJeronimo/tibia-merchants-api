@@ -8,8 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest
 class TibiaMerchantsApiApplicationTests {
 
 	@Test
-	fun contextLoads() {
-		Tibia().blessings().blessingsInformation().forEach {
+	fun blessingsTest() {
+		Tibia().blessings().blessingsInformation().blessings?.forEach {
 			println(it)
 		}
 	}
