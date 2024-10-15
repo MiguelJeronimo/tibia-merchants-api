@@ -1,4 +1,4 @@
-package com.miguel.tibia_merchants_api.model.Tibia.POST
+package com.miguel.tibia_merchants_api.domain.models.post
 
 data class BodyItems(
     val title:String? = null,
