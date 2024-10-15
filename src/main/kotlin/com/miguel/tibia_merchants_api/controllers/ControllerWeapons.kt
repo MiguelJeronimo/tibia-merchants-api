@@ -1,8 +1,10 @@
 package com.miguel.tibia_merchants_api.controllers
 
-import com.miguel.tibia_merchants_api.model.Tibia.Errors
-import com.miguel.tibia_merchants_api.model.Tibia.Response
-import com.miguel.tibia_merchants_api.repository.RepositoryWeapons
+import com.miguel.tibia_merchants_api.data.network.Tibia
+import com.miguel.tibia_merchants_api.data.repositories.ItemsRepositoryImp
+import com.miguel.tibia_merchants_api.domain.models.Errors
+import com.miguel.tibia_merchants_api.domain.models.Response
+import com.miguel.tibia_merchants_api.domain.usecase.UseCaseItems
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.springframework.http.ResponseEntity
@@ -14,14 +16,16 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("api/v1")
 class ControllerWeapons {
     private val logger: Logger = LogManager.getLogger(ControllerWeapons::class.java)
+    private val repositoryImp = ItemsRepositoryImp(Tibia())
+    private val useCase = UseCaseItems(repositoryImp)
     @GetMapping("/weapons")
     fun weapons(): Any {
         return try {
             logger.info("init petition")
-            val weapons = RepositoryWeapons().weapons()
+            val weapons = useCase.weapons()
             if (weapons != null){
                 val response = Response(200, weapons)
-                logger.info("Response final: $response")
+                logger.info("Response final: ${response.statusCode}")
                 ResponseEntity.ok().body(response)
             }else{
                 val error = Errors(400, "Error getting weapon list")

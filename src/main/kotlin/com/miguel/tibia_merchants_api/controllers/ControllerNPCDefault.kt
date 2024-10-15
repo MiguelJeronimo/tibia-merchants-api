@@ -1,7 +1,9 @@
 package com.miguel.tibia_merchants_api.controllers
-import com.miguel.tibia_merchants_api.model.Tibia.Errors
-import com.miguel.tibia_merchants_api.model.Tibia.Response
-import com.miguel.tibia_merchants_api.repository.repositoryNPC
+import com.miguel.tibia_merchants_api.data.network.Tibia
+import com.miguel.tibia_merchants_api.data.repositories.NPCRepositoryImp
+import com.miguel.tibia_merchants_api.domain.models.Errors
+import com.miguel.tibia_merchants_api.domain.models.Response
+import com.miguel.tibia_merchants_api.domain.usecase.UseCaseNPC
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.springframework.http.ResponseEntity
@@ -12,14 +14,16 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class ControllerNPCDefault {
     private val logger: Logger = LogManager.getLogger(ControllerNPCDefault::class.java)
+    private val npcepositoryImp = NPCRepositoryImp(Tibia())
+    private val useCaseNPC = UseCaseNPC(npcepositoryImp)
     @GetMapping("api/v1/npcs/{name}")
     fun npcsDefault(@PathVariable name: String): Any?{
         return try {
             logger.info("init petition")
-            val npc = repositoryNPC(name).npc()
+            val npc = useCaseNPC.npc(name)
             if (npc != null){
                 val response = Response(200, npc)
-                logger.info("Response final: $response")
+                logger.info("Response final: ${response.statusCode}")
                 ResponseEntity.ok().body(response)
             }else{
                 val error = Errors(400, "NPC is not exits")
