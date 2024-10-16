@@ -3,6 +3,7 @@ package com.miguel.tibia_merchants_api.domain.models
 data class Profile(
     var name: String? = null,
     var img: String? = null,
+    var tibia_lengend: String? = null,
     var notes: String? = null,
     var requeriments: Requeriments? = null,
     var combat_propierties: CombatPropierties? = null,
