@@ -32,9 +32,6 @@ class UseCaseItems(val repository: ItemsRepository) {
         return repository.bodyEquipments(name)
     }
 
-    fun weapons(name: String): Any? {
-        return repository.weapons(name)
-    }
 
     fun weapons(): Weapons? {
         return repository.weapons()
