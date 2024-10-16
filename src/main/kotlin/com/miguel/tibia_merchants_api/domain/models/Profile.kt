@@ -42,6 +42,10 @@ data class CombatPropierties(
 
 data class GeneralPropierties(
     var classification: String? = null,
+    var also_known_as:String ? = null,
+    var item_class: String? = null,
+    var origin:String?=null,
+    var notes:String? = null,
     var pickupable: String? = null,
     var weight: String? = null,
     var stackable: String? = null,
@@ -52,6 +56,7 @@ data class TraderPropierties(
     var value: String? = null,
     var sold_for: String? = null,
     var bought_for: String? = null,
+    var loot_value: String? = null,
 )
 
 data class FieldPropierties(
