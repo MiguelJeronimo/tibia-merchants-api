@@ -3,7 +3,7 @@ package com.miguel.tibia_merchants_api.controllers
 import com.miguel.tibia_merchants_api.data.network.Tibia
 import com.miguel.tibia_merchants_api.data.repositories.ItemsRepositoryImp
 import com.miguel.tibia_merchants_api.domain.models.Errors
-import com.miguel.tibia_merchants_api.model.Tibia.POST.BodyItems
+import com.miguel.tibia_merchants_api.domain.models.post.BodyItems
 import com.miguel.tibia_merchants_api.domain.models.Response
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseItems
 import org.apache.logging.log4j.LogManager
@@ -59,6 +59,33 @@ class ControllerItems {
             } else {
                 val error = Errors(400, "Error send data: ")
                 logger.error("Error: $bodyItems")
+                error
+            }
+        }catch(e:Exception){
+            logger.fatal("Error: ${e.message}")
+            val error = Errors(500, "Fatal Error, contact to support")
+            ResponseEntity.internalServerError().body(error)
+        }
+    }
+    @GetMapping("/item/{name}")
+    fun item(@PathVariable name: String): Any?{
+        return try {
+            logger.info("Request: $name")
+            logger.info("init petition")
+            if (name != null){
+                val repository = useCaseItems.item(name)
+                if (repository != null){
+                    val response = Response(200, repository)
+                    logger.info("Response succeful....")
+                    ResponseEntity.ok().body(response)
+                } else {
+                    val error = Errors(400, "Error getting $name information")
+                    logger.error("Error: $repository")
+                    ResponseEntity.badRequest().body(error)
+                }
+            } else {
+                val error = Errors(400, "Error send data: ")
+                logger.error("Error: $name")
                 error
             }
         }catch(e:Exception){

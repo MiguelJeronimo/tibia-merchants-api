@@ -8,10 +8,12 @@ import Tibia.Items.Items
 import Tibia.Vocations.Vocations
 import com.miguel.tibia_merchants_api.Tibia.TibiaNPCs
 import com.miguel.tibia_merchants_api.data.network.tibia.Items.bodyequipment.EquipmentList
+import com.miguel.tibia_merchants_api.data.network.tibia.Items.bodyequipment.ItemProfileBodyEquipment
 import com.miguel.tibia_merchants_api.data.network.tibia.Items.ohters.Other
 import com.miguel.tibia_merchants_api.data.network.tibia.Items.ohters.OtherItem
 import com.miguel.tibia_merchants_api.data.network.tibia.Items.toolsequipments.ToolsEquipments
 import com.miguel.tibia_merchants_api.data.network.tibia.householdItems.HouseholdItems
+import com.miguel.tibia_merchants_api.domain.models.Profile
 import model.Tibia.ItemEquipment
 import Tibia.Weapons.Weapons as Weapons
 
@@ -40,36 +42,31 @@ class Tibia {
         return Blessings(scrapper, baseurl)
     }
 
+    @Suppress("IMPLICIT_CAST_TO_ANY")
     fun npcsDefault(nameNPC: String): Any? {
         val npc = when (nameNPC){
-            "Rashid"-> { TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").rashid()}
-            "Yasir"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").yasir()}
-            "Haroun"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").horoun()}
-            "Nah Bob"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").nashBob()}
-            "Asnarus"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").asnarus()}
-            "Alesar"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").alesar()}
-            "Yalam"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").yalam()}
-            "Esrik"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").esrik()}
-            "Alexander"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").alexander()}
-            "Tamoril"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").tamoril()}
-            "Grizzly Adams"-> {
-                TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").grizzlyAdams()}
-            else -> {null}
+            "Rashid"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").rashid()
+            "Yasir"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").yasir()
+            "Haroun"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").horoun()
+            "Nah Bob"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").nashBob()
+            "Asnarus"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").asnarus()
+            "Alesar"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").alesar()
+            "Yalam"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").yalam()
+            "Esrik"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").esrik()
+            "Alexander"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").alexander()
+            "Tamoril"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").tamoril()
+            "Grizzly Adams"-> TibiaNPCs(scrapper, url = "${baseurl}/${nameNPC}").grizzlyAdams()
+            else -> null
         }
         return npc
     }
 
     fun bodyEquipments(name: String): ArrayList<ItemEquipment> {
         return EquipmentList(scrapper, baseurl, name).item()
+    }
+
+    fun itemProfileItems(name: String): Profile {
+        return ItemProfileBodyEquipment(scrapper, baseurl, name).item()
     }
 
     fun household(name: String): Any? {
@@ -134,4 +131,6 @@ class Tibia {
         }
         return equipments
     }
+
+
 }

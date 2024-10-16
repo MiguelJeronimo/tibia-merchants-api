@@ -2,6 +2,7 @@ package com.miguel.tibia_merchants_api.data.repositories
 
 import API.Tibia.models.Weapons
 import com.miguel.tibia_merchants_api.data.network.Tibia
+import com.miguel.tibia_merchants_api.domain.models.Profile
 import model.Tibia.ItemEquipment
 import model.Tibia.ItemsCatalog
 import org.apache.logging.log4j.LogManager
@@ -12,6 +13,17 @@ class ItemsRepositoryImp(private val tibia: Tibia): ItemsRepository {
     override fun items(): ItemsCatalog? {
         return try {
             val items = tibia.items().items()
+            logger.info("Response repository: $items")
+            items
+        }catch (e:Exception){
+            logger.fatal("Error repository: ${e.message}")
+            null
+        }
+    }
+
+    override fun item(name: String): Profile? {
+        return try {
+            val items = tibia.itemProfileItems(name)
             logger.info("Response repository: $items")
             items
         }catch (e:Exception){
