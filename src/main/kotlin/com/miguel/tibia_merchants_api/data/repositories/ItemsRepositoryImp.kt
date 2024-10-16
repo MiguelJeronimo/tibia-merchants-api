@@ -104,7 +104,7 @@ class ItemsRepositoryImp(private val tibia: Tibia): ItemsRepository {
         return try {
             val others = tibia.toolsEquipments(name)
             logger.info("Response repository: $others")
-            tibia
+            others
         }catch (e: Exception){
             logger.fatal("Error repository: ${e.message}")
             null
@@ -115,7 +115,7 @@ class ItemsRepositoryImp(private val tibia: Tibia): ItemsRepository {
         return try {
             val others = tibia.otherItems(name)
             logger.info("Response repository: $others")
-            tibia
+            others
         }catch (e: Exception){
             logger.fatal("Error repository: ${e.message}")
             null

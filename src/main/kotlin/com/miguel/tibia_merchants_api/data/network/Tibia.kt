@@ -100,6 +100,7 @@ class Tibia {
     }
 
     fun toolsEquipments(name: String): Any? {
+        println("NAME: $name")
         val equipments = when(name.lowercase()){
             "amulets and necklaces"-> ToolsEquipments(scrapper, baseurl).amuletsAndNecklaces()
             "keys"-> ToolsEquipments(scrapper, baseurl).keys()

@@ -47,6 +47,7 @@ class ControllerItems {
             logger.info("init petition")
             if (title != null && name != null){
                 val repository = useCaseItems.type(title, name)
+                println("REPOSITY"+repository)
                 if (repository != null){
                     val response = Response(200, repository)
                     logger.info("Response succeful....")
