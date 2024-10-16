@@ -38,13 +38,18 @@ class ItemProfileBodyEquipment (scrapper: Scrapper, baseurl: String, name: Strin
      * **/
     fun item(): Profile {
         println("url final: $url")
+        val buy = ArrayList<BuyFrom>()
+        val sell = ArrayList<SellFrom>()
         val npcNotes = request.getElementById("object-notes")?.children()
         val nameNPC = request.getElementsByClass("mw-page-title-main").text()
-        val imgNPC = request.getElementById("twbox-image")?.select("img")?.attr("src")
+        val imgNPC = request.getElementById("twbox-image")
+            ?.select("img")?.attr("src")
         //val mapImage = request.getElementsByClass("map_image").select("img").attr("src")
-        val aside = request.getElementsByClass("portable-infobox pi-background pi-border-color pi-theme-twbox pi-layout-default")
+        val aside = request.getElementsByClass(
+            "portable-infobox pi-background pi-border-color pi-theme-twbox pi-layout-default"
+        )
+        val trades = request.getElementsByClass("trades")
         val section = aside.select("section")
-
         val requeriment = utils.addDataInClass(
             section(section, "Requirements").ifEmpty { null },
             Requeriments()
@@ -74,6 +79,37 @@ class ItemProfileBodyEquipment (scrapper: Scrapper, baseurl: String, name: Strin
                 note += "${it.text()}\n"
             }
         }
+
+        trades[0].select("tbody").forEach {
+            val tr = it.select("[style=\"text-align:center\"]")
+            tr.forEach {
+                val td = it.children()
+                val buyFrom = BuyFrom().apply {
+                    if (td[0].text() != "NPC"){
+                        npc = td[0].text()
+                        location = td[1].text()
+                        price = td[2].text()
+                    }
+                }
+                buy.add(buyFrom)
+            }
+        }
+
+        trades[1].select("tbody").forEach {
+            val tr = it.select("[style=\"text-align:center\"]")
+            tr.forEach {
+                val td = it.children()
+                val sellFrom = SellFrom().apply {
+                    if (td[0].text() != "NPC"){
+                        npc = td[0].text()
+                        location = td[1].text()
+                        price = td[2].text()
+                    }
+                }
+                sell.add(sellFrom)
+            }
+        }
+
         return Profile().apply {
             name = nameNPC
             img = imgNPC
@@ -84,6 +120,8 @@ class ItemProfileBodyEquipment (scrapper: Scrapper, baseurl: String, name: Strin
             trader_propierties = trade as TraderPropierties?
             field_propierties = field as FieldPropierties?
             other_propierties = other as OtherPropierties?
+            buy_from = buy.ifEmpty { null }
+            sell_from = sell.ifEmpty { null }
 
         }
     }

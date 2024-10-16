@@ -79,7 +79,7 @@ class ControllerItems {
                     logger.info("Response succeful....")
                     ResponseEntity.ok().body(response)
                 } else {
-                    val error = Errors(400, "Error getting $name list")
+                    val error = Errors(400, "Error getting $name information")
                     logger.error("Error: $repository")
                     ResponseEntity.badRequest().body(error)
                 }

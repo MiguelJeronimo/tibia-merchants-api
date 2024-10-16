@@ -9,7 +9,21 @@ data class Profile(
     var general_propierties: GeneralPropierties? = null,
     var trader_propierties: TraderPropierties? = null,
     var field_propierties: FieldPropierties? = null,
-    var other_propierties: OtherPropierties? = null
+    var other_propierties: OtherPropierties? = null,
+    var buy_from: ArrayList<BuyFrom>? = null,
+    var sell_from: ArrayList<SellFrom>? = null
+)
+
+data class BuyFrom(
+    var npc: String? = null,
+    var location: String? = null,
+    var price: String? = null
+)
+
+data class SellFrom(
+    var npc: String? = null,
+    var location: String? = null,
+    var price: String? = null
 )
 
 data class Requeriments(

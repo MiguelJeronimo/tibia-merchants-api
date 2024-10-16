@@ -67,7 +67,6 @@ class Utils {
                             it.name == data[position].key
                         }
                         if (params != null && params is KMutableProperty<*>) {
-                            println("ALgo: ${propierties.name}: ${data[position].value}")
                             params.setter.call(dataClass, data[position].value)
                             position += 1
                         }
