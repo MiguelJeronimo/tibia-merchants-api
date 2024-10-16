@@ -41,6 +41,8 @@ class ItemProfileBodyEquipment (scrapper: Scrapper, baseurl: String, name: Strin
         val buy = ArrayList<BuyFrom>()
         val sell = ArrayList<SellFrom>()
         val npcNotes = request.getElementById("object-notes")?.children()
+        val history = request.getElementById("object-history")?.children()
+        val tibia = request.getElementById("twbox-look")?.text()
         val nameNPC = request.getElementsByClass("mw-page-title-main").text()
         val imgNPC = request.getElementById("twbox-image")
             ?.select("img")?.attr("src")
@@ -79,6 +81,11 @@ class ItemProfileBodyEquipment (scrapper: Scrapper, baseurl: String, name: Strin
                 note += "${it.text()}\n"
             }
         }
+        history?.forEach {
+            if (it.text() != "History"){
+                note += "${it.text()}\n"
+            }
+        }
 
         trades[0].select("tbody").forEach {
             val tr = it.select("[style=\"text-align:center\"]")
@@ -86,7 +93,7 @@ class ItemProfileBodyEquipment (scrapper: Scrapper, baseurl: String, name: Strin
                 val td = it.children()
                 val buyFrom = BuyFrom().apply {
                     if (td[0].text() != "NPC"){
-                        npc = td[0].text()
+                        npc = td[0].children()[0].text()
                         location = td[1].text()
                         price = td[2].text()
                     }
@@ -101,7 +108,7 @@ class ItemProfileBodyEquipment (scrapper: Scrapper, baseurl: String, name: Strin
                 val td = it.children()
                 val sellFrom = SellFrom().apply {
                     if (td[0].text() != "NPC"){
-                        npc = td[0].text()
+                        npc = td[0].children()[0].text()
                         location = td[1].text()
                         price = td[2].text()
                     }
@@ -113,6 +120,7 @@ class ItemProfileBodyEquipment (scrapper: Scrapper, baseurl: String, name: Strin
         return Profile().apply {
             name = nameNPC
             img = imgNPC
+            tibia_lengend = tibia.toString().ifEmpty { null }
             notes = note
             requeriments = requeriment as Requeriments?
             combat_propierties = combat as CombatPropierties?
