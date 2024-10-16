@@ -8,10 +8,12 @@ import Tibia.Items.Items
 import Tibia.Vocations.Vocations
 import com.miguel.tibia_merchants_api.Tibia.TibiaNPCs
 import com.miguel.tibia_merchants_api.data.network.tibia.Items.bodyequipment.EquipmentList
+import com.miguel.tibia_merchants_api.data.network.tibia.Items.bodyequipment.ItemProfileBodyEquipment
 import com.miguel.tibia_merchants_api.data.network.tibia.Items.ohters.Other
 import com.miguel.tibia_merchants_api.data.network.tibia.Items.ohters.OtherItem
 import com.miguel.tibia_merchants_api.data.network.tibia.Items.toolsequipments.ToolsEquipments
 import com.miguel.tibia_merchants_api.data.network.tibia.householdItems.HouseholdItems
+import com.miguel.tibia_merchants_api.domain.models.Profile
 import model.Tibia.ItemEquipment
 import Tibia.Weapons.Weapons as Weapons
 
@@ -61,6 +63,10 @@ class Tibia {
 
     fun bodyEquipments(name: String): ArrayList<ItemEquipment> {
         return EquipmentList(scrapper, baseurl, name).item()
+    }
+
+    fun itemProfileItems(name: String): Profile {
+        return ItemProfileBodyEquipment(scrapper, baseurl, name).item()
     }
 
     fun household(name: String): Any? {
@@ -125,4 +131,6 @@ class Tibia {
         }
         return equipments
     }
+
+
 }

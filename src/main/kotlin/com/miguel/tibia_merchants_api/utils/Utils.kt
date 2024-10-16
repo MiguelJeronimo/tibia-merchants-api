@@ -1,5 +1,10 @@
 package com.miguel.tibia_merchants_api.utils
 
+import com.miguel.tibia_merchants_api.domain.models.Sections
+import kotlin.reflect.KMutableProperty
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.full.primaryConstructor
+
 class Utils {
     fun listNPC(): List<Weapons> {
         val list = listOf(
@@ -49,6 +54,30 @@ class Utils {
             )
         )
         return list
+    }
+
+    fun addDataInClass(data: ArrayList<Sections>?, dataClass: Any?): Any? {
+        return if (data != null && dataClass != null) {
+            var position = 0
+            val constructor = dataClass::class.primaryConstructor!!.parameters
+            if (constructor != null) {
+                constructor.forEach { propierties ->
+                    if (position < data.size) {
+                        val params = dataClass::class.memberProperties.find {
+                            it.name == data[position].key
+                        }
+                        if (params != null && params is KMutableProperty<*>) {
+                            println("ALgo: ${propierties.name}: ${data[position].value}")
+                            params.setter.call(dataClass, data[position].value)
+                            position += 1
+                        }
+                    }
+                }
+            }
+            dataClass
+        } else {
+            null
+        }
     }
 }
 

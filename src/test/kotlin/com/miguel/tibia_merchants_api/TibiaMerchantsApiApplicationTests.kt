@@ -14,4 +14,11 @@ class TibiaMerchantsApiApplicationTests {
 		}
 	}
 
+	@Test
+	fun itemProfile(){
+		println(Tibia().itemProfileItems("Alicorn Headguard"))
+		println("*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
+		println(Tibia().itemProfileItems("Demon Helmet"))
+	}
+
 }

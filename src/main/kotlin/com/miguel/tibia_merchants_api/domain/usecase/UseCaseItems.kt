@@ -2,12 +2,17 @@ package com.miguel.tibia_merchants_api.domain.usecase
 
 import API.Tibia.models.Weapons
 import com.miguel.tibia_merchants_api.data.repositories.ItemsRepository
+import com.miguel.tibia_merchants_api.domain.models.Profile
 import model.Tibia.ItemEquipment
 import model.Tibia.ItemsCatalog
 
 class UseCaseItems(val repository: ItemsRepository) {
     fun items(): ItemsCatalog? {
         return repository.items()
+    }
+
+    fun item(name: String): Profile? {
+        return repository.item(name)
     }
 
     fun type(title: String, name: String): Any? {
