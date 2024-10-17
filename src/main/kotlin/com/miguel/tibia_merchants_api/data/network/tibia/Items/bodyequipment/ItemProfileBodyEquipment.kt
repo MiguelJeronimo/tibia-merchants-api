@@ -76,7 +76,7 @@ class ItemProfileBodyEquipment (scrapper: Scrapper, baseurl: String, name: Strin
         val field = utils.addDataInClass(
             section(section, "Field Properties").ifEmpty { null },
             FieldPropierties())
-        println(section(section, "Field Properties"))
+
         val other = utils.addDataInClass(
             section(section, "Other Properties").ifEmpty { null },
             OtherPropierties()
