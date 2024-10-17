@@ -50,32 +50,43 @@ class ItemProfileBodyEquipment (scrapper: Scrapper, baseurl: String, name: Strin
         val aside = request.getElementsByClass(
             "portable-infobox pi-background pi-border-color pi-theme-twbox pi-layout-default"
         )
+
         val trades = request.getElementsByClass("trades")
         val section = aside.select("section")
         val requeriment = utils.addDataInClass(
             section(section, "Requirements").ifEmpty { null },
             Requeriments()
         )
+
         val combat = utils.addDataInClass(
             section(section, "Combat Properties").ifEmpty { null },
             CombatPropierties()
         )
+
         val general = utils.addDataInClass(
             section(section, "General Properties").ifEmpty { null },
             GeneralPropierties()
         )
+
         val trade = utils.addDataInClass(
             section(section, "Trade Properties").ifEmpty { null },
             TraderPropierties()
         )
-        println(section(section, "Trade Properties"))
+
         val field = utils.addDataInClass(
             section(section, "Field Properties").ifEmpty { null },
             FieldPropierties())
+        println(section(section, "Field Properties"))
         val other = utils.addDataInClass(
             section(section, "Other Properties").ifEmpty { null },
             OtherPropierties()
         )
+
+        val magicPropierties = utils.addDataInClass(
+            section(section, "Magic Properties").ifEmpty { null },
+            MagicProperties()
+        )
+
         var note = ""
         npcNotes?.forEach {
             if (it.text() != "Notes"){
@@ -129,6 +140,7 @@ class ItemProfileBodyEquipment (scrapper: Scrapper, baseurl: String, name: Strin
             trader_propierties = trade as TraderPropierties?
             field_propierties = field as FieldPropierties?
             other_propierties = other as OtherPropierties?
+            magic_properties = magicPropierties as MagicProperties?
             buy_from = buy.ifEmpty { null }
             sell_from = sell.ifEmpty { null }
 
