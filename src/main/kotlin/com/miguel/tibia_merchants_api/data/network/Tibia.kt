@@ -13,7 +13,9 @@ import com.miguel.tibia_merchants_api.data.network.tibia.Items.ohters.Other
 import com.miguel.tibia_merchants_api.data.network.tibia.Items.ohters.OtherItem
 import com.miguel.tibia_merchants_api.data.network.tibia.Items.toolsequipments.ToolsEquipments
 import com.miguel.tibia_merchants_api.data.network.tibia.householdItems.HouseholdItems
+import com.miguel.tibia_merchants_api.data.network.tibia.spells.TibiaSpells
 import com.miguel.tibia_merchants_api.domain.models.Profile
+import com.miguel.tibia_merchants_api.domain.models.spells.Spells
 import model.Tibia.ItemEquipment
 import Tibia.Weapons.Weapons as Weapons
 
@@ -131,6 +133,10 @@ class Tibia {
             else-> null
         }
         return equipments
+    }
+
+    fun spells(): Spells {
+        return TibiaSpells(baseurl = baseurl, scrapper = scrapper).spellList()
     }
 
 
