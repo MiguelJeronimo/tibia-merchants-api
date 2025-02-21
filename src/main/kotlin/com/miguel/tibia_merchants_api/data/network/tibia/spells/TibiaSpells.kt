@@ -6,7 +6,7 @@ import com.miguel.tibia_merchants_api.domain.models.spells.Runes
 import com.miguel.tibia_merchants_api.domain.models.spells.Spell
 import com.miguel.tibia_merchants_api.domain.models.spells.Spells
 
-class TibiaSpells(val scrapper: Scrapper, private val baseurl: String) {
+class TibiaSpells(val scrapper: Scrapper, val baseurl: String) {
     private val url = "$baseurl/Spells"
     private val request = scrapper.Soup(url)
 
