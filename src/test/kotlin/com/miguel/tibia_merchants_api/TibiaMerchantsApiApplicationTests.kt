@@ -21,4 +21,10 @@ class TibiaMerchantsApiApplicationTests {
 		println(Tibia().itemProfileItems("Demon Helmet"))
 	}
 
+	@Test
+	fun npcInformation(){
+		val nameNPC = "Frodo"
+		Tibia().npc(nameNPC)
+	}
+
 }
