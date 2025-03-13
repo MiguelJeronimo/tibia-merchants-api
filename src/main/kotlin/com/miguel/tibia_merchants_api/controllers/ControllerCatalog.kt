@@ -1,26 +1,24 @@
 package com.miguel.tibia_merchants_api.controllers
 
-import com.miguel.tibia_merchants_api.data.network.Tibia
-import com.miguel.tibia_merchants_api.data.repositories.CatalogRepositoryImp
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseCatalog
 import com.miguel.tibia_merchants_api.domain.models.Errors
 import com.miguel.tibia_merchants_api.domain.models.Response
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class ControllerCatalog {
+class ControllerCatalog: KoinComponent {
     private val logger: Logger = LogManager.getLogger(ControllerCatalog::class.java)
+    private val useCaseCatalog: UseCaseCatalog by inject()
     @GetMapping("api/v1/catalog")
     fun catalog(): Any {
         return try {
             logger.info("init petition")
-            val repositoryImp = CatalogRepositoryImp(Tibia())
-            val useCaseCatalog = UseCaseCatalog(repositoryImp)
             val catalog = useCaseCatalog.catalog()
             if (catalog != null){
                 val response = Response(200, catalog)
