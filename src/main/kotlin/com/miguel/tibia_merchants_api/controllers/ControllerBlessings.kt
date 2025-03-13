@@ -1,12 +1,12 @@
 package com.miguel.tibia_merchants_api.controllers
 
-import com.miguel.tibia_merchants_api.data.network.Tibia
-import com.miguel.tibia_merchants_api.data.repositories.BlessingsRepositoryImp
 import com.miguel.tibia_merchants_api.domain.models.Errors
 import com.miguel.tibia_merchants_api.domain.models.Response
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseBlessings
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("api/v1")
-class ControllerBlessings {
+class ControllerBlessings: KoinComponent {
     private val logger: Logger = LogManager.getLogger(ControllerBlessings::class.java)
-    private val repository = BlessingsRepositoryImp(Tibia())
-    private val useCaseBlessings = UseCaseBlessings(repository)
+    private val useCaseBlessings: UseCaseBlessings by inject()
     @GetMapping("/blessings")
     fun blessings(): Any{
         return try {
