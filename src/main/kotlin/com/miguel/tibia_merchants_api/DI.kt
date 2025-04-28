@@ -11,11 +11,14 @@ import com.miguel.tibia_merchants_api.data.repositories.NPCRepository
 import com.miguel.tibia_merchants_api.data.repositories.NPCRepositoryImp
 import com.miguel.tibia_merchants_api.data.repositories.SpellsRepository
 import com.miguel.tibia_merchants_api.data.repositories.SpellsRepositoryImp
+import com.miguel.tibia_merchants_api.data.repositories.VocationsRepository
+import com.miguel.tibia_merchants_api.data.repositories.VocationsRepositoryImp
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseBlessings
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseCatalog
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseItems
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseNPC
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseSpells
+import com.miguel.tibia_merchants_api.domain.usecase.UseCaseVocations
 import org.koin.dsl.module
 
 class DI {
@@ -61,6 +64,14 @@ class DI {
 
         single <UseCaseSpells>{
             UseCaseSpells(get())
+        }
+        //injection dependencies in Vocations
+        single <VocationsRepository>{
+            VocationsRepositoryImp(Tibia())
+        }
+
+        single <UseCaseVocations>{
+            UseCaseVocations(get())
         }
     }
 }
