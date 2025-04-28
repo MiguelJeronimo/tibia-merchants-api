@@ -3,9 +3,11 @@ package com.miguel.tibia_merchants_api.data.network.tibia.Items.bodyequipment
 import Jsoup.Scrapper
 import com.miguel.tibia_merchants_api.domain.models.*
 import com.miguel.tibia_merchants_api.utils.Utils
+import org.apache.logging.log4j.LogManager
 import org.jsoup.select.Elements
 
 class ItemProfileBodyEquipment (scrapper: Scrapper, baseurl: String, name: String){
+    private val logger = LogManager.getLogger(ItemProfileBodyEquipment::class.java)
     private val url = "${baseurl}/${name}"
     private val request = scrapper.Soup(url)
     private val utils = Utils()
@@ -37,7 +39,7 @@ class ItemProfileBodyEquipment (scrapper: Scrapper, baseurl: String, name: Strin
      *
      * **/
     fun item(): Profile {
-        println("url final: $url")
+        logger.info("url final: $url")
         val buy = ArrayList<BuyFrom>()
         val sell = ArrayList<SellFrom>()
         val npcNotes = request.getElementById("object-notes")?.children()
