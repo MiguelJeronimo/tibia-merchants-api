@@ -1,21 +1,20 @@
 package com.miguel.tibia_merchants_api.controllers
 
-import com.miguel.tibia_merchants_api.data.network.Tibia
-import com.miguel.tibia_merchants_api.data.repositories.ItemsRepositoryImp
 import com.miguel.tibia_merchants_api.domain.models.Errors
 import com.miguel.tibia_merchants_api.domain.models.post.BodyItems
 import com.miguel.tibia_merchants_api.domain.models.Response
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseItems
 import org.apache.logging.log4j.LogManager
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("api/v1")
-class ControllerItems {
+class ControllerItems: KoinComponent {
     private val logger = LogManager.getLogger(ControllerItems::class.java)
-    private val repositoryImp = ItemsRepositoryImp(Tibia())
-    private val useCaseItems = UseCaseItems(repositoryImp)
+    private val useCaseItems: UseCaseItems by inject()
     @GetMapping("/items")
     fun items(): Any {
         return try {
