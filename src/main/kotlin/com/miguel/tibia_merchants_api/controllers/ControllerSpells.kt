@@ -7,6 +7,8 @@ import com.miguel.tibia_merchants_api.domain.models.Response
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseSpells
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -14,15 +16,13 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("api/v1")
-class ControllerSpells {
+class ControllerSpells: KoinComponent {
     private val logger: Logger = LogManager.getLogger(ControllerSpells::class.java)
-
+    private val useCaseSpells: UseCaseSpells by inject()
     @GetMapping("/spells")
     fun spells(): Any?{
         logger.info("init petition")
         return try {
-            val repositoryImp = SpellsRepositoryImp(Tibia())
-            val useCaseSpells = UseCaseSpells(repositoryImp)
             val spells = useCaseSpells.invokeSpells()
             if (spells != null){
                 val response = Response(200, spells)

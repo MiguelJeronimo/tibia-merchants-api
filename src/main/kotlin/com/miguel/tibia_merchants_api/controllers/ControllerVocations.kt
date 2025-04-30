@@ -1,22 +1,21 @@
 package com.miguel.tibia_merchants_api.controllers
 
-import com.miguel.tibia_merchants_api.data.network.Tibia
-import com.miguel.tibia_merchants_api.data.repositories.VocationsRepositoryImp
 import com.miguel.tibia_merchants_api.domain.models.Errors
 import com.miguel.tibia_merchants_api.domain.models.Response
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseVocations
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class ControllerVocations {
+class ControllerVocations: KoinComponent {
     private val logger: Logger = LogManager.getLogger(ControllerVocations::class.java)
-    private val vocationsRepositoryImp = VocationsRepositoryImp(Tibia())
-    private val useCaseVocations = UseCaseVocations(vocationsRepositoryImp)
+    private val useCaseVocations: UseCaseVocations by inject()
     @GetMapping("api/v1/vocations")
     fun vocations(): Any {
         return try {
