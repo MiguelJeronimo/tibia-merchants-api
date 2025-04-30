@@ -111,7 +111,7 @@ class NPCProfile(private val scrapper: Scrapper, private val baseurl: String) {
                     if (img.isNotEmpty()) {
                         val price = it.select("[style=white-space:nowrap]").text()
                         item.price = price
-                        val nameItem = it.select("a").text()
+                        val nameItem = it.select("a").attr("title")
                         if (img.attr("data-src") == "") {
                             item.name = nameItem
                             item.img = img.attr("src")
