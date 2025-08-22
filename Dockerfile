@@ -30,4 +30,4 @@ WORKDIR /app
 COPY --from=build /app/build/libs/*.jar app.jar
 
 # Set the startup command to execute the jar
-CMD ["java", "-jar", "/app/app.jar"]:wq::
+CMD ["java", "-jar", "/app/app.jar"]
