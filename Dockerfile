@@ -5,6 +5,9 @@ FROM amazoncorretto:17 AS build
 # Set the working directory in the image to "/app"
 WORKDIR /app
 
+# Instalar bash, git, unzip, curl
+RUN yum install -y bash curl git unzip || true
+
 # Copy the Gradle executable to the image
 COPY gradlew ./
 
