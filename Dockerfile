@@ -1,4 +1,5 @@
-# Etapa de construcción
+# Start with a base image containing Java runtime (AdoptOpenJDK)
+#FROM openjdk:17-jdk-slim AS build
 FROM amazoncorretto:17 AS build
 
 # Set the working directory in the image to "/app"
