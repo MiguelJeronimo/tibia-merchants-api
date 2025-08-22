@@ -19,7 +19,7 @@ class ControllerNPCDefault: KoinComponent {
     private val npcepositoryImp = NPCRepositoryImp(Tibia())
     private val useCaseNPC: UseCaseNPC by inject()
     @GetMapping("api/v1/npcs/{name}")
-    fun npcsDefault(@PathVariable name: String): Any?{
+    suspend fun npcsDefault(@PathVariable name: String): Any?{
         return try {
             logger.info("init petition")
             val npc = useCaseNPC.npc(name)

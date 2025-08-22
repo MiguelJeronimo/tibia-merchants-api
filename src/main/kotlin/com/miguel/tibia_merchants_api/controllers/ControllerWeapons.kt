@@ -19,7 +19,7 @@ class ControllerWeapons {
     private val repositoryImp = ItemsRepositoryImp(Tibia())
     private val useCase = UseCaseItems(repositoryImp)
     @GetMapping("/weapons")
-    fun weapons(): Any {
+    suspend fun weapons(): Any {
         return try {
             logger.info("init petition")
             val weapons = useCase.weapons()

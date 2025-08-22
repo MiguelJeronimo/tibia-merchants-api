@@ -19,7 +19,7 @@ class ControllerNPCInfo: KoinComponent {
     private val logger: Logger = LogManager.getLogger(ControllerSpells::class.java)
     val useCaseNPC: UseCaseNPC by inject()
     @GetMapping("/npc/{name}")
-    fun npcInfo(@PathVariable name:String):Any?{
+    suspend fun npcInfo(@PathVariable name:String):Any?{
         logger.info("init petition")
         return try {
             val npcs = useCaseNPC.npcInfo(name = name)

@@ -16,7 +16,7 @@ class ControllerItems: KoinComponent {
     private val logger = LogManager.getLogger(ControllerItems::class.java)
     private val useCaseItems: UseCaseItems by inject()
     @GetMapping("/items")
-    fun items(): Any {
+    suspend fun items(): Any {
         return try {
             logger.info("init petition")
             val repository = useCaseItems.items()
@@ -38,7 +38,7 @@ class ControllerItems: KoinComponent {
     }
 
     @PostMapping("/items/type/")
-    fun item(@RequestBody bodyItems: BodyItems): Any {
+    suspend fun item(@RequestBody bodyItems: BodyItems): Any {
         return try {
             logger.info("Request: $bodyItems")
             val title = bodyItems.title
@@ -68,7 +68,7 @@ class ControllerItems: KoinComponent {
         }
     }
     @GetMapping("/item/{name}")
-    fun item(@PathVariable name: String): Any?{
+    suspend fun item(@PathVariable name: String): Any?{
         return try {
             logger.info("Request: $name")
             logger.info("init petition")

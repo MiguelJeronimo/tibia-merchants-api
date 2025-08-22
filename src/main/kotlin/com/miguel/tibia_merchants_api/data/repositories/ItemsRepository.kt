@@ -6,13 +6,13 @@ import model.Tibia.ItemEquipment
 import model.Tibia.ItemsCatalog
 
 interface ItemsRepository {
-    fun items(): ItemsCatalog?
-    fun item(name: String): Profile?
-    fun bodyEquipments(name: String): ArrayList<ItemEquipment>?
-    fun weapons(name: String): Any?
-    fun weapons(): Weapons?
-    fun household(name: String): Any?
-    fun others(name: String): Any?
-    fun othersEquipments(name: String): Any?
-    fun otherItems(name:String): Any?
+    suspend fun items(): ItemsCatalog?
+    suspend fun item(name: String): Profile?
+    suspend fun bodyEquipments(name: String): ArrayList<ItemEquipment>?
+    suspend fun weapons(name: String): Any?
+    suspend fun weapons(): Weapons?
+    suspend fun household(name: String): Any?
+    suspend fun others(name: String): Any?
+    suspend fun othersEquipments(name: String): Any?
+    suspend fun otherItems(name:String): Any?
 }

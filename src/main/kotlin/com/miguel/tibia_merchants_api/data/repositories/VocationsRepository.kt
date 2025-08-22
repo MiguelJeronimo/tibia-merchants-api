@@ -4,9 +4,9 @@ import API.Tibia.models.Vocation
 import API.Tibia.models.Vocations
 
 interface VocationsRepository {
-    fun vocations(): ArrayList<Vocations>?
-    fun sorcerer(): Vocation?
-    fun druid(): Vocation?
-    fun knight(): Vocation?
-    fun paladin(): Vocation?
+    suspend fun vocations(): ArrayList<Vocations>?
+    suspend fun sorcerer(): Vocation?
+    suspend fun druid(): Vocation?
+    suspend fun knight(): Vocation?
+    suspend fun paladin(): Vocation?
 }

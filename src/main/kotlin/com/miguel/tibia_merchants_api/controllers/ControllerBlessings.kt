@@ -18,7 +18,7 @@ class ControllerBlessings: KoinComponent {
     private val logger: Logger = LogManager.getLogger(ControllerBlessings::class.java)
     private val useCaseBlessings: UseCaseBlessings by inject()
     @GetMapping("/blessings")
-    fun blessings(): Any{
+    suspend fun blessings(): Any{
         return try {
             logger.info("init petition")
             val blessings = useCaseBlessings.blessings()

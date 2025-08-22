@@ -7,15 +7,15 @@ import model.Tibia.ItemEquipment
 import model.Tibia.ItemsCatalog
 
 class UseCaseItems(val repository: ItemsRepository) {
-    fun items(): ItemsCatalog? {
+    suspend fun items(): ItemsCatalog? {
         return repository.items()
     }
 
-    fun item(name: String): Profile? {
+    suspend fun item(name: String): Profile? {
         return repository.item(name)
     }
 
-    fun type(title: String, name: String): Any? {
+    suspend fun type(title: String, name: String): Any? {
         return when(title.lowercase()){
             "body equipment"-> repository.bodyEquipments(name)
             "weapons"-> repository.weapons(name)
@@ -28,12 +28,12 @@ class UseCaseItems(val repository: ItemsRepository) {
         }
     }
 
-    fun equipments(name: String): ArrayList<ItemEquipment>? {
+    suspend fun equipments(name: String): ArrayList<ItemEquipment>? {
         return repository.bodyEquipments(name)
     }
 
 
-    fun weapons(): Weapons? {
+    suspend fun weapons(): Weapons? {
         return repository.weapons()
     }
 }
