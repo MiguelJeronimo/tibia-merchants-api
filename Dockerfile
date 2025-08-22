@@ -1,31 +1,32 @@
 # Etapa de construcción
-FROM gradle:8.5-jdk17 AS build
+FROM amazoncorretto:17 AS build
+
+# Set the working directory in the image to "/app"
 WORKDIR /app
 
-# Copiamos gradlew y wrapper primero (para cachear dependencias)
+# Copy the Gradle executable to the image
 COPY gradlew ./
+
+# Copy the 'gradle' folder to the image
 COPY gradle ./gradle
 
-# Arreglamos saltos de línea (CRLF -> LF) y permisos
-RUN sed -i 's/\r$//' gradlew && chmod +x gradlew
+# Give permission to execute the gradle script
+RUN chmod +x ./gradlew
 
-# Copiamos el resto del código
+# Copy the rest of the application source code
 COPY . .
 
-# Compilamos (sin tests para ahorrar tiempo)
-RUN ./gradlew clean build -x test --stacktrace
+# Use Gradle to build the application
+RUN sh ./gradlew build
 
-# ============================
-# Etapa de runtime
-# ============================
+# Set up a second stage, which will only keep the compiled application and not the build tools and source code
 FROM amazoncorretto:17-alpine
+
+# Set the working directory to '/app'
 WORKDIR /app
 
-# Copiamos solo el JAR final desde la etapa de build
+# Copy the jar file from the first stage
 COPY --from=build /app/build/libs/*.jar app.jar
 
-# Variables JVM
-ENV JAVA_OPTS="-Xms64m -Xmx450m -XX:+UseZGC -XX:MaxMetaspaceSize=128m -XX:CompressedClassSpaceSize=32m -XX:+HeapDumpOnOutOfMemoryError -XX:MaxGCPauseMillis=200 -XX:InitiatingHeapOccupancyPercent=35 -Xlog:gc*:file=gc.log:time,uptime,level,tags:filecount=5,filesize=10m -Xss512k"
-
-# Ejecutamos la app
-CMD ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]
+# Set the startup command to execute the jar
+CMD ["java", "-jar", "/app/app.jar"]
