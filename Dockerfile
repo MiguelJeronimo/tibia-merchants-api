@@ -18,7 +18,8 @@ RUN chmod +x ./gradlew
 COPY . .
 
 # Use Gradle to build the application
-RUN sh ./gradlew build
+# Construir el JAR (sin tests para acelerar)
+RUN ./gradlew clean build -x test --stacktrace
 
 # Set up a second stage, which will only keep the compiled application and not the build tools and source code
 FROM amazoncorretto:17-alpine
