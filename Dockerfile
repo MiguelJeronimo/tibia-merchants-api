@@ -20,7 +20,7 @@ COPY . .
 RUN sh ./gradlew build
 
 # Set up a second stage, which will only keep the compiled application and not the build tools and source code
-FROM amazoncorretto:17-alpine
+FROM openjdk:17-jdk-slim
 
 # Set the working directory to '/app'
 WORKDIR /app
