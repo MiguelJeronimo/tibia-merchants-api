@@ -20,7 +20,7 @@ class ControllerSpells: KoinComponent {
     private val logger: Logger = LogManager.getLogger(ControllerSpells::class.java)
     private val useCaseSpells: UseCaseSpells by inject()
     @GetMapping("/spells")
-    fun spells(): Any?{
+    suspend fun spells(): Any?{
         logger.info("init petition")
         return try {
             val spells = useCaseSpells.invokeSpells()

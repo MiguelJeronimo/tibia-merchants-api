@@ -5,11 +5,11 @@ import API.Tibia.models.Vocations
 import com.miguel.tibia_merchants_api.data.repositories.VocationsRepository
 
 class UseCaseVocations(private val repository: VocationsRepository) {
-    fun vocatons(): ArrayList<Vocations>? {
+    suspend fun vocatons(): ArrayList<Vocations>? {
         return repository.vocations()
     }
 
-    fun vocation(name: String): Vocation? {
+    suspend fun vocation(name: String): Vocation? {
         return when(name.lowercase()){
             "sorcerer" -> sorcerer()
             "druid" -> druid()
@@ -19,19 +19,19 @@ class UseCaseVocations(private val repository: VocationsRepository) {
         }
     }
 
-    private fun sorcerer(): Vocation? {
+    private suspend fun sorcerer(): Vocation? {
         return repository.sorcerer()
     }
 
-    private fun druid(): Vocation? {
+    private suspend fun druid(): Vocation? {
         return repository.druid()
     }
 
-    private fun knight(): Vocation? {
+    private suspend fun knight(): Vocation? {
         return repository.knight()
     }
 
-    private fun paladin(): Vocation? {
+    private suspend fun paladin(): Vocation? {
         return repository.paladin()
     }
 }

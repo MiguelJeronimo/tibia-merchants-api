@@ -17,7 +17,7 @@ class ControllerVocations: KoinComponent {
     private val logger: Logger = LogManager.getLogger(ControllerVocations::class.java)
     private val useCaseVocations: UseCaseVocations by inject()
     @GetMapping("api/v1/vocations")
-    fun vocations(): Any {
+    suspend fun vocations(): Any {
         return try {
             logger.info("init petition")
             val vocations = useCaseVocations.vocatons()
@@ -38,7 +38,7 @@ class ControllerVocations: KoinComponent {
     }
 
     @GetMapping("api/v1/vocation/{vocation}")
-    fun vocation(@PathVariable vocation:String): Any {
+    suspend fun vocation(@PathVariable vocation:String): Any {
         return try {
             logger.info("init petition")
             logger.info("Request: $vocation")
