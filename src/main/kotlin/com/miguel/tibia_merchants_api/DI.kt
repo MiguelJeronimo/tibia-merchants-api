@@ -5,6 +5,8 @@ import com.miguel.tibia_merchants_api.data.repositories.BlessingsRepository
 import com.miguel.tibia_merchants_api.data.repositories.BlessingsRepositoryImp
 import com.miguel.tibia_merchants_api.data.repositories.CatalogRepository
 import com.miguel.tibia_merchants_api.data.repositories.CatalogRepositoryImp
+import com.miguel.tibia_merchants_api.data.repositories.EmbuimentsRepository
+import com.miguel.tibia_merchants_api.data.repositories.EmbuimentsRepositoryImp
 import com.miguel.tibia_merchants_api.data.repositories.ItemsRepository
 import com.miguel.tibia_merchants_api.data.repositories.ItemsRepositoryImp
 import com.miguel.tibia_merchants_api.data.repositories.NPCRepository
@@ -15,6 +17,7 @@ import com.miguel.tibia_merchants_api.data.repositories.VocationsRepository
 import com.miguel.tibia_merchants_api.data.repositories.VocationsRepositoryImp
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseBlessings
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseCatalog
+import com.miguel.tibia_merchants_api.domain.usecase.UseCaseEmbuiments
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseItems
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseNPC
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseSpells
@@ -72,6 +75,14 @@ class DI {
 
         single <UseCaseVocations>{
             UseCaseVocations(get())
+        }
+        //injection dependencies in Embuiments
+        single <EmbuimentsRepository>{
+            EmbuimentsRepositoryImp(Tibia())
+        }
+
+        single <UseCaseEmbuiments>{
+            UseCaseEmbuiments(get())
         }
     }
 }

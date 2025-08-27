@@ -1,6 +1,7 @@
 package com.miguel.tibia_merchants_api
 
 import com.miguel.tibia_merchants_api.data.network.Tibia
+import com.miguel.tibia_merchants_api.data.network.tibia.EmbuimentsTibia
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
@@ -25,6 +26,13 @@ class TibiaMerchantsApiApplicationTests {
 	fun npcInformation(){
 		val nameNPC = "Frodo"
 		Tibia().npc(nameNPC)
+	}
+
+	@Test
+	fun embuiments(){
+		Tibia().embuiments().embuiments().embuiments?.forEach {
+			println(it)
+		}
 	}
 
 }

@@ -7,6 +7,7 @@ import Tibia.Catalog.CatalogGame
 import Tibia.Items.Items
 import Tibia.Vocations.Vocations
 import com.miguel.tibia_merchants_api.Tibia.TibiaNPCs
+import com.miguel.tibia_merchants_api.data.network.tibia.EmbuimentsTibia
 import com.miguel.tibia_merchants_api.data.network.tibia.Items.bodyequipment.EquipmentList
 import com.miguel.tibia_merchants_api.data.network.tibia.Items.bodyequipment.ItemProfileBodyEquipment
 import com.miguel.tibia_merchants_api.data.network.tibia.Items.ohters.Other
@@ -15,6 +16,7 @@ import com.miguel.tibia_merchants_api.data.network.tibia.Items.toolsequipments.T
 import com.miguel.tibia_merchants_api.data.network.tibia.NPCProfile
 import com.miguel.tibia_merchants_api.data.network.tibia.householdItems.HouseholdItems
 import com.miguel.tibia_merchants_api.data.network.tibia.spells.TibiaSpells
+import com.miguel.tibia_merchants_api.domain.models.Imbuements
 import com.miguel.tibia_merchants_api.domain.models.Profile
 import com.miguel.tibia_merchants_api.domain.models.npc.NPCInfo
 import com.miguel.tibia_merchants_api.domain.models.spells.Spells
@@ -145,5 +147,9 @@ class Tibia {
 
     fun spells(): Spells {
         return TibiaSpells(baseurl = baseurl, scrapper = scrapper).spellList()
+    }
+
+    fun embuiments(): Imbuements {
+        return EmbuimentsTibia(baseURL = baseurl,  scrapper = scrapper).embuiments()
     }
 }
