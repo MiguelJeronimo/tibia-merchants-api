@@ -30,7 +30,7 @@ class TibiaMerchantsApiApplicationTests {
 
 	@Test
 	fun embuiments(){
-		Tibia().embuiments().embuiments().embuiments?.forEach {
+		Tibia().embuiments().embuiments?.forEach {
 			println(it)
 		}
 	}
