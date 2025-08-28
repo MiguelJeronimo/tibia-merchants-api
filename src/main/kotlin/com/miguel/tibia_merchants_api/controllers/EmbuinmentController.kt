@@ -19,6 +19,7 @@ private val useCase: UseCaseEmbuiments by inject()
 
     @GetMapping("/embuinments")
     suspend fun embuiments(): ResponseEntity<out Any?> {
+        logger.info("init petition")
         return try{
             val embuiments = useCase.embuiment()
             if (embuiments != null){

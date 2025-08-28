@@ -8,15 +8,18 @@ import com.miguel.tibia_merchants_api.domain.models.EmbuimentsAttributes
 import com.miguel.tibia_merchants_api.domain.models.Imbuements
 import com.miguel.tibia_merchants_api.domain.models.Intricate
 import com.miguel.tibia_merchants_api.domain.models.PowerFull
+import org.apache.logging.log4j.LogManager
 import org.jsoup.select.Elements
 
 class EmbuimentsTibia(scrapper: Scrapper, baseURL:  String) {
+    private val logger = LogManager.getLogger(EmbuimentsTibia::class.java)
     private val url = "${baseURL}/Imbuing"
     private val request = scrapper.Soup(url)
     private val model = Imbuements()
     private val modelList = ArrayList<EmbuimentsAttributes>()
 
     fun embuiments(): Imbuements {
+        logger.info("URL Wiki: $url")
         val nodes = request.getElementById("content")?.children()
         walkTree(nodes =  nodes, list = modelList)
         val list = modelList.distinctBy { it.name }
