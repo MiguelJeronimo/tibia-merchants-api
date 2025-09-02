@@ -27,4 +27,11 @@ class TibiaMerchantsApiApplicationTests {
 		Tibia().npc(nameNPC)
 	}
 
+	@Test
+	fun embuiments(){
+		Tibia().embuiments().embuiments?.forEach {
+			println(it)
+		}
+	}
+
 }

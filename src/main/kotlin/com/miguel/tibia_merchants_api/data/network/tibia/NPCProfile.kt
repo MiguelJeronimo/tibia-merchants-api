@@ -5,8 +5,9 @@ import com.miguel.tibia_merchants_api.domain.models.Item
 import com.miguel.tibia_merchants_api.domain.models.Spells
 import com.miguel.tibia_merchants_api.domain.models.npc.NPCInfo
 import com.miguel.tibia_merchants_api.domain.models.npc.NameNPC
+import org.apache.logging.log4j.LogManager
 import org.jsoup.nodes.Document
-import java.sql.SQLOutput
+
 
 class NPCProfile(private val scrapper: Scrapper, private val baseurl: String) {
     val arrayBuyingItems = ArrayList<Item>()
@@ -14,8 +15,10 @@ class NPCProfile(private val scrapper: Scrapper, private val baseurl: String) {
     val arraySellingSpells = ArrayList<Spells>()
     val item = Item(null, null, null)
     val spells = Spells(null, null, null, null, null)
+    private val logger = LogManager.getLogger(NPCProfile::class.java)
 
     fun information(name:String): NPCInfo {
+        logger.info("URL Wiki: \"${baseurl}/${name}\"")
         val arrayCitys = ArrayList<NameNPC>()
         val request = scrapper.Soup("${baseurl}/${name}")
         val npcNotes = request.getElementById("npc-notes")!!.text()
