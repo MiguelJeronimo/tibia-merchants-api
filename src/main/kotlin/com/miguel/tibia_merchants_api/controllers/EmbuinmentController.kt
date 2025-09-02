@@ -27,7 +27,7 @@ private val useCase: UseCaseEmbuiments by inject()
                     200,
                     embuiments
                 )
-                ResponseEntity.ok().body(response)
+                ResponseEntity.ok(response)
             } else{
                 val error = Errors(400, "Error getting embuinments")
                 logger.error("Error Final: $embuiments")
@@ -38,6 +38,5 @@ private val useCase: UseCaseEmbuiments by inject()
             val error = Errors(500, "Fatal Error, contact to support")
             ResponseEntity.internalServerError().body(error)
         }
-
     }
 }

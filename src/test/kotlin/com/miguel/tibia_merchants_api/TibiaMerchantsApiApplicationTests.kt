@@ -1,7 +1,6 @@
 package com.miguel.tibia_merchants_api
 
 import com.miguel.tibia_merchants_api.data.network.Tibia
-import com.miguel.tibia_merchants_api.data.network.tibia.EmbuimentsTibia
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 

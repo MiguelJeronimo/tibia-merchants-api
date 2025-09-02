@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.apache.logging.log4j.LogManager
 
-class EmbuimentsRepositoryImp(private val tibia: Tibia): EmbuimentsRepository {
+class EmbuimentsRepositoryImp(private val tibia: Tibia) : EmbuimentsRepository {
     private val logger = LogManager.getLogger(EmbuimentsRepositoryImp::class.java)
     override suspend fun getEmbuiments(): Imbuements? {
         return try {
