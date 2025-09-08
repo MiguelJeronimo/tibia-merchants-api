@@ -28,7 +28,8 @@ class SecurityConf (private val secret:String){
     fun validateToken(token:String): Boolean {
         return try {
             val claims = Jwts.parser().verifyWith(key).build().parseSignedClaims(token)
-            !claims.payload.expiration.before(Date())
+            val exp = claims.payload.expiration
+            exp == null || !exp.before(Date())//Validate token without defeat time or defeat token
         }catch (e: JwtException){
             false
         }catch (e: Exception){
