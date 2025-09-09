@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("/api/v1")
 class ControllerNPCInfo: KoinComponent {
     private val logger: Logger = LogManager.getLogger(ControllerSpells::class.java)
     val useCaseNPC: UseCaseNPC by inject()

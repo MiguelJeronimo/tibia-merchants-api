@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("/api/v1")
 class ControllerItems: KoinComponent {
     private val logger = LogManager.getLogger(ControllerItems::class.java)
     private val useCaseItems: UseCaseItems by inject()
