@@ -1,7 +1,5 @@
 package com.miguel.tibia_merchants_api.controllers
 
-import com.miguel.tibia_merchants_api.data.network.Tibia
-import com.miguel.tibia_merchants_api.data.repositories.SpellsRepositoryImp
 import com.miguel.tibia_merchants_api.domain.models.Errors
 import com.miguel.tibia_merchants_api.domain.models.Response
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseSpells
