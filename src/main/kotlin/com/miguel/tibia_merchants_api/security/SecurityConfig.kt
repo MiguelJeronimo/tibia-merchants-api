@@ -15,6 +15,10 @@ import org.springframework.security.web.server.SecurityWebFilterChain
 class SecurityConfig {
     @Value("\${tibia.merchants.secret}")
     lateinit var secret: String
+    @Value("\${tibia.merchants.pathToken}")
+    lateinit var pathToken: String
+    @Value("\${tibia.merchants.paths}")
+    lateinit var paths:String
 
     @Bean
     fun securityConf() = SecurityConf(secret = secret)
@@ -26,13 +30,13 @@ class SecurityConfig {
     fun securityFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain? {
         http.csrf { it.disable() }
             .authorizeExchange {
-                it.pathMatchers("/auth/**").permitAll()
-                it.pathMatchers("/api/v1/**")
+                it.pathMatchers(pathToken).permitAll()
+                it.pathMatchers(paths)
                     .authenticated()//.hasAuthority("ROLE_USER") // endpoint para generar token externo
                 it.anyExchange().authenticated()
             }
             .addFilterAt(jwtFilter(), SecurityWebFiltersOrder.AUTHENTICATION)
         return http.build()
     }
-
+//eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aWJpYV9tZXJjaGFudHNfYXBwIiwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTc1NzM0ODk1MX0.2zSRSd_HcJCCiWVahHzd44OH3nSIbVhwikd54tZfuSY
 }
