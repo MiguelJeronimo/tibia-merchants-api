@@ -18,7 +18,7 @@ class ControllerCatalog: KoinComponent {
     private val logger: Logger = LogManager.getLogger(ControllerCatalog::class.java)
     private val useCaseCatalog: UseCaseCatalog by inject()
     @GetMapping("/catalog")
-    suspend fun catalog(): Any {
+    suspend fun catalog(): ResponseEntity<out Any?> {
         return try {
             logger.info("init petition")
             val catalog = useCaseCatalog.catalog()
