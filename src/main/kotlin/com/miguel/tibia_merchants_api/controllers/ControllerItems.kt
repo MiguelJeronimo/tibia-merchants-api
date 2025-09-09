@@ -16,7 +16,7 @@ class ControllerItems: KoinComponent {
     private val logger = LogManager.getLogger(ControllerItems::class.java)
     private val useCaseItems: UseCaseItems by inject()
     @GetMapping("/items")
-    suspend fun items(): Any {
+    suspend fun items(): ResponseEntity<out Any?> {
         return try {
             logger.info("init petition")
             val repository = useCaseItems.items()
@@ -38,7 +38,7 @@ class ControllerItems: KoinComponent {
     }
 
     @PostMapping("/items/type/")
-    suspend fun item(@RequestBody bodyItems: BodyItems): Any {
+    suspend fun item(@RequestBody bodyItems: BodyItems): ResponseEntity<out Any?> {
         return try {
             logger.info("Request: $bodyItems")
             val title = bodyItems.title
@@ -65,10 +65,12 @@ class ControllerItems: KoinComponent {
             logger.fatal("Error: ${e.message}")
             val error = Errors(500, "Fatal Error, contact to support")
             ResponseEntity.internalServerError().body(error)
-        }
+        } as ResponseEntity<out Any?>
     }
+
+
     @GetMapping("/item/{name}")
-    suspend fun item(@PathVariable name: String): Any?{
+    suspend fun item(@PathVariable name: String?): ResponseEntity<out Any?>{
         return try {
             logger.info("Request: $name")
             logger.info("init petition")
@@ -77,7 +79,7 @@ class ControllerItems: KoinComponent {
                 if (repository != null){
                     val response = Response(200, repository)
                     logger.info("Response succeful....")
-                    ResponseEntity.ok().body(response)
+                    ResponseEntity.ok(response)
                 } else {
                     val error = Errors(400, "Error getting $name information")
                     logger.error("Error: $repository")
@@ -92,6 +94,6 @@ class ControllerItems: KoinComponent {
             logger.fatal("Error: ${e.message}")
             val error = Errors(500, "Fatal Error, contact to support")
             ResponseEntity.internalServerError().body(error)
-        }
+        } as ResponseEntity<out Any?>
     }
 }
