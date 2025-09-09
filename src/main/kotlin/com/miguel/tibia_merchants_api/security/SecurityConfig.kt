@@ -38,5 +38,4 @@ class SecurityConfig {
             .addFilterAt(jwtFilter(), SecurityWebFiltersOrder.AUTHENTICATION)
         return http.build()
     }
-//eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aWJpYV9tZXJjaGFudHNfYXBwIiwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTc1NzM0ODk1MX0.2zSRSd_HcJCCiWVahHzd44OH3nSIbVhwikd54tZfuSY
 }
