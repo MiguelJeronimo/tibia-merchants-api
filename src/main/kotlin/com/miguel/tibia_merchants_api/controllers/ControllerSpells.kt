@@ -18,14 +18,14 @@ class ControllerSpells: KoinComponent {
     private val logger: Logger = LogManager.getLogger(ControllerSpells::class.java)
     private val useCaseSpells: UseCaseSpells by inject()
     @GetMapping("/spells")
-    suspend fun spells(): Any?{
+    suspend fun spells(): ResponseEntity<out Any?> {
         logger.info("init petition")
         return try {
-            val spells = useCaseSpells.invokeSpells()
+            val spells = useCaseSpells.spells()
             if (spells != null){
                 val response = Response(200, spells)
                 logger.info("Response final: $response")
-                ResponseEntity.ok().body(response)
+                ResponseEntity.ok(response)
             }else{
                 val error = Errors(400, "Error getting catalog list")
                 logger.error("Error: $error")
