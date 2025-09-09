@@ -1,7 +1,5 @@
 package com.miguel.tibia_merchants_api.controllers
 
-import com.miguel.tibia_merchants_api.data.network.Tibia
-import com.miguel.tibia_merchants_api.data.repositories.SpellsRepositoryImp
 import com.miguel.tibia_merchants_api.domain.models.Errors
 import com.miguel.tibia_merchants_api.domain.models.Response
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseSpells
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("/api/v1")
 class ControllerSpells: KoinComponent {
     private val logger: Logger = LogManager.getLogger(ControllerSpells::class.java)
     private val useCaseSpells: UseCaseSpells by inject()

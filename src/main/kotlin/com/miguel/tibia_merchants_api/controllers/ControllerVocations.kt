@@ -10,13 +10,15 @@ import org.koin.core.component.inject
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@RequestMapping("/api/v1")
 class ControllerVocations: KoinComponent {
     private val logger: Logger = LogManager.getLogger(ControllerVocations::class.java)
     private val useCaseVocations: UseCaseVocations by inject()
-    @GetMapping("api/v1/vocations")
+    @GetMapping("/vocations")
     suspend fun vocations(): Any {
         return try {
             logger.info("init petition")
@@ -37,7 +39,7 @@ class ControllerVocations: KoinComponent {
         }
     }
 
-    @GetMapping("api/v1/vocation/{vocation}")
+    @GetMapping("/vocation/{vocation}")
     suspend fun vocation(@PathVariable vocation:String): Any {
         return try {
             logger.info("init petition")

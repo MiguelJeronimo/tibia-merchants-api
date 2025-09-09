@@ -9,13 +9,15 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@RequestMapping("/api/v1")
 class ControllerCatalog: KoinComponent {
     private val logger: Logger = LogManager.getLogger(ControllerCatalog::class.java)
     private val useCaseCatalog: UseCaseCatalog by inject()
-    @GetMapping("api/v1/catalog")
+    @GetMapping("/catalog")
     suspend fun catalog(): Any {
         return try {
             logger.info("init petition")
