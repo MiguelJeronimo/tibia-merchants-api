@@ -15,6 +15,8 @@ import com.miguel.tibia_merchants_api.data.repositories.SpellsRepository
 import com.miguel.tibia_merchants_api.data.repositories.SpellsRepositoryImp
 import com.miguel.tibia_merchants_api.data.repositories.VocationsRepository
 import com.miguel.tibia_merchants_api.data.repositories.VocationsRepositoryImp
+import com.miguel.tibia_merchants_api.data.repositories.wikipediaapi.RepositoryWikiTibia
+import com.miguel.tibia_merchants_api.data.repositories.wikipediaapi.RepositoryWikiTibiaImpl
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseBlessings
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseCatalog
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseEmbuiments
@@ -28,6 +30,10 @@ class DI {
     //dependences injection configuration
     val appModules = module {
         //injection in Catalogs
+        single<RepositoryWikiTibia>{
+            RepositoryWikiTibiaImpl()
+        }
+
         single <CatalogRepository>{
             CatalogRepositoryImp(Tibia())
         }
@@ -42,7 +48,7 @@ class DI {
         }
 
         single <UseCaseBlessings>{
-            UseCaseBlessings(get())
+            UseCaseBlessings(get(), get())
         }
         //injection dependencies in npcInfo
         single <NPCRepository>{

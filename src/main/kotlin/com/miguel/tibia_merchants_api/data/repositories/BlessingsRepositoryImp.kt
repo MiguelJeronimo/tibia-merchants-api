@@ -9,10 +9,10 @@ import org.apache.logging.log4j.Logger
 
 class BlessingsRepositoryImp(private val tibia: Tibia): BlessingsRepository {
     private val logger: Logger = LogManager.getLogger(BlessingsRepositoryImp::class.java)
-    override suspend fun blessings(): Blessing? {
+    override suspend fun blessings(html: String): Blessing? {
         return try {
             withContext(Dispatchers.IO){
-                val blessings = tibia.blessings().blessingsInformation()
+                val blessings = tibia.blessings().blessingsInformation(html)
                 logger.info("Reponse repository: ${blessings}")
                 blessings
             }

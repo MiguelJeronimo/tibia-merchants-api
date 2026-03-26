@@ -4,5 +4,5 @@ import com.miguel.tibia_merchants_api.domain.models.Blessing
 
 
 interface BlessingsRepository {
-   suspend fun blessings(): Blessing?
+   suspend fun blessings(html: String): Blessing?
 }

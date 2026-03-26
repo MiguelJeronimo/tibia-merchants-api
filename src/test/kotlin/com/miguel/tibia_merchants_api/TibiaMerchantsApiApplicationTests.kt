@@ -9,9 +9,9 @@ class TibiaMerchantsApiApplicationTests {
 
 	@Test
 	fun blessingsTest() {
-		Tibia().blessings().blessingsInformation().blessings?.forEach {
-			println(it)
-		}
+//		Tibia().blessings().blessingsInformation(html).blessings?.forEach {
+//			println(it)
+//		}
 	}
 
 	@Test
