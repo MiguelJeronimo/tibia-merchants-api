@@ -1,35 +1,31 @@
-# Start with a base image containing Java runtime (AdoptOpenJDK)
-#FROM openjdk:17-jdk-slim AS build
+# Etapa 1: Build
 FROM amazoncorretto:17 AS build
-
-# Set the working directory in the image to "/app"
 WORKDIR /app
 
-# Copy the Gradle executable to the image
-COPY gradlew ./
-
-# Copy the 'gradle' folder to the image
+# Copiamos archivos de configuración primero para aprovechar el cache de Docker
+COPY gradlew .
 COPY gradle ./gradle
+COPY build.gradle.kts settings.gradle.kts ./
 
-# Give permission to execute the gradle script
+# Descargar dependencias sin compilar todo el proyecto (ahorra tiempo en rediseños)
 RUN chmod +x ./gradlew
+RUN ./gradlew dependencies --no-daemon
 
-# Copy the rest of the application source code
-COPY . .
+# Copiar el código fuente de Kotlin y recursos
+COPY src ./src
 
-# Use Gradle to build the application
-RUN sh ./gradlew build
+# Compilar solo el bootJar (el ejecutable de Spring) saltando los tests
+RUN ./gradlew bootJar -x test --no-daemon
 
-# Set up a second stage, which will only keep the compiled application and not the build tools and source code
+# Etapa 2: Runtime
 FROM amazoncorretto:17-alpine
-
-# Set the working directory to '/app'
 WORKDIR /app
 
-# Copy the jar file from the first stage
-COPY --from=build /app/build/libs/*.jar app.jar
-# Variables de entorno para JVM
-ENV JAVA_OPTS="-Xms64m -Xmx450m -XX:+UseZGC -XX:MaxMetaspaceSize=128m -XX:CompressedClassSpaceSize=32m -XX:+HeapDumpOnOutOfMemoryError -XX:MaxGCPauseMillis=200 -XX:InitiatingHeapOccupancyPercent=35 -Xlog:gc*:file=gc.log:time,uptime,level,tags:filecount=5,filesize=10m -Xss512k"
+# IMPORTANTE: Usamos un patrón más específico para evitar el error de múltiples JARs
+# O simplemente apuntamos al nombre que Spring Boot genera por defecto
+COPY --from=build /app/build/libs/*-SNAPSHOT.jar app.jar
 
-# Set the startup command to execute the jar
-CMD ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]
+ENV JAVA_OPTS="-Xms64m -Xmx450m -XX:+UseZGC -XX:MaxMetaspaceSize=128m -Xss512k"
+
+# Usar ENTRYPOINT es mejor práctica para contenedores ejecutables
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
