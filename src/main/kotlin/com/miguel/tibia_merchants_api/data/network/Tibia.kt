@@ -68,8 +68,8 @@ class Tibia {
         return npc
     }
 
-    fun npc(name:String): NPCInfo {
-        val npc = NPCProfile(scrapper, baseurl).information(name)
+    fun npc(name: String, html: String): NPCInfo {
+        val npc = NPCProfile(scrapper, html).information()
         return npc
     }
 

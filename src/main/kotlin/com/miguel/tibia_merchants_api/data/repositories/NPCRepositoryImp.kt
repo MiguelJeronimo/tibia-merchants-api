@@ -23,10 +23,10 @@ class NPCRepositoryImp(private val tibia: Tibia): NPCRepository{
         }
     }
 
-    override suspend fun npcInfo(name: String): NPCInfo? {
+    override suspend fun npcInfo(name: String, html: String): NPCInfo? {
         return try {
             withContext(Dispatchers.IO){
-                val npc = tibia.npc(name)
+                val npc = tibia.npc(name,html)
                 logger.info("RESPONSE NPCINFO: $npc")
                 npc
             }
