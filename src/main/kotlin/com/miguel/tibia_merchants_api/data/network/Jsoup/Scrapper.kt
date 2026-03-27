@@ -4,9 +4,11 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
 class Scrapper {
-    fun Soup(url:String): Document {
-        //Itony Stark
-        val conexion = Jsoup.connect(url).get()
-        return conexion
+    fun Soup(url: String): Document {
+        return Jsoup.connect(url).get()
+    }
+
+    fun htmlConverter(code: String): Document {
+        return Jsoup.parse(code)
     }
 }

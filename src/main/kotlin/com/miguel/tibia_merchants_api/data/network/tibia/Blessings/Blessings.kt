@@ -5,11 +5,9 @@ import com.miguel.tibia_merchants_api.domain.models.Blessing
 import com.miguel.tibia_merchants_api.domain.models.Blessings
 
 class Blessings(val scrapper: Scrapper, baseurl: String) {
-    private val url = "${baseurl}/Blessings"
-    private val request = scrapper.Soup(url)
 
-    fun blessingsInformation(): Blessing {
-        println(url)
+    fun blessingsInformation(html: String): Blessing {
+        val request = scrapper.htmlConverter(html)
         val container = request.select("[class=\"wikitable\"]")
         val introduction = request.select("h2 + p").first()!!.text()+
                 request.select("h2 + p + p").first()!!.text() +
