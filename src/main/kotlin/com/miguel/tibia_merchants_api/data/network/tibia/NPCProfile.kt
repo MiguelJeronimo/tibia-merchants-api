@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager
 import org.jsoup.nodes.Document
 
 
-class NPCProfile(private val scrapper: Scrapper, private val baseurl: String) {
+class NPCProfile(private val scrapper: Scrapper, private val html: String) {
     val arrayBuyingItems = ArrayList<Item>()
     val arraSellingItems = ArrayList<Item>()
     val arraySellingSpells = ArrayList<Spells>()
@@ -17,12 +17,11 @@ class NPCProfile(private val scrapper: Scrapper, private val baseurl: String) {
     val spells = Spells(null, null, null, null, null)
     private val logger = LogManager.getLogger(NPCProfile::class.java)
 
-    fun information(name:String): NPCInfo {
-        logger.info("URL Wiki: \"${baseurl}/${name}\"")
+    fun information(): NPCInfo {
         val arrayCitys = ArrayList<NameNPC>()
-        val request = scrapper.Soup("${baseurl}/${name}")
+        val request = scrapper.htmlConverter(code = html)
         val npcNotes = request.getElementById("npc-notes")!!.text()
-        val nameNPC = request.getElementsByClass("mw-page-title-main").text()
+        val nameNPC = request.select("[data-source=\"name\"]").text()
         val imgNPC = request.getElementById("twbox-image")?.select("img")?.attr("src")
         val aside = request.getElementsByClass("portable-infobox pi-background pi-border-color pi-theme-twbox pi-layout-default")
         val gender = aside.select("[data-source=\"gender\"]").select("[class=\"pi-data-value pi-font\"]").text()
@@ -105,7 +104,7 @@ class NPCProfile(private val scrapper: Scrapper, private val baseurl: String) {
 
     private fun getSellingItems(document: Document): ArrayList<Item>? {
         val tableSells = document.getElementById("npc-trade-sells")
-        val tbody = tableSells?.select("tbody")//?.select("tr")
+        val tbody = tableSells?.select("tbody")
         return if (tableSells != null) {
             if (tbody.toString() != "") {
                 val trSells = tbody?.select("tr")

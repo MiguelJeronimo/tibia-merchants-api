@@ -13,6 +13,7 @@ class RepositoryWikiTibiaImpl: RepositoryWikiTibia {
     override suspend fun getWikiContent(title: String): WikiModels {
         return try {
             val url = "https://tibia.fandom.com/api.php?action=parse&page=$title&prop=text&format=json"
+            logger.info("URL: $url")
             val response = response.getForEntity<WikiModels>(url)
             
             if (response.statusCode.isError){

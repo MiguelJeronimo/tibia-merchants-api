@@ -56,7 +56,7 @@ class DI {
         }
 
         single <UseCaseNPC>{
-            UseCaseNPC(get())
+            UseCaseNPC(get(), get())
         }
         //injection dependencies in Items
         single <ItemsRepository>{
