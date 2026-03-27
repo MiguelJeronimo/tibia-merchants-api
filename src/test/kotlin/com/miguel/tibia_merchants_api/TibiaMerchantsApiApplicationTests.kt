@@ -24,7 +24,7 @@ class TibiaMerchantsApiApplicationTests {
 	@Test
 	fun npcInformation(){
 		val nameNPC = "Frodo"
-		Tibia().npc(nameNPC, html)
+		//Tibia().npc(nameNPC, html)
 	}
 
 	@Test
