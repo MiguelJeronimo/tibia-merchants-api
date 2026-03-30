@@ -16,9 +16,9 @@ class TibiaMerchantsApiApplicationTests {
 
 	@Test
 	fun itemProfile(){
-		println(Tibia().itemProfileItems("Alicorn Headguard"))
+		println(Tibia().itemProfileItems("Alicorn Headguard",))
 		println("*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
-		println(Tibia().itemProfileItems("Demon Helmet"))
+		println(Tibia().itemProfileItems("Demon Helmet",))
 	}
 
 	@Test

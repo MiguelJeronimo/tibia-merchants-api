@@ -28,8 +28,8 @@ class Tibia {
     private val baseurl = "https://tibia.fandom.com/wiki"
     private val scrapper = Scrapper()
 
-    fun weapons(): Weapons {
-        return Weapons(scrapper, baseurl)
+    fun weapons(html: String): Weapons {
+        return Weapons(scrapper, html)
     }
 
     fun catalog(): CatalogGame {
@@ -41,7 +41,7 @@ class Tibia {
     }
 
     fun items(): Items {
-        return Items(scrapper, baseurl)
+        return Items(scrapper)
     }
 
     fun blessings(): Blessings {
@@ -73,12 +73,12 @@ class Tibia {
         return npc
     }
 
-    fun bodyEquipments(name: String): ArrayList<ItemEquipment> {
-        return EquipmentList(scrapper, baseurl, name).item()
+    fun bodyEquipments(name: String, html: String): ArrayList<ItemEquipment> {
+        return EquipmentList(scrapper, html, name).item()
     }
 
-    fun itemProfileItems(name: String): Profile {
-        return ItemProfileBodyEquipment(scrapper, baseurl, name).item()
+    fun itemProfileItems(name: String, html: String): Profile {
+        return ItemProfileBodyEquipment(scrapper, html, name).item()
     }
 
     fun household(name: String): Any? {

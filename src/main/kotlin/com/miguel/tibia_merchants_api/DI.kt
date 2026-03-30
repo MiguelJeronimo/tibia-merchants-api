@@ -64,7 +64,7 @@ class DI {
         }
 
         single <UseCaseItems>{
-            UseCaseItems(get())
+            UseCaseItems(get(), get())
         }
         //injection dependencies in Spells
         single <SpellsRepository>{

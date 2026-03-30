@@ -7,17 +7,20 @@ import com.miguel.tibia_merchants_api.domain.models.Response
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseItems
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.koin.java.KoinJavaComponent.inject
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import kotlin.getValue
 
 @RestController
 @RequestMapping("/api/v1")
-class ControllerWeapons {
+class ControllerWeapons: KoinComponent {
     private val logger: Logger = LogManager.getLogger(ControllerWeapons::class.java)
-    private val repositoryImp = ItemsRepositoryImp(Tibia())
-    private val useCase = UseCaseItems(repositoryImp)
+    private val useCase: UseCaseItems by inject()
     @GetMapping("/weapons")
     suspend fun weapons(): ResponseEntity<out Any?> {
         return try {

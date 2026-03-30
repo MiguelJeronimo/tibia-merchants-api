@@ -6,10 +6,10 @@ import model.Tibia.Information
 import model.Tibia.ItemsCatalog
 import org.jsoup.select.Elements
 
-class Items(val scrapper: Scrapper, baseurl: String) {
-    private val url = "${baseurl}/items"
-    private val request = scrapper.Soup(url)
-    fun items(): ItemsCatalog {
+class Items(val scrapper: Scrapper) {
+
+    fun items(html: String): ItemsCatalog {
+        val request = scrapper.htmlConverter(html)
         val catalogs = ItemsCatalog()
         val container = request.getElementsByClass("mw-parser-output")
         val arrayTitles = container.select("h2").eachText()

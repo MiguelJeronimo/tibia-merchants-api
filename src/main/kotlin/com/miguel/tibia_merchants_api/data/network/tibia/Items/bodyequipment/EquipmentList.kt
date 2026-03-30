@@ -5,12 +5,11 @@ import model.Tibia.BodyEquipment
 import model.Tibia.ItemEquipment
 import org.jsoup.select.Elements
 
-class EquipmentList(scrapper: Scrapper, baseurl: String, val name: String) {
-    private val url = "${baseurl}/${name}"
-    private val request = scrapper.Soup(url)
+class EquipmentList(scrapper: Scrapper, html: String, val name: String) {
+    private val request = scrapper.htmlConverter(html)
     private var container: Elements? = null
+
     fun item(): ArrayList<ItemEquipment> {
-        println("url_: $url")
         val bodyEquipment = BodyEquipment()
         val items = ArrayList<ItemEquipment>()
         request.getElementsByClass("wikitable sortable full-width").also {
