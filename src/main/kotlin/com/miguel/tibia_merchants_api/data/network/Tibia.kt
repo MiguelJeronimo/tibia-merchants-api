@@ -149,7 +149,7 @@ class Tibia {
         return TibiaSpells(baseurl = baseurl, scrapper = scrapper).spellList()
     }
 
-    fun embuiments(html: String?): Imbuements {
-        return EmbuimentsTibia(baseURL = html,  scrapper = scrapper).embuiments()
+    fun embuiments(html: String): Imbuements {
+        return EmbuimentsTibia(html = html,  scrapper = scrapper).embuiments()
     }
 }
