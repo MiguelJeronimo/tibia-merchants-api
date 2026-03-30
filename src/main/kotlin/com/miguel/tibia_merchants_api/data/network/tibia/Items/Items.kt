@@ -14,12 +14,12 @@ class Items(val scrapper: Scrapper) {
         val container = request.getElementsByClass("mw-parser-output")
         val arrayTitles = container.select("h2").eachText()
         arrayTitles.removeFirst()
-        catalogs.body_equipment = Information(title = arrayTitles[0], array= bodyEquipments(container))
-        catalogs.weapons = Information(title = arrayTitles[1], array= weapons(container))
-        catalogs.household_items = Information(title = arrayTitles[2], array= houseHoldItems(container))
-        catalogs.others = Information(title = arrayTitles[3], array= others(container))
-        catalogs.tools_equipment = Information(title = arrayTitles[4], array= toolsEquipment(container))
-        catalogs.other_items = Information(title = arrayTitles[5], array= othersItems(container))
+        catalogs.body_equipment = Information(title = arrayTitles[0].replace("[]", ""), array= bodyEquipments(container))
+        catalogs.weapons = Information(title = arrayTitles[1].replace("[]", ""), array= weapons(container))
+        catalogs.household_items = Information(title = arrayTitles[2].replace("[]", ""), array= houseHoldItems(container))
+        catalogs.others = Information(title = arrayTitles[3].replace("[]", ""), array= others(container))
+        catalogs.tools_equipment = Information(title = arrayTitles[4].replace("[]", ""), array= toolsEquipment(container))
+        catalogs.other_items = Information(title = arrayTitles[5].replace("[]", ""), array= othersItems(container))
         return catalogs
     }
     //Body Equipment
