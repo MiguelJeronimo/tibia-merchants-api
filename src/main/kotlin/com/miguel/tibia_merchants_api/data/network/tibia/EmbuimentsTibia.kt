@@ -11,22 +11,19 @@ import com.miguel.tibia_merchants_api.domain.models.PowerFull
 import org.apache.logging.log4j.LogManager
 import org.jsoup.select.Elements
 
-class EmbuimentsTibia(scrapper: Scrapper, baseURL:  String) {
-    private val logger = LogManager.getLogger(EmbuimentsTibia::class.java)
-    private val url = "${baseURL}/Imbuing"
-    private val request = scrapper.Soup(url)
+class EmbuimentsTibia(scrapper: Scrapper, html:  String) {
+    private val request = scrapper.htmlConverter(html)
     private val model = Imbuements()
     private val modelList = ArrayList<EmbuimentsAttributes>()
 
     fun embuiments(): Imbuements {
-        logger.info("URL Wiki: $url")
         val nodes = request.getElementById("content")?.children()
         walkTree(nodes =  nodes, list = modelList)
         val list = modelList.distinctBy { it.name }
         return model.apply { this.embuiments = list as ArrayList}
     }
 
-    fun walkTree(nodes: Elements?, list: ArrayList<EmbuimentsAttributes>, map: HashMap<String, String> = HashMap()){
+    private fun walkTree(nodes: Elements?, list: ArrayList<EmbuimentsAttributes>, map: HashMap<String, String> = HashMap()){
         for (node in nodes!!){
             when{
                 node.tagName() == "h4"->{
@@ -51,7 +48,7 @@ class EmbuimentsTibia(scrapper: Scrapper, baseURL:  String) {
         }
     }
 
-    fun tableEmbuiments(tBody: Elements, list: ArrayList<EmbuimentsAttributes>, map: HashMap<String, String>){
+    private fun tableEmbuiments(tBody: Elements, list: ArrayList<EmbuimentsAttributes>, map: HashMap<String, String>){
         val attributes = Attributes()
         val trs = tBody.select("tr")
         trs.forEach {

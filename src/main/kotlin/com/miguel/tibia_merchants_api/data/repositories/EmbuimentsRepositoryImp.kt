@@ -8,10 +8,10 @@ import org.apache.logging.log4j.LogManager
 
 class EmbuimentsRepositoryImp(private val tibia: Tibia) : EmbuimentsRepository {
     private val logger = LogManager.getLogger(EmbuimentsRepositoryImp::class.java)
-    override suspend fun getEmbuiments(): Imbuements? {
+    override suspend fun getEmbuiments(html: String?): Imbuements? {
         return try {
             withContext(Dispatchers.IO){
-                val tibia = tibia.embuiments()
+                val tibia = tibia.embuiments(html = html)
                 logger.info("Embuinments: $tibia")
                 tibia
             }

@@ -88,7 +88,7 @@ class DI {
         }
 
         single <UseCaseEmbuiments>{
-            UseCaseEmbuiments(get())
+            UseCaseEmbuiments(get(), get())
         }
     }
 }
