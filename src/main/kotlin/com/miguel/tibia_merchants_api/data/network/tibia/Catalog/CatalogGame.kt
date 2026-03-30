@@ -4,10 +4,10 @@ import API.Tibia.models.Catalog
 import Jsoup.Scrapper
 
 class CatalogGame(val scrapper: Scrapper, baseurl: String) {
-    private val url = "${baseurl}/Main_Page"
-    private val request = scrapper.Soup(url)
     private val catalogs = ArrayList<Catalog>()
-    fun options(): ArrayList<Catalog> {
+
+    fun options(html: String): ArrayList<Catalog> {
+        val request = scrapper.htmlConverter(html)
         val container = request.getElementById("gallery-0")
         val galleryItems = container?.select("[class=\"thumb\"]")
         val image = galleryItems?.select("img")

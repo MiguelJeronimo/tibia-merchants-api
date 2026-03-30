@@ -1,10 +1,15 @@
 package com.miguel.tibia_merchants_api.domain.usecase
 
 import com.miguel.tibia_merchants_api.data.repositories.EmbuimentsRepository
+import com.miguel.tibia_merchants_api.data.repositories.wikipediaapi.RepositoryWikiTibia
 import com.miguel.tibia_merchants_api.domain.models.Imbuements
+import kotlin.toString
 
-class UseCaseEmbuiments(private val repository: EmbuimentsRepository) {
+class UseCaseEmbuiments(private val repository: EmbuimentsRepository, private val repositoryWikiTibia: RepositoryWikiTibia) {
+    //TODO: resolve enpoint not found
     suspend fun embuiment(): Imbuements? {
-        return repository.getEmbuiments()
+        val response = repositoryWikiTibia.getWikiContent("Imbuing")
+        val html = response.parse?.text?.content.toString()
+        return repository.getEmbuiments(html = html)
     }
 }

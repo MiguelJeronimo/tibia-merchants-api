@@ -39,7 +39,7 @@ class DI {
         }
 
         single <UseCaseCatalog>{
-            UseCaseCatalog(get())
+            UseCaseCatalog(get(), get())
         }
 
         //injection dependencies in Blessigs
@@ -64,7 +64,7 @@ class DI {
         }
 
         single <UseCaseItems>{
-            UseCaseItems(get())
+            UseCaseItems(get(), get())
         }
         //injection dependencies in Spells
         single <SpellsRepository>{
@@ -88,7 +88,7 @@ class DI {
         }
 
         single <UseCaseEmbuiments>{
-            UseCaseEmbuiments(get())
+            UseCaseEmbuiments(get(), get())
         }
     }
 }

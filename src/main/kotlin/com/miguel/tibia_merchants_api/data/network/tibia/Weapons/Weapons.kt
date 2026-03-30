@@ -5,7 +5,8 @@ import API.Tibia.models.Weapons
 import Jsoup.Scrapper
 import com.miguel.tibia_merchants_api.data.network.tibia.ModelsScrapper.*
 
-class Weapons(val scrapper: Scrapper, private val baseurl: String) {
+class Weapons(private val scrapper: Scrapper, private val html: String) {
+    private val request = scrapper.htmlConverter(html)
     fun weapons(): Weapons {
         return Weapons(
             bows = bows(),
@@ -21,8 +22,6 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     }
     //six tables
     fun bows(): Bows {
-        println("url_: ${baseurl}/Distance_Weapons")
-        val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val weaponsList = ArrayList<Bow>()
         val body = request.getElementsByClass("tabber wds-tabber")
             .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")[0].select("tbody")
@@ -52,8 +51,6 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     }
 
     fun crowBows(): CrossBows {
-        println("url_: ${baseurl}/Distance_Weapons")
-        val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val weaponsList = ArrayList<CrossBow>()
         val body = request.getElementsByClass("tabber wds-tabber")
             .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")[1].select("tbody")
@@ -81,8 +78,6 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     }
 
     fun arrows(): Arrows {
-        println("url_: ${baseurl}/Bow_Ammunition")
-        val request = scrapper.Soup("${baseurl}/Bow_Ammunition")
         val ammunitionList = ArrayList<Arrow>()
         val body = request.getElementsByClass("wikitable sortable full-width").select("tbody")
         body.select("tr").forEach {
@@ -104,8 +99,6 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     }
 
     fun bolts(): Bolts {
-        println("url_: ${baseurl}/Distance_Weapons")
-        val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val ammunitionList = ArrayList<Bolt>()
         val body = request.getElementsByClass("tabber wds-tabber")
             .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")[3].select("tbody")
@@ -128,8 +121,6 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     }
 
     fun throwingWeapons(): Throwings {
-        println("url_: ${baseurl}/Distance_Weapons")
-        val request = scrapper.Soup("${baseurl}/Distance_Weapons")
         val ammunitionList = ArrayList<Throwing>()
         val body = request.getElementsByClass("tabber wds-tabber")
             .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")[4]
@@ -156,8 +147,6 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     /*AXES*/
 
     fun clubWeapons(): Club {
-        println("url_: ${baseurl}/Club_Weapons")
-        val request = scrapper.Soup("${baseurl}/Club_Weapons")
         val clubWeaponsList = ArrayList<ClubWeapons>()
         val clubEnchanted = ArrayList<ClubWeapons>()
         val clubCharged = ArrayList<ClubWeapons>()
@@ -224,8 +213,6 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     }
 
     fun axesWeapons(): Axes {
-        println("url_: ${baseurl}/Axe_Weapons")
-        val request = scrapper.Soup("${baseurl}/Axe_Weapons")
         val axesWeaponsList = ArrayList<AxesWeapons>()
         val axesEnchanted = ArrayList<AxesWeapons>()
         val axesCharged = ArrayList<AxesWeapons>()
@@ -292,8 +279,6 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     }
 
     fun swordsWeapons(): Swords {
-        println("url_: ${baseurl}/Sword_Weapons")
-        val request = scrapper.Soup("${baseurl}/Sword_Weapons")
         val swordsWeaponsList = ArrayList<SwordsWeapons>()
         val swordsEnchanted = ArrayList<SwordsWeapons>()
         val swordsCharged = ArrayList<SwordsWeapons>()
@@ -360,8 +345,6 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     }
 
     fun wands(): Wands {
-        println("url_:${baseurl}/Wands")
-        val request = scrapper.Soup("${baseurl}/Wands")
         val wandsWeaponsList = ArrayList<WandsWeapons>()
         val wandsCharged = ArrayList<WandsWeapons>()
         val tbody = request.getElementsByClass("tabber wds-tabber")
@@ -419,8 +402,6 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     }
 
     fun rods(): Rods {
-        println("url_:${baseurl}/Rods")
-        val request = scrapper.Soup("${baseurl}/Rods")
         val rodsWeaponsList = ArrayList<RodsWeapons>()
         val rodsCharged = ArrayList<RodsWeapons>()
         val tbody = request.getElementsByClass("tabber wds-tabber")
@@ -478,8 +459,6 @@ class Weapons(val scrapper: Scrapper, private val baseurl: String) {
     }
 
     fun oldWands(): OldWands {
-        println("url_:${baseurl}/Old_Wands_and_Rods")
-        val request = scrapper.Soup("${baseurl}/Old_Wands_and_Rods")
         val oldWands = ArrayList<OldWand>()
         val tbody = request.getElementsByClass("wikitable sortable full-width")
             .tagName("tbody").select("[class=\"wikitable sortable full-width\"]")

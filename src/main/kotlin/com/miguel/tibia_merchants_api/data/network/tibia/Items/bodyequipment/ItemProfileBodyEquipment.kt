@@ -6,10 +6,8 @@ import com.miguel.tibia_merchants_api.utils.Utils
 import org.apache.logging.log4j.LogManager
 import org.jsoup.select.Elements
 
-class ItemProfileBodyEquipment (scrapper: Scrapper, baseurl: String, name: String){
-    private val logger = LogManager.getLogger(ItemProfileBodyEquipment::class.java)
-    private val url = "${baseurl}/${name}"
-    private val request = scrapper.Soup(url)
+class ItemProfileBodyEquipment (scrapper: Scrapper, html: String, name: String){
+    private val request = scrapper.htmlConverter(html)
     private val utils = Utils()
     /**
      * Search the next data for items profile:
@@ -39,13 +37,12 @@ class ItemProfileBodyEquipment (scrapper: Scrapper, baseurl: String, name: Strin
      *
      * **/
     fun item(): Profile {
-        logger.info("url final: $url")
         val buy = ArrayList<BuyFrom>()
         val sell = ArrayList<SellFrom>()
         val npcNotes = request.getElementById("object-notes")?.children()
         val history = request.getElementById("object-history")?.children()
         val tibia = request.getElementById("twbox-look")?.text()
-        val nameNPC = request.getElementsByClass("mw-page-title-main").text()
+        val nameNPC = request.getElementsByClass("pi-item pi-item-spacing pi-title pi-secondary-background").text()
         val imgNPC = request.getElementById("twbox-image")
             ?.select("img")?.attr("src")
         //val mapImage = request.getElementsByClass("map_image").select("img").attr("src")
