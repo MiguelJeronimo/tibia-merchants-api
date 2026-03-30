@@ -9,10 +9,10 @@ import org.apache.logging.log4j.Logger
 
 class CatalogRepositoryImp(private val tibia: Tibia): CatalogRepository {
     private val logger: Logger = LogManager.getLogger(CatalogRepositoryImp::class.java)
-    override suspend fun catalog(): ArrayList<Catalog>? {
+    override suspend fun catalog(html: String): ArrayList<Catalog>? {
         return try {
             withContext(Dispatchers.IO){
-                val options = tibia.catalog().options()
+                val options = tibia.catalog().options(html = html)
                 logger.info("Reponse repository: ${options}")
                 options
             }

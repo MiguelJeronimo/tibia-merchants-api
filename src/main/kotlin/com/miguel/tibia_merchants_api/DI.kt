@@ -39,7 +39,7 @@ class DI {
         }
 
         single <UseCaseCatalog>{
-            UseCaseCatalog(get())
+            UseCaseCatalog(get(), get())
         }
 
         //injection dependencies in Blessigs
