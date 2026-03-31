@@ -72,7 +72,7 @@ class DI {
         }
 
         single <UseCaseSpells>{
-            UseCaseSpells(get())
+            UseCaseSpells(get(), get())
         }
         //injection dependencies in Vocations
         single <VocationsRepository>{

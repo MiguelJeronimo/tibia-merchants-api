@@ -145,8 +145,8 @@ class Tibia {
         return equipments
     }
 
-    fun spells(): Spells {
-        return TibiaSpells(baseurl = baseurl, scrapper = scrapper).spellList()
+    fun spells(html: String): Spells {
+        return TibiaSpells(html = html, scrapper = scrapper).spellList()
     }
 
     fun embuiments(html: String): Imbuements {

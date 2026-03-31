@@ -6,9 +6,9 @@ import com.miguel.tibia_merchants_api.domain.models.spells.Runes
 import com.miguel.tibia_merchants_api.domain.models.spells.Spell
 import com.miguel.tibia_merchants_api.domain.models.spells.Spells
 
-class TibiaSpells(val scrapper: Scrapper, val baseurl: String) {
-    private val url = "$baseurl/Spells"
-    private val request = scrapper.Soup(url)
+class TibiaSpells(val scrapper: Scrapper, val html: String) {
+
+    private val request = scrapper.htmlConverter(html)
 
     fun spellList(): Spells {
         return Spells().apply {
