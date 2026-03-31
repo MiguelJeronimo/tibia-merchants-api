@@ -6,9 +6,9 @@ import com.miguel.tibia_merchants_api.domain.models.spells.Runes
 import com.miguel.tibia_merchants_api.domain.models.spells.Spell
 import com.miguel.tibia_merchants_api.domain.models.spells.Spells
 
-class TibiaSpells(val scrapper: Scrapper, val baseurl: String) {
-    private val url = "$baseurl/Spells"
-    private val request = scrapper.Soup(url)
+class TibiaSpells(val scrapper: Scrapper, val html: String) {
+
+    private val request = scrapper.htmlConverter(html)
 
     fun spellList(): Spells {
         return Spells().apply {
@@ -25,22 +25,21 @@ class TibiaSpells(val scrapper: Scrapper, val baseurl: String) {
         tr.forEach {
             val td = it.children()
             if (td[1].select("a").attr("title").isNotEmpty()){
-                var spell = Spell().apply {
+                val spell = Spell().apply {
                     val pattern = "/wiki/"
-                    val imge = td[8].select("a").attr("href")
+                    val imge = td[7].select("a").attr("href")
                     val effects = Effect().apply {
-                        description = td[8].text()
+                        description = td[7].text()
                         img = (if (imge.contains(pattern)) "" else imge).ifEmpty { null }
                     }
-                    name = td[1].select("a").attr("title")
+                    name = td[0].select("a").attr("title")
                     img = td[1].select("a").select("img").attr("data-src")
                         .ifEmpty { null }
                     formula = td[2].text()
                     premium = td[3].text()
                     level = td[4].text()
                     mana = td[5].text()
-                    price = td[6].text()
-                    group = td[7].text()
+                    group = td[6].text()
                     effect = effects
                 }
                 spellList.add(spell)
@@ -58,12 +57,12 @@ class TibiaSpells(val scrapper: Scrapper, val baseurl: String) {
             val td = it.children()
             if (td[1].select("a").attr("title").isNotEmpty()){
                 val rune = Runes().apply {
-                    val imge = td[10].select("a").select("img").attr("data-src")
+                    val imge = td[9].select("a").select("img").attr("data-src")
                     val effects = Effect().apply {
-                        description = td[10].text()
+                        description = td[9].text()
                         img = imge.ifEmpty { null }
                     }
-                    name = td[1].select("a").attr("title")
+                    name = td[0].select("a").attr("title")
                     img = td[1].select("a").select("img").attr("data-src")
                         .ifEmpty { null }
                     formula = td[2].text()
@@ -72,8 +71,7 @@ class TibiaSpells(val scrapper: Scrapper, val baseurl: String) {
                     soul_points = td[5].text()
                     Amount = td[6].text()
                     mana = td[7].text()
-                    price = td[8].text()
-                    rune_group = td[9].text()
+                    rune_group = td[8].text()
                     effect = effects
                 }
                 runesArray.add(rune)

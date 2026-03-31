@@ -81,26 +81,26 @@ class Tibia {
         return ItemProfileBodyEquipment(scrapper, html, name).item()
     }
 
-    fun household(name: String): Any? {
+    fun household(name: String, html: String): Any? {
         val household = when(name.lowercase()){
-            "books"-> HouseholdItems(scrapper, baseurl).books()
-            "carpets"-> HouseholdItems(scrapper, baseurl).carpets()
-            "containers"-> HouseholdItems(scrapper, baseurl).containers()
-            "contest prizes"-> HouseholdItems(scrapper, baseurl).contestPrizes()
-            "fansite items"-> HouseholdItems(scrapper, baseurl).fanSiteItems()
-            "decorations"-> HouseholdItems(scrapper, baseurl).decorations()
-            "documents and papers"-> HouseholdItems(scrapper, baseurl).documentsAndPapers()
-            "dolls and bears"-> HouseholdItems(scrapper, baseurl).dollsAndBears()
-            "furniture"-> HouseholdItems(scrapper, baseurl).furniture()
-            "kitchen tools"-> HouseholdItems(scrapper, baseurl).kitchenTools()
-            "musical instruments"-> HouseholdItems(scrapper, baseurl).musicalInstruments()
-            "trophies"-> HouseholdItems(scrapper, baseurl).trophies()
+            "books"-> HouseholdItems(scrapper, html).books()
+            "carpets"-> HouseholdItems(scrapper, html).carpets()
+            "containers"-> HouseholdItems(scrapper, html).containers()
+            "contest prizes"-> HouseholdItems(scrapper, html).contestPrizes()
+            "fansite items"-> HouseholdItems(scrapper, html).fanSiteItems()
+            "decorations"-> HouseholdItems(scrapper, html).decorations()
+            "documents and papers"-> HouseholdItems(scrapper, html).documentsAndPapers()
+            "dolls and bears"-> HouseholdItems(scrapper, html).dollsAndBears()
+            "furniture"-> HouseholdItems(scrapper, html).furniture()
+            "kitchen tools"-> HouseholdItems(scrapper, html).kitchenTools()
+            "musical instruments"-> HouseholdItems(scrapper, html).musicalInstruments()
+            "trophies"-> HouseholdItems(scrapper, html).trophies()
             else-> null
         }
         return household
     }
 
-    fun others(name: String): Any? {
+    fun others(name: String, html: String): Any? {
         val ohters = when(name.lowercase()){
             "creature products"-> Other(scrapper, baseurl).creatureProducts()
             "food"-> Other(scrapper, baseurl).food()
@@ -111,7 +111,7 @@ class Tibia {
         return ohters
     }
 
-    fun toolsEquipments(name: String): Any? {
+    fun toolsEquipments(name: String, html: String): Any? {
         println("NAME: $name")
         val equipments = when(name.lowercase()){
             "amulets and necklaces"-> ToolsEquipments(scrapper, baseurl).amuletsAndNecklaces()
@@ -127,7 +127,7 @@ class Tibia {
         return equipments
     }
 
-    fun otherItems(name: String): Any? {
+    fun otherItems(name: String, html: String): Any? {
         val equipments = when(name.lowercase()){
             "clothing accessories"-> OtherItem(scrapper, baseurl).clothingAccesories()
             "enchanted items"-> OtherItem(scrapper, baseurl).enchantedItems()
@@ -145,8 +145,8 @@ class Tibia {
         return equipments
     }
 
-    fun spells(): Spells {
-        return TibiaSpells(baseurl = baseurl, scrapper = scrapper).spellList()
+    fun spells(html: String): Spells {
+        return TibiaSpells(html = html, scrapper = scrapper).spellList()
     }
 
     fun embuiments(html: String): Imbuements {

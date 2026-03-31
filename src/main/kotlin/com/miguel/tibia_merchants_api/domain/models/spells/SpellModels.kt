@@ -12,7 +12,6 @@ data class Spell(
     var premium:String? = null,
     var level:String? = null,
     var mana:String? = null,
-    var price:String? = null,
     var group:String? = null,
     var effect:Effect? = null
 )
@@ -26,7 +25,6 @@ data class Runes(
     var soul_points:String? = null,
     var Amount:String? = null,
     var mana:String? = null,
-    var price:String? = null,
     var rune_group:String? = null,
     var effect:Effect? = null
 )
