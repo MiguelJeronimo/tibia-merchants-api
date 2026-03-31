@@ -93,7 +93,7 @@ class ItemsRepositoryImp(private val tibia: Tibia): ItemsRepository {
     override suspend fun household(name: String, html: String): Any? {
         return try {
             withContext(Dispatchers.IO){
-                val houseHold = tibia.household(name)
+                val houseHold = tibia.household(name, html = html)
                 logger.info("Response repository: $houseHold")
                 houseHold
             }
@@ -106,7 +106,7 @@ class ItemsRepositoryImp(private val tibia: Tibia): ItemsRepository {
     override suspend fun others(name: String, html: String): Any? {
         return try {
             withContext(Dispatchers.IO){
-                val others = tibia.others(name)
+                val others = tibia.others(name, html = html)
                 logger.info("Response repository: $others")
                 others
             }
@@ -119,7 +119,7 @@ class ItemsRepositoryImp(private val tibia: Tibia): ItemsRepository {
     override suspend fun othersEquipments(name: String, html: String): Any? {
         return try {
             withContext(Dispatchers.IO){
-                val others = tibia.toolsEquipments(name)
+                val others = tibia.toolsEquipments(name, html = html)
                 logger.info("Response repository: $others")
                 others
             }
@@ -132,7 +132,7 @@ class ItemsRepositoryImp(private val tibia: Tibia): ItemsRepository {
     override suspend fun otherItems(name: String, html: String): Any? {
         return try {
             withContext(Dispatchers.IO){
-                val others = tibia.otherItems(name)
+                val others = tibia.otherItems(name, html = html)
                 logger.info("Response repository: $others")
                 others
             }
