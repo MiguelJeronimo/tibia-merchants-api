@@ -2,6 +2,9 @@
 FROM amazoncorretto:17 AS build
 WORKDIR /app
 
+# Instalar herramientas necesarias que faltan en la imagen base
+RUN yum install -y findutils && yum clean all
+
 # Copiamos archivos de configuración primero para aprovechar el cache de Docker
 COPY gradlew .
 COPY gradle ./gradle
