@@ -2,6 +2,7 @@ package com.miguel.tibia_merchants_api.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.miguel.tibia_merchants_api.domain.models.ErrorAutorizer
+import org.apache.logging.log4j.LogManager
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -16,6 +17,7 @@ import reactor.core.publisher.Mono
 @Component
 class JwtFilter(private val securityConf: SecurityConf): WebFilter {
     private val  mapper = ObjectMapper()
+    private val logger = LogManager.getLogger(JwtFilter::class.java)
 
     override fun filter(
         exchange: ServerWebExchange,
@@ -39,9 +41,11 @@ class JwtFilter(private val securityConf: SecurityConf): WebFilter {
                 chain.filter(exchange)
                     .contextWrite(ReactiveSecurityContextHolder.withAuthentication(auth))
             } else {
+                logger.info("Token is invalid")
                 unauthorized(exchange, "Invalid token")
             }
         } catch (e: Exception) {
+            logger.error("Error validating token", e)
             unauthorized(exchange, "Invalid token: ${e.message}")
         }
     }
