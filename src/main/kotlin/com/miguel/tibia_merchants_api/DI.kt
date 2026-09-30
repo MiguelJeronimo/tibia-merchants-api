@@ -15,6 +15,8 @@ import com.miguel.tibia_merchants_api.data.repositories.SpellsRepository
 import com.miguel.tibia_merchants_api.data.repositories.SpellsRepositoryImp
 import com.miguel.tibia_merchants_api.data.repositories.VocationsRepository
 import com.miguel.tibia_merchants_api.data.repositories.VocationsRepositoryImp
+import com.miguel.tibia_merchants_api.data.repositories.trade.TradeRepository
+import com.miguel.tibia_merchants_api.data.repositories.trade.TradeRepositoryImpl
 import com.miguel.tibia_merchants_api.data.repositories.wikipediaapi.RepositoryWikiTibia
 import com.miguel.tibia_merchants_api.data.repositories.wikipediaapi.RepositoryWikiTibiaImpl
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseBlessings
@@ -89,6 +91,10 @@ class DI {
 
         single <UseCaseEmbuiments>{
             UseCaseEmbuiments(get(), get())
+        }
+
+        single<TradeRepository> {
+           TradeRepositoryImpl()
         }
     }
 }
