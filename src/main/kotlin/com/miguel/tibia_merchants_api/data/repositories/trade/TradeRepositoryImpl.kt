@@ -1,33 +1,49 @@
 package com.miguel.tibia_merchants_api.data.repositories.trade
 
+import com.miguel.tibia_merchants_api.utils.Constants
+import com.miguel.tibia_merchants_api.utils.exceptions.ResourceNotFoundException
 import kotlinx.coroutines.reactor.awaitSingle
+import org.apache.logging.log4j.LogManager
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.bodyToMono
+import java.net.URI
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 class TradeRepositoryImpl(
-    private val webClient: WebClient = WebClient.builder().baseUrl("https://tibiatrade.gg").build()
+    private val webClient: WebClient = WebClient.builder().build()
 ) : TradeRepository {
 
+    private val logger = LogManager.getLogger(TradeRepositoryImpl::class.java)
+    /*
+    * Fetches the catalog of trade items based on the provided parameters.
+    */
     override suspend fun getCatalog(params: TradeAdListParams): TradeCatalogResponse {
         val request = TradeBatchInput(adList = params)
-
-        val response = webClient.get().uri { uriBuilder ->
-            uriBuilder.path("/trpc/world.list,house.listTowns,item.listTypes,ad.list")
-            uriBuilder.queryParam("batch", "1")
-            uriBuilder.queryParam("input", request.toJson())
-            uriBuilder.build()
-        }.retrieve().bodyToMono<List<TradeBatchResponse>>().awaitSingle()
-
-        return response.fold(TradeCatalogResponse()) { acc, batchResponse ->
-            val data = batchResponse.result.data
-            val next = acc.copy()
-            data.worlds?.let { next.worlds = it }
-            data.towns?.let { next.towns = it }
-            data.itemTypes?.let { next.itemTypes = it }
-            data.count?.let { next.count = it }
-            data.ads?.let { next.ads = it }
-            data.highlightedAds?.let { next.highlightedAds = it }
-            next
+        return try {
+            val encodedInput = URLEncoder.encode(request.toJson(), StandardCharsets.UTF_8)
+            logger.info("INPUSTS: $request")
+            logger.info("INPUSTS: ${request.toJson()}")
+            val url = "${Constants.UrlTrade.route}/world.list,house.listTowns,item.listTypes,ad.list?batch=1&input=$encodedInput"
+            val response = webClient.get()
+                .uri(URI.create(url))
+                .retrieve()
+                .bodyToMono<List<TradeBatchResponse>>()
+                .awaitSingle()
+            logger.info("Trade info: $response")
+            response.fold(TradeCatalogResponse()) { acc, batchResponse ->
+                val data = batchResponse.result.data
+                val next = acc.copy()
+                data.worlds?.let { next.worlds = it }
+                data.towns?.let { next.towns = it }
+                data.itemTypes?.let { next.itemTypes = it }
+                data.count?.let { next.count = it }
+                data.ads?.let { next.ads = it }
+                data.highlightedAds?.let { next.highlightedAds = it }
+                next
+            }
+        } catch (e: Exception) {
+            throw ResourceNotFoundException("Failed to fetch catalog: ${e.message}", e)
         }
     }
 
@@ -50,15 +66,16 @@ class TradeRepositoryImpl(
     //Tibia CoinPrice
     override suspend fun getHighlightedCatalog(): TradeHighlightedCatalogResponse {
         val request = TradeBatchInput()
-
-        val response = webClient.get().uri { uriBuilder ->
-                uriBuilder.path("/trpc/ad.listHighlighted,world.list,tibiaCoinPrice.list")
-                uriBuilder.queryParam("batch", "1")
-                uriBuilder.queryParam("input", request.toJson())
-                uriBuilder.build()
-            }.retrieve().bodyToMono<List<TradeHighlightedBatchResponse>>().awaitSingle()
-
-        return response.fold(TradeHighlightedCatalogResponse()) { acc, batchResponse ->
+        return try {
+            val encodedInput = URLEncoder.encode(request.toJson(), StandardCharsets.UTF_8)
+            val url = "${Constants.UrlTrade.route}/ad.listHighlighted,world.list,tibiaCoinPrice.list?batch=1&input=$encodedInput"
+            val response = webClient.get()
+                .uri(URI.create(url))
+                .retrieve()
+                .bodyToMono<List<TradeHighlightedBatchResponse>>()
+                .awaitSingle()
+            logger.info("Trade info tcPrice")
+            response.fold(TradeHighlightedCatalogResponse()) { acc, batchResponse ->
                 val data = batchResponse.result.data
                 val next = acc.copy()
                 data.highlightedAds?.let { next.highlightedAds = it }
@@ -66,6 +83,10 @@ class TradeRepositoryImpl(
                 data.prices?.let { next.prices = it }
                 next
             }
+        } catch (e: Exception) {
+            logger.error("Failed to fetch catalog: ${e.message}", e)
+            throw ResourceNotFoundException("Failed to fetch highlighted catalog: ${e.message}", e)
+        }
     }
 
 
