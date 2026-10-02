@@ -1,6 +1,7 @@
 package com.miguel.tibia_merchants_api.data.repositories.trade
 
 import com.miguel.tibia_merchants_api.utils.Constants
+import com.miguel.tibia_merchants_api.utils.Environment
 import com.miguel.tibia_merchants_api.utils.exceptions.ResourceNotFoundException
 import kotlinx.coroutines.reactor.awaitSingle
 import org.apache.logging.log4j.LogManager
@@ -12,7 +13,7 @@ import java.nio.charset.StandardCharsets
 
 class TradeRepositoryImpl(
     private val webClient: WebClient = WebClient.builder().build()
-) : TradeRepository {
+) : Environment(),TradeRepository {
 
     private val logger = LogManager.getLogger(TradeRepositoryImpl::class.java)
     /*
@@ -20,11 +21,13 @@ class TradeRepositoryImpl(
     */
     override suspend fun getCatalog(params: TradeAdListParams): TradeCatalogResponse {
         val request = TradeBatchInput(adList = params)
+        val environmentName = "url_trade"
+        val route = environment(environmentName, Constants.UrlTrade.route) ?: Constants.UrlTrade.route
         return try {
             val encodedInput = URLEncoder.encode(request.toJson(), StandardCharsets.UTF_8)
             logger.info("INPUSTS: $request")
-            logger.info("url: ${Constants.UrlTrade.route}/world.list,house.listTowns,item.listTypes,ad.list?batch=1&input=${request.toJson()}")
-            val url = "${Constants.UrlTrade.route}/world.list,house.listTowns,item.listTypes,ad.list?batch=1&input=$encodedInput"
+            logger.info("url: ${route}/world.list,house.listTowns,item.listTypes,ad.list?batch=1&input=${request.toJson()}")
+            val url = "${route}/world.list,house.listTowns,item.listTypes,ad.list?batch=1&input=$encodedInput"
             val response = webClient.get()
                 .uri(URI.create(url))
                 .retrieve()
@@ -66,10 +69,12 @@ class TradeRepositoryImpl(
     //Tibia CoinPrice
     override suspend fun getHighlightedCatalog(): TradeHighlightedCatalogResponse {
         val request = TradeBatchInput()
+        val environmentName = "url_trade"
+        val route = environment(environmentName, Constants.UrlTrade.route) ?: Constants.UrlTrade.route
         return try {
             val encodedInput = URLEncoder.encode(request.toJson(), StandardCharsets.UTF_8)
-            logger.info("url: ${Constants.UrlTrade.route}/ad.listHighlighted,world.list,tibiaCoinPrice.list?batch=1&input=${request.toJson()}")
-            val url = "${Constants.UrlTrade.route}/ad.listHighlighted,world.list,tibiaCoinPrice.list?batch=1&input=$encodedInput"
+            logger.info("url: ${route}/ad.listHighlighted,world.list,tibiaCoinPrice.list?batch=1&input=${request.toJson()}")
+            val url = "${route}/ad.listHighlighted,world.list,tibiaCoinPrice.list?batch=1&input=$encodedInput"
             val response = webClient.get()
                 .uri(URI.create(url))
                 .retrieve()
