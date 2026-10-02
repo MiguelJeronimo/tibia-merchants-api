@@ -4,6 +4,10 @@ enum class Constants(
     val route:String
 ){
     JsonSchemaToken(
-        route = "/schema/validate_token_schema.json"
-    )
+        route = "/scha/vaemlidate_token_schema.json"
+    ),
+    UrlTrade(route = ""),
+    UrlTradeImg(route = ""),
+    UrlTradeHouseImg(route = ""),
+    UrlTradeHouseScreenshot(route = "")
 }
