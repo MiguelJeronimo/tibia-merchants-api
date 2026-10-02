@@ -21,6 +21,7 @@ sealed interface TradeRequestParams {
 data class TradeAdListParams(
     val sortType: String = "3",
     val page: String = "1",
+    val productType: String? = null,
     val worldId: String? = null,
     val itemType: String? = null,
     val town: String? = null,
@@ -33,6 +34,7 @@ data class TradeAdListParams(
     override fun asMap(): Map<String, Any> = buildMap {
         put("sortType", sortType)
         put("page", page)
+        productType?.let { put("productType", it) }
         worldId?.let { put("worldId", it) }
         itemType?.let { put("itemType", it) }
         town?.let { put("town", it) }

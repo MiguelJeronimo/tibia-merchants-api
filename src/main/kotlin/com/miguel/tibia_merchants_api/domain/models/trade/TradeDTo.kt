@@ -7,7 +7,8 @@ import com.miguel.tibia_merchants_api.utils.ImageUrl
 
 data class ParamsItemsDto(
     val sortType: String? = null,
-    val page: String? = null
+    val page: String? = null,
+    val productType: String? = null
 )
 data class AllItems(
     val items: List<ItemsDto>,
@@ -83,7 +84,7 @@ private fun TradeCatalogResponse.toTradeItems(): List<ItemsDto> {
             userId = item.userId,
             price = item.price,
             currencyType = item.currencyType,
-            imageUrl = ImageUrl.getImageUrl(item.itemName?:""),
+            imageUrl = ImageUrl.getImageUrl(item.itemName, item.tibiaId),
             type = item.type,
             worldId = item.worldId,
             createdAt = item.createdAt,
@@ -176,7 +177,8 @@ private fun TradeCatalogResponse.toHighLightedItems(): List<ItemsDto> {
 
 fun ParamsItemsDto.toTradeAdListParams(): TradeAdListParams {
     return TradeAdListParams(
-        sortType = this.sortType ?: "1",
-        page = this.page ?: "1"
+        sortType = this.sortType ?: "3",
+        page = this.page ?: "1",
+        productType = this.productType
     )
 }

@@ -48,4 +48,30 @@ class ControllerTradeProfiles: KoinComponent {
             ResponseEntity.internalServerError().body(error)
         }
     }
+
+    @GetMapping("/trade/user-profile")
+    suspend fun getUserProfile(
+       @RequestParam("username") username: String,
+       @RequestParam("productType", required = false) productType: String?,
+       @RequestParam("sortType", defaultValue = "3") sortType: Int,
+       @RequestParam("page", defaultValue = "1") page: Int
+    ): ResponseEntity<out Any?> {
+       return try {
+           val result = useCase.userProfile(
+               username = username,
+               productType = productType,
+               sortType = sortType,
+               page = page
+           )
+           ResponseEntity.ok().body(result)
+       } catch (e: ResourceNotFoundException) {
+           logger.error(e)
+           val error = Errors(statusCode = 400, error = "User profile not found")
+           ResponseEntity.badRequest().body(error)
+       } catch (e: Exception) {
+           logger.error(e)
+           val error = Errors(statusCode = 500, error = "Fatal Error, contact to support")
+           ResponseEntity.internalServerError().body(error)
+       }
+    }
 }

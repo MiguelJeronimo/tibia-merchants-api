@@ -56,4 +56,32 @@ class TradeProfilesRepositoryImpl(
         logger.info("Response: {}", response)
         return response
     }
+
+    override suspend fun getUserPublicProfile(
+        username: String,
+        sortType: String,
+        page: String,
+        productType: String?
+    ): List<TibiaTradeResponse<TradePublicProfileData>> {
+        val payload = buildMap {
+            put("username", username)
+            put("sortType", sortType)
+            put("page", page)
+            productType?.takeIf { it.isNotBlank() }?.let { put("productType", it) }
+        }
+        val request = TradeBatchDirectInput(mapOf("0" to payload))
+        logger.info("User public profile request: {}", request)
+        val encoded = URLEncoder.encode(request.toJson(), StandardCharsets.UTF_8)
+        val url = "${Constants.UrlTrade.route}/user.getPublicProfile?batch=1&input=$encoded"
+        val response = webClient.get().uri(URI.create(url))
+            .retrieve()
+            .onStatus({ status -> !status.is2xxSuccessful }) { response ->
+                response.bodyToMono<String>().map { body ->
+                    throw ResourceNotFoundException("Failed to fetch public profile: ${response.statusCode()} - $body")
+                }
+            }
+            .bodyToMono<List<TibiaTradeResponse<TradePublicProfileData>>>().awaitSingle()
+        logger.info("User public profile response: {}", response)
+        return response
+    }
 }

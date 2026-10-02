@@ -22,15 +22,17 @@ class ControllerTrade : KoinComponent {
 
     @GetMapping("/trade/items")
     suspend fun getItems(
-        @RequestParam("sortType") sortType: Int,
-        @RequestParam("page", defaultValue = "1") page: Int
+        @RequestParam("sortType", defaultValue = "3") sortType: Int,
+        @RequestParam("page", defaultValue = "1") page: Int,
+        @RequestParam("productType", required = false) productType: String?
     ): ResponseEntity<out Any?> {
         return try {
-            logger.info("Params: sortType: $sortType, page: $page")
+            logger.info("Params: sortType: $sortType, page: $page, productType: $productType")
             val items = useCase.getItems(
                 params = ParamsItemsDto(
                     sortType = sortType.toString(),
-                    page = page.toString()
+                    page = page.toString(),
+                    productType = productType
                 )
             )
             val response = Response(200, items)

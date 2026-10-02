@@ -4,6 +4,7 @@ import com.miguel.tibia_merchants_api.data.network.responses.Ad
 import com.miguel.tibia_merchants_api.data.network.responses.ItemProfileParams
 import com.miguel.tibia_merchants_api.data.network.responses.MarketPrice
 import com.miguel.tibia_merchants_api.data.network.responses.TibiaTradeResponse
+import com.miguel.tibia_merchants_api.data.repositories.trade.TradePublicProfileData
 import com.miguel.tibia_merchants_api.utils.ImageUrl
 
 data class TradeProfileParamDto(
@@ -74,12 +75,82 @@ data class MarketPriceDto(
     val source: String? = null
 )
 
+data class UserPublicProfileDto(
+    val createdAt: String? = null,
+    val lastLogin: String? = null,
+    val avatar: String? = null,
+    val isVerified: Boolean? = null,
+    val concludedDealsCount: Int? = null,
+    val tibiaBlackjackUsername: String? = null,
+    val ads: List<ItemsDto> = emptyList(),
+    val presets: List<Any> = emptyList()
+)
+
+fun List<TibiaTradeResponse<TradePublicProfileData>>.toUserProfileDto(): UserPublicProfileDto {
+    val profile = this.firstOrNull()?.result?.data ?: return UserPublicProfileDto()
+    return UserPublicProfileDto(
+        createdAt = profile.createdAt,
+        lastLogin = profile.lastLogin,
+        avatar = profile.avatar,
+        isVerified = profile.isVerified,
+        concludedDealsCount = profile.concludedDealsCount,
+        tibiaBlackjackUsername = profile.tibiaBlackjackUsername,
+        ads = profile.ads?.map { ad ->
+            ItemsDto(
+                id = ad.id,
+                itemAmount = ad.itemAmount,
+                itemId = ad.itemId,
+                itemTier = ad.itemTier,
+                houseId = ad.houseId,
+                highlightedUntil = ad.highlightedUntil,
+                userId = ad.userId,
+                price = ad.price,
+                currencyType = ad.currencyType,
+                type = ad.type,
+                worldId = ad.worldId,
+                createdAt = ad.createdAt,
+                isClosed = ad.isClosed,
+                isRookgaard = ad.isRookgaard,
+                itemName = ad.itemName,
+                itemLook = ad.itemLook,
+                worldName = ad.worldName,
+                worldPvpType = ad.worldPvpType,
+                worldBattleyeColor = ad.worldBattleyeColor,
+                username = ad.username,
+                avatar = ad.avatar,
+                isWhatsappVerified = ad.isWhatsappVerified,
+                isVerified = ad.isVerified,
+                houseName = ad.houseName,
+                town = ad.town,
+                tibiaId = ad.tibiaId,
+                size = ad.size,
+                rent = ad.rent,
+                beds = ad.beds,
+                floors = ad.floors,
+                rooms = ad.rooms,
+                windows = ad.windows,
+                coordinates = ad.coordinates,
+                furnitures = ad.furnitures,
+                isGuildhall = ad.isGuildhall,
+                tibiaBlackjackUsername = ad.tibiaBlackjackUsername,
+                isUserVerified = ad.isUserVerified,
+                viewCount = ad.viewCount,
+                isHighlightPrepaid = ad.isHighlightPrepaid,
+                autoRenew = ad.autoRenew,
+                autoHighlight = ad.autoHighlight,
+                tibiaBlackjackUsernameAlt = ad.tibiaBlackjackUsernameAlt,
+                convertedPrice = ad.convertedPrice
+            )
+        } ?: emptyList(),
+        presets = profile.presets ?: emptyList()
+    )
+}
 
 fun List<TibiaTradeResponse<Ad>>.toDomain(): AddDto {
     val info = InfoAdDto(
         id = this[0].result?.data?.info?.id,
         itemName = this[0].result?.data?.info?.itemName,
-        imageUrl = ImageUrl.getImageUrl(this[0].result?.data?.info?.itemName?:""),
+        imageUrl = ImageUrl.getImageUrl(this[0].result?.data?.info?.itemName),
         itemAmount = this[0].result?.data?.info?.itemAmount,
         itemId = this[0].result?.data?.info?.itemId,
         houseId = this[0].result?.data?.info?.houseId,

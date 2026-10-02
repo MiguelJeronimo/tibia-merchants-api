@@ -3,9 +3,11 @@ package com.miguel.tibia_merchants_api.domain.usecase
 import com.miguel.tibia_merchants_api.data.repositories.trade.TradeProfilesRepository
 import com.miguel.tibia_merchants_api.domain.models.trade.AddDto
 import com.miguel.tibia_merchants_api.domain.models.trade.TradeProfileParamDto
+import com.miguel.tibia_merchants_api.domain.models.trade.UserPublicProfileDto
 import com.miguel.tibia_merchants_api.domain.models.trade.toDomain
 import com.miguel.tibia_merchants_api.domain.models.trade.toMarketPrice
 import com.miguel.tibia_merchants_api.domain.models.trade.toParams
+import com.miguel.tibia_merchants_api.domain.models.trade.toUserProfileDto
 
 class UseCaseTradeProfiles(private val repository: TradeProfilesRepository) {
     suspend fun itemProfile(params: TradeProfileParamDto): AddDto {
@@ -13,5 +15,20 @@ class UseCaseTradeProfiles(private val repository: TradeProfilesRepository) {
         val tradePriceProfileResponse = repository.tradeTradePriceProfile(params = params.toParams()).toMarketPrice()
         itemProfileResponse.marketPrice = tradePriceProfileResponse
         return itemProfileResponse
+    }
+
+    suspend fun userProfile(
+        username: String,
+        productType: String? = null,
+        sortType: Int = 3,
+        page: Int = 1
+    ): UserPublicProfileDto {
+        val profileResponse = repository.getUserPublicProfile(
+            username = username,
+            sortType = sortType.toString(),
+            page = page.toString(),
+            productType = productType
+        )
+        return profileResponse.toUserProfileDto()
     }
 }

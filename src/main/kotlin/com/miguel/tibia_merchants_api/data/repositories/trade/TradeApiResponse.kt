@@ -93,3 +93,15 @@ data class TradeAd(
     @JsonProperty("tibiablackjackUsername") val tibiaBlackjackUsernameAlt: String? = null,
     @JsonProperty("converted_price") val convertedPrice: String? = null
 )
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class TradePublicProfileData(
+    @JsonProperty("created_at") val createdAt: String? = null,
+    @JsonProperty("last_login") val lastLogin: String? = null,
+    @JsonProperty("avatar") val avatar: String? = null,
+    @JsonProperty("is_verified") val isVerified: Boolean? = null,
+    @JsonProperty("concluded_deals_count") val concludedDealsCount: Int? = null,
+    @JsonProperty("tibiablackjackUsername") val tibiaBlackjackUsername: String? = null,
+    @JsonProperty("ads") val ads: List<TradeAd>? = null,
+    @JsonProperty("presets") val presets: List<Any>? = null
+)
