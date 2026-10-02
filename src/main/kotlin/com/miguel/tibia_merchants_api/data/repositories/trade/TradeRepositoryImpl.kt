@@ -23,7 +23,7 @@ class TradeRepositoryImpl(
         return try {
             val encodedInput = URLEncoder.encode(request.toJson(), StandardCharsets.UTF_8)
             logger.info("INPUSTS: $request")
-            logger.info("INPUSTS: ${request.toJson()}")
+            logger.info("url: ${Constants.UrlTrade.route}/world.list,house.listTowns,item.listTypes,ad.list?batch=1&input=${request.toJson()}")
             val url = "${Constants.UrlTrade.route}/world.list,house.listTowns,item.listTypes,ad.list?batch=1&input=$encodedInput"
             val response = webClient.get()
                 .uri(URI.create(url))
@@ -68,6 +68,7 @@ class TradeRepositoryImpl(
         val request = TradeBatchInput()
         return try {
             val encodedInput = URLEncoder.encode(request.toJson(), StandardCharsets.UTF_8)
+            logger.info("url: ${Constants.UrlTrade.route}/ad.listHighlighted,world.list,tibiaCoinPrice.list?batch=1&input=${request.toJson()}")
             val url = "${Constants.UrlTrade.route}/ad.listHighlighted,world.list,tibiaCoinPrice.list?batch=1&input=$encodedInput"
             val response = webClient.get()
                 .uri(URI.create(url))

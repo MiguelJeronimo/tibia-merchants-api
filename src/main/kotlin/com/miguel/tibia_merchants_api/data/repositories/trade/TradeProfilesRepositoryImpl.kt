@@ -27,6 +27,7 @@ class TradeProfilesRepositoryImpl(
         val json = request.toJson()
         val encoded = URLEncoder.encode(json, StandardCharsets.UTF_8)
         val url = "${Constants.UrlTrade.route}/ad.fetchById?batch=1&input=$encoded"
+        logger.info("URL: {}", "${Constants.UrlTrade.route}/ad.fetchById?batch=1&input=$json")
         val response = webClient.get().uri(URI.create(url))
             .retrieve()
             .onStatus({ status -> !status.is2xxSuccessful }) { response ->
@@ -43,6 +44,7 @@ class TradeProfilesRepositoryImpl(
         val request = TradeBatchDirectInput(params.toMarketMap())
         logger.info("Request: {}", request)
         val json = request.toJson()
+        logger.info("URL: {}", "${Constants.UrlTrade.route}/ad.marketPrice?batch=1&input=$json")
         val encoded = URLEncoder.encode(json, StandardCharsets.UTF_8)
         val url = "${Constants.UrlTrade.route}/ad.marketPrice?batch=1&input=$encoded"
         val response = webClient.get().uri(URI.create(url))
@@ -72,6 +74,7 @@ class TradeProfilesRepositoryImpl(
         val request = TradeBatchDirectInput(mapOf("0" to payload))
         logger.info("User public profile request: {}", request)
         val encoded = URLEncoder.encode(request.toJson(), StandardCharsets.UTF_8)
+        logger.info("URL: {}", "${Constants.UrlTrade.route}/user.getPublicProfile?batch=1&input=${request.toJson()}")
         val url = "${Constants.UrlTrade.route}/user.getPublicProfile?batch=1&input=$encoded"
         val response = webClient.get().uri(URI.create(url))
             .retrieve()
