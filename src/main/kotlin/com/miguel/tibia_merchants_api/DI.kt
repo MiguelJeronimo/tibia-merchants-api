@@ -1,29 +1,14 @@
 package com.miguel.tibia_merchants_api
 
 import com.miguel.tibia_merchants_api.data.network.Tibia
-import com.miguel.tibia_merchants_api.data.repositories.BlessingsRepository
-import com.miguel.tibia_merchants_api.data.repositories.BlessingsRepositoryImp
-import com.miguel.tibia_merchants_api.data.repositories.CatalogRepository
-import com.miguel.tibia_merchants_api.data.repositories.CatalogRepositoryImp
-import com.miguel.tibia_merchants_api.data.repositories.EmbuimentsRepository
-import com.miguel.tibia_merchants_api.data.repositories.EmbuimentsRepositoryImp
-import com.miguel.tibia_merchants_api.data.repositories.ItemsRepository
-import com.miguel.tibia_merchants_api.data.repositories.ItemsRepositoryImp
-import com.miguel.tibia_merchants_api.data.repositories.NPCRepository
-import com.miguel.tibia_merchants_api.data.repositories.NPCRepositoryImp
-import com.miguel.tibia_merchants_api.data.repositories.SpellsRepository
-import com.miguel.tibia_merchants_api.data.repositories.SpellsRepositoryImp
-import com.miguel.tibia_merchants_api.data.repositories.VocationsRepository
-import com.miguel.tibia_merchants_api.data.repositories.VocationsRepositoryImp
+import com.miguel.tibia_merchants_api.data.repositories.*
+import com.miguel.tibia_merchants_api.data.repositories.trade.TradeProfilesRepository
+import com.miguel.tibia_merchants_api.data.repositories.trade.TradeProfilesRepositoryImpl
+import com.miguel.tibia_merchants_api.data.repositories.trade.TradeRepository
+import com.miguel.tibia_merchants_api.data.repositories.trade.TradeRepositoryImpl
 import com.miguel.tibia_merchants_api.data.repositories.wikipediaapi.RepositoryWikiTibia
 import com.miguel.tibia_merchants_api.data.repositories.wikipediaapi.RepositoryWikiTibiaImpl
-import com.miguel.tibia_merchants_api.domain.usecase.UseCaseBlessings
-import com.miguel.tibia_merchants_api.domain.usecase.UseCaseCatalog
-import com.miguel.tibia_merchants_api.domain.usecase.UseCaseEmbuiments
-import com.miguel.tibia_merchants_api.domain.usecase.UseCaseItems
-import com.miguel.tibia_merchants_api.domain.usecase.UseCaseNPC
-import com.miguel.tibia_merchants_api.domain.usecase.UseCaseSpells
-import com.miguel.tibia_merchants_api.domain.usecase.UseCaseVocations
+import com.miguel.tibia_merchants_api.domain.usecase.*
 import org.koin.dsl.module
 
 class DI {
@@ -90,5 +75,16 @@ class DI {
         single <UseCaseEmbuiments>{
             UseCaseEmbuiments(get(), get())
         }
+        //Trade
+        single<TradeRepository> {
+           TradeRepositoryImpl()
+        }
+
+        single<UseCaseTrade>{
+            UseCaseTrade(repository = get())
+        }
+
+        single<TradeProfilesRepository> { TradeProfilesRepositoryImpl() }
+        single<UseCaseTradeProfiles> { UseCaseTradeProfiles(get()) }
     }
 }
