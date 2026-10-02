@@ -34,7 +34,8 @@ data class AddDto(
     val hasFeedImage: Boolean = false,
     val hasStoryImage: Boolean = false,
     val hasFeedPtBrImage: Boolean = false,
-    val hasStoryPtBrImage: Boolean = false
+    val hasStoryPtBrImage: Boolean = false,
+    val screenshotCount: Int? = null
 )
 
 data class InfoAdDto(
@@ -43,6 +44,7 @@ data class InfoAdDto(
     val imageUrl: String? = null,
     val itemAmount: Int? = null,
     val itemId: Int? = null,
+    val tibiaId: Int? = null,
     val houseId: Long? = null,
     val itemTier: Int? = null,
     val itemLook: String? = null,
@@ -50,6 +52,7 @@ data class InfoAdDto(
     val userId: Long? = null,
     val price: Long? = null,
     val currencyType: Int? = null,
+    val roomsImages: List<String>? = null,
     val type: Int? = null,
     val worldId: Int? = null,
     val worldName: String? = null,
@@ -64,6 +67,15 @@ data class InfoAdDto(
     val autoRenew: Boolean,
     val autoHighlight: Boolean,
     val isGuildhall: Boolean,
+    val town: String? = null,
+    val size: Int? = null,
+    val rooms: Int? = null,
+    val beds: Int? = null,
+    val floors: Int? = null,
+    val rent: Long? = null,
+    val windows: Int? = null,
+    val furnitures: String? = null,
+    val coordinates: String? = null,
     val convertedPrice: Long? = null,
     val avatar: String? = null,
     val tibiaBlackjackUsername: String? = null
@@ -147,12 +159,20 @@ fun List<TibiaTradeResponse<TradePublicProfileData>>.toUserProfileDto(): UserPub
 }
 
 fun List<TibiaTradeResponse<Ad>>.toDomain(): AddDto {
+    val screenshotCount = this[0].result?.data?.screenshotCount
+    val tibiaId = this[0].result?.data?.info?.tibiaId
+    val roomImages = ImageUrl.screenshotUrl(screenshotCount = screenshotCount?:0, tibiaId = tibiaId?:0)
+
     val info = InfoAdDto(
         id = this[0].result?.data?.info?.id,
         itemName = this[0].result?.data?.info?.itemName,
-        imageUrl = ImageUrl.getImageUrl(this[0].result?.data?.info?.itemName),
+        imageUrl = ImageUrl.getImageUrl(
+            itemName = this[0].result?.data?.info?.itemName,
+            tibiaId = this[0].result?.data?.info?.tibiaId
+        ),
         itemAmount = this[0].result?.data?.info?.itemAmount,
         itemId = this[0].result?.data?.info?.itemId,
+        tibiaId = this[0].result?.data?.info?.tibiaId,
         houseId = this[0].result?.data?.info?.houseId,
         itemTier = this[0].result?.data?.info?.itemTier,
         itemLook = this[0].result?.data?.info?.itemLook,
@@ -163,6 +183,7 @@ fun List<TibiaTradeResponse<Ad>>.toDomain(): AddDto {
         type = this[0].result?.data?.info?.type,
         worldId = this[0].result?.data?.info?.worldId,
         worldName = this[0].result?.data?.info?.worldName,
+        roomsImages = roomImages,
         worldPvpType = this[0].result?.data?.info?.worldPvpType,
         worldBattleyeColor = this[0].result?.data?.info?.worldBattleyeColor,
         createdAt = this[0].result?.data?.info?.createdAt,
@@ -174,6 +195,15 @@ fun List<TibiaTradeResponse<Ad>>.toDomain(): AddDto {
         autoRenew = this[0].result?.data?.info?.autoRenew ?: false,
         autoHighlight = this[0].result?.data?.info?.autoHighlight ?: false,
         isGuildhall = this[0].result?.data?.info?.isGuildhall ?: false,
+        town = this[0].result?.data?.info?.town,
+        size = this[0].result?.data?.info?.size,
+        rooms = this[0].result?.data?.info?.rooms,
+        beds = this[0].result?.data?.info?.beds,
+        floors = this[0].result?.data?.info?.floors,
+        rent = this[0].result?.data?.info?.rent,
+        windows = this[0].result?.data?.info?.windows,
+        furnitures = this[0].result?.data?.info?.furnitures,
+        coordinates = this[0].result?.data?.info?.coordinates,
         convertedPrice = this[0].result?.data?.info?.convertedPrice,
         avatar = this[0].result?.data?.info?.avatar,
         tibiaBlackjackUsername = this[0].result?.data?.info?.tibiaBlackjackUsername
@@ -183,6 +213,7 @@ fun List<TibiaTradeResponse<Ad>>.toDomain(): AddDto {
         isClosed = this[0].result?.data?.info?.isClosed == 1,
         isActive = this[0].result?.data?.info?.isClosed == 0,
         hasFeedImage = this[0].result?.data?.hasFeedImage ?: false,
+        screenshotCount = this[0].result?.data?.screenshotCount,
         hasStoryImage = this[0].result?.data?.hasStoryImage ?: false,
         hasFeedPtBrImage = this[0].result?.data?.hasFeedPtBrImage ?: false,
         hasStoryPtBrImage = this[0].result?.data?.hasStoryPtBrImage ?: false

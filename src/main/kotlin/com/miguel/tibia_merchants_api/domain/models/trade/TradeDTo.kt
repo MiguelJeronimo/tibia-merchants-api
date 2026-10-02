@@ -43,7 +43,7 @@ data class ItemsDto(
     val isVerified: Int? = null,
     val houseName: String? = null,
     val town: String? = null,
-    val tibiaId: String? = null,
+    val tibiaId: Int? = null,
     val size: String? = null,
     val rent: String? = null,
     val beds: String? = null,
@@ -84,7 +84,10 @@ private fun TradeCatalogResponse.toTradeItems(): List<ItemsDto> {
             userId = item.userId,
             price = item.price,
             currencyType = item.currencyType,
-            imageUrl = ImageUrl.getImageUrl(item.itemName, item.tibiaId),
+            imageUrl = ImageUrl.getImageUrl(
+                itemName = item.itemName,
+                tibiaId = item.tibiaId
+            ),
             type = item.type,
             worldId = item.worldId,
             createdAt = item.createdAt,

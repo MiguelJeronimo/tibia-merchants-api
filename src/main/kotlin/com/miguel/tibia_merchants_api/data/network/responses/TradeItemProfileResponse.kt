@@ -12,7 +12,8 @@ data class Ad(
     @JsonProperty("has_feed_image") val hasFeedImage: Boolean,
     @JsonProperty("has_story_image") val hasStoryImage: Boolean,
     @JsonProperty("has_feed_pt_br_image") val hasFeedPtBrImage: Boolean,
-    @JsonProperty("has_story_pt_br_image") val hasStoryPtBrImage: Boolean
+    @JsonProperty("has_story_pt_br_image") val hasStoryPtBrImage: Boolean,
+    @JsonProperty("screenshot_count") val screenshotCount: Int? = null,
 )
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -22,11 +23,13 @@ data class InfoAd(
     @JsonProperty("item_amount") val itemAmount: Int? = null,
     @JsonProperty("item_id") val itemId: Int? = null,
     @JsonProperty("house_id") val houseId: Long? = null,
+    @JsonProperty("house_name") val houseName: String? = null,
     @JsonProperty("item_tier") val itemTier: Int? = null,
     @JsonProperty("item_look") val itemLook: String? = null,
     @JsonProperty("username") val username: String? = null,
     @JsonProperty("user_id") val userId: Long? = null,
     @JsonProperty("price") val price: Long? = null,
+    @JsonProperty("tibia_id") val tibiaId: Int? = null,
     @JsonProperty("currency_type") val currencyType: Int? = null,
     @JsonProperty("type") val type: Int? = null,
     @JsonProperty("world_id") val worldId: Int? = null,
@@ -42,6 +45,15 @@ data class InfoAd(
     @JsonProperty("auto_renew") val autoRenew: Boolean,
     @JsonProperty("auto_highlight") val autoHighlight: Boolean,
     @JsonProperty("is_guildhall") val isGuildhall: Boolean,
+    @JsonProperty("town") val town: String? = null,
+    @JsonProperty("size") val size: Int? = null,
+    @JsonProperty("rooms") val rooms: Int? = null,
+    @JsonProperty("beds") val beds: Int? = null,
+    @JsonProperty("floors") val floors: Int? = null,
+    @JsonProperty("rent") val rent: Long? = null,
+    @JsonProperty("windows") val windows: Int? = null,
+    @JsonProperty("furnitures") val furnitures: String? = null,
+    @JsonProperty("coordinates") val coordinates: String? = null,
     @JsonProperty("converted_price") val convertedPrice: Long? = null,
     @JsonProperty("avatar") val avatar: String? = null,
     @JsonProperty("tibiablackjackUsername") val tibiaBlackjackUsername: String? = null

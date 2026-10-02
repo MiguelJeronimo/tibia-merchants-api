@@ -74,7 +74,7 @@ data class TradeAd(
     @JsonProperty("is_verified") val isVerified: Int? = null,
     @JsonProperty("house_name") val houseName: String? = null,
     @JsonProperty("town") val town: String? = null,
-    @JsonProperty("tibia_id") val tibiaId: String? = null,
+    @JsonProperty("tibia_id") val tibiaId: Int? = null,
     @JsonProperty("size") val size: String? = null,
     @JsonProperty("rent") val rent: String? = null,
     @JsonProperty("beds") val beds: String? = null,
