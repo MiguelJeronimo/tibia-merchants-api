@@ -1,6 +1,7 @@
 package com.miguel.tibia_merchants_api.controllers
 
 import com.miguel.tibia_merchants_api.domain.models.Errors
+import com.miguel.tibia_merchants_api.domain.models.Response
 import com.miguel.tibia_merchants_api.domain.models.trade.TradeProfileParamDto
 import com.miguel.tibia_merchants_api.domain.usecase.UseCaseTradeProfiles
 import com.miguel.tibia_merchants_api.utils.exceptions.ResourceNotFoundException
@@ -37,7 +38,8 @@ class ControllerTradeProfiles: KoinComponent {
                 type = type
             )
             val tradeProfiles = useCase.itemProfile(params)
-            ResponseEntity.ok().body(tradeProfiles)
+            val response = Response(200, tradeProfiles)
+            ResponseEntity.ok().body(response)
         } catch (e: ResourceNotFoundException) {
             logger.error(e)
             val error = Errors(statusCode = 400, error = "Resource not found")
@@ -63,7 +65,8 @@ class ControllerTradeProfiles: KoinComponent {
                sortType = sortType,
                page = page
            )
-           ResponseEntity.ok().body(result)
+           val response = Response(200, result)
+           ResponseEntity.ok().body(response)
        } catch (e: ResourceNotFoundException) {
            logger.error(e)
            val error = Errors(statusCode = 400, error = "User profile not found")
